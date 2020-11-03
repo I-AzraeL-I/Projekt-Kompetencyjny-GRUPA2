@@ -7,4 +7,13 @@ Kacper Durmaj - backend\
 Mateusz Zaborowski - frontend\
 Dominik Snopek - database
 
+## Technologie
+### Frontend
+- Vue
+### Backend
+- Spring Boot
+- Hibernate
+### Baza
+- PostgreSQL
+
 
