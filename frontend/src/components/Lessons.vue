@@ -1,10 +1,8 @@
 <template>
   <div id="app">
     <div class="top-title">
-      <div class="kore">
-      <h4>Korepetycje</h4>
-      </div>
-          <input type="text" v-model="search" placeholder="szukaj przedmiotu"/>
+
+          <input type="text" v-model="search" placeholder="szukaj przedmiotu" class="searchBar"/>
     </div>
     <div class="content">
       <div class="left-section">
@@ -29,10 +27,9 @@
               <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
               <div class="prices">
                 <div class="price">{{ teacher.price }} złoty</div>
-                <div class="price2"> za godzinę</div>
+                <div class="price2"> na godzinę</div>
               </div>
               <div class="buttons">
-                <a class="waves-effect waves-light btn">Rezerwuj lekcje</a>
                 <a class="waves-effect waves-light btn">Wyślij wiadomość</a>
               </div>
             </div>
@@ -40,9 +37,9 @@
         </ul>
       </div>
       <div class="right-section">
-        <div class="promoted">
-          Promowoanes
-        </div>
+<!--        <div class="promoted">-->
+<!--          Promowoanes-->
+<!--        </div>-->
 
       </div>
     </div>
@@ -91,12 +88,12 @@ export default {
 }
 .top-title{
   display: grid;
-  grid-template-columns: 300px 1fr 500px 1fr 1fr;
+  grid-template-columns: 300px 1fr 300px 1fr 1fr;
 }
 .content {
   display: flex;
 }
-.kore{
+.searchBar{
   grid-column: 2 / 3;
 }
 .left-section{
@@ -107,10 +104,7 @@ export default {
   margin-top: 20px;
 }
 
-.title {
-  font-size: 55px;
 
-}
 .collection li {
   margin: 0 6px 10px;
   font-weight: 600;
@@ -130,25 +124,28 @@ li {
 .description {
   width: 65%;
   padding: 10px 40px 10px;
+  font-weight: 400;
 }
 
 .prices {
   text-align: center;
+  font-weight: 400;
 }
 
 .buttons {
   text-align: center;
   font-weight:400;
+  margin-top: 30px;
 }
 
 .price {
   margin-top: 30px;
   font-size: 30px;
-  text-align: right;
+
 }
 
 .price2 {
-  text-align: right;
+
 }
 
 .buttons a {

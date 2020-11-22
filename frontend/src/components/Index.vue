@@ -71,7 +71,6 @@ p {
 
 .row {
   text-align: center;
-  border-style: solid;
   padding: 100px 0 100px;
 }
 

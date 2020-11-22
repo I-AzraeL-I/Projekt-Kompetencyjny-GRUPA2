@@ -11,8 +11,10 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import 'materialize-css/dist/css/materialize.min.css'
 import 'material-design-icons/iconfont/material-icons.css'
 import VueDynamicForms from '@asigloo/vue-dynamic-forms';
+
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
+import 'materialize-css/dist/js/materialize.min.js'
 Vue.use(DatePicker);
 Vue.use(VueDynamicForms);
 Vue.use(VueGoogleMaps, {

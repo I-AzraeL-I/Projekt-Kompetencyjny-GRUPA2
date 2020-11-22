@@ -1,27 +1,27 @@
 <template>
   <div class="container">
-    <div class="zio"><h1>LOGO</h1></div>
-    <div class="register-form">
+    <div class="register-form z-depth-3">
+      <div class="zio"><h1>LOGO</h1></div>
       <dynamic-form class="dynamic-form"
                     v-bind:id="testForm.id"
                     v-bind:fields="testForm.fields"
                     @submit="printValues"
 
       />
-      <div class="radio-role">
-        <p class="role-span">
-          <label>
-            <input value="one" name="group1" type="radio" v-model="picked"/>
-            <span>Uczeń</span>
-          </label>
-        </p>
-        <p class="role-span">
-          <label>
-            <input value="two" name="group1" type="radio" v-model="picked"/>
-            <span class="role-span">Korepetytor</span>
-          </label>
-        </p>
-      </div>
+<!--      <div class="radio-role">-->
+<!--        <p class="role-span">-->
+<!--          <label>-->
+<!--            <input value="one" name="group1" type="radio" v-model="picked"/>-->
+<!--            <span>Uczeń</span>-->
+<!--          </label>-->
+<!--        </p>-->
+<!--        <p class="role-span">-->
+<!--          <label>-->
+<!--            <input value="two" name="group1" type="radio" v-model="picked"/>-->
+<!--            <span class="role-span">Korepetytor</span>-->
+<!--          </label>-->
+<!--        </p>-->
+<!--      </div>-->
       <button type="submit" :form="testForm.id" class="waves-effect waves-light btn">Zarejestruj
       </button>
     </div>
@@ -30,6 +30,7 @@
 
 <script>
 import {FormField, FormValidation, pattern, required, email, minLength, maxLength} from '@asigloo/vue-dynamic-forms';
+import '@asigloo/vue-dynamic-forms/src/styles/themes/default.scss';
 import md5 from 'js-md5'
 
 export default {
@@ -42,7 +43,7 @@ export default {
         fields: [
           new FormField({
             type: 'text',
-            label: 'Imię',
+            placeholder: 'Imię',
             name: 'name',
             validations: [
               new FormValidation(required, 'To pole jest wymagane')
@@ -50,7 +51,7 @@ export default {
           }),
           new FormField({
             type: 'text',
-            label: 'Nazwisko',
+            placeholder: 'Nazwisko',
             name: 'surname',
             validations: [
               new FormValidation(required, 'To pole jest wymagane')
@@ -58,7 +59,7 @@ export default {
           }),
           new FormField({
             type: 'email',
-            label: 'Email',
+            placeholder: 'Email',
             name: 'email',
             validations: [
               new FormValidation(required, 'To pole jest wymagane'),
@@ -67,7 +68,7 @@ export default {
           }),
           new FormField({
             type: 'password',
-            label: 'Hasło',
+            placeholder: 'Hasło',
             name: 'password',
             validations: [
               new FormValidation(required, 'To pole jest wymagane'),
@@ -81,7 +82,7 @@ export default {
           }),
           new FormField({
             type: 'text',
-            label: 'Miasto',
+            placeholder: 'Miasto',
             name: 'city',
             validations: [
               new FormValidation(required, 'To pole jest wymagane')
@@ -89,7 +90,7 @@ export default {
           }),
           new FormField({
             type: 'text',
-            label: 'Ulica',
+            placeholder: 'Adres',
             name: 'street',
             validations: [
               new FormValidation(required, 'To pole jest wymagane')
@@ -97,7 +98,7 @@ export default {
           }),
           new FormField({
             type: 'text',
-            label: 'Numer telefonu',
+            placeholder: 'Numer telefonu',
             name: 'phoneNumber',
             validations: [
               new FormValidation(required, 'To pole jest wymagane'),
@@ -130,10 +131,13 @@ export default {
 .container {
   display: grid;
   grid-template-columns: 1fr 500px 1fr;
+  text-align: center;
+  padding-top:150px;
+
 }
 
 .zio {
-  margin: 150px 0 100px;
+  margin-bottom: 75px;
   grid-column: 2/3;
 }
 
@@ -141,21 +145,24 @@ export default {
 
   margin-bottom: 100px;
   grid-column: 2 / 3;
-  text-align: center;
+  background-color: rgb(85, 214, 170);
+  border-radius: 10px 10px 30px 30px;
+  padding: 0 30px 20px;
 
 }
 
 .dynamic-form {
   margin-bottom: 10px;
+
+}
+.input-field input[type=number]:focus + label {
+  color: black;
 }
 
-.radio-role {
-  margin-bottom: 10px;
-}
-
-.role-span {
-  text-align: left;
-  /*padding-left: 20px;*/
-}
-
+.shell span {
+  font-size: 16px;
+  font-family: monospace;
+  padding-right: 10px;
+  background-color: transparent;
+  text-transform: uppercase; }
 </style>

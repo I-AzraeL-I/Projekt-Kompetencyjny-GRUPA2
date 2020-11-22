@@ -5,6 +5,7 @@ import Register from "@/components/Register";
 import Help from "@/components/Help"
 import Index from "@/components/Index";
 import Lessons from "@/components/Lessons";
+import Teacher from "@/components/Teacher";
 Vue.use(Router)
 
 export default new Router({
@@ -33,6 +34,11 @@ export default new Router({
       path: '/korepetycje',
       name: 'Korepetycje',
       component: Lessons
+    },
+    {
+      path: '/profil',
+      name: 'profil',
+      component: Teacher
     }
   ]
 })
