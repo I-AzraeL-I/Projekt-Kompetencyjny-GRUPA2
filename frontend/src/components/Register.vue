@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="register-form z-depth-3">
+  <div class="container row">
+    <div class="register-form z-depth-3 col s12 m12 l4 offset-l4">
       <div class="zio"><h1>LOGO</h1></div>
       <dynamic-form class="dynamic-form"
                     v-bind:id="testForm.id"
@@ -22,7 +22,7 @@
 <!--          </label>-->
 <!--        </p>-->
 <!--      </div>-->
-      <button type="submit" :form="testForm.id" class="waves-effect waves-light btn">Zarejestruj
+      <button type="submit" :form="testForm.id" class="waves-effect waves-light btn signButton">Zarejestruj
       </button>
     </div>
   </div>
@@ -63,7 +63,7 @@ export default {
             name: 'email',
             validations: [
               new FormValidation(required, 'To pole jest wymagane'),
-              new FormValidation(email, 'Format of email is incorrect'),
+              new FormValidation(email, 'Nieprawidłowy adres email'),
             ],
           }),
           new FormField({
@@ -72,12 +72,12 @@ export default {
             name: 'password',
             validations: [
               new FormValidation(required, 'To pole jest wymagane'),
-              // new FormValidation(
-              //     pattern(
-              //         '^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[#$^+=!*()@%&]).{8,16}$',
-              //     ),
-              //     'Hasło musi zawierać conajmniej 1 wielką literę, 1 małą literę, 1 cyfrę, 1 znak specjalny i mieć od 8 do 16 znaków.',
-              // ),
+              new FormValidation(
+                  pattern(
+                      '^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[#$^+=!*()@%&]).{8,16}$',
+                  ),
+                  'Hasło musi zawierać conajmniej 1 wielką literę, 1 małą literę, 1 cyfrę, 1 znak specjalny i mieć od 8 do 16 znaków.',
+              ),
             ],
           }),
           new FormField({
@@ -129,8 +129,6 @@ export default {
 
 <style scoped>
 .container {
-  display: grid;
-  grid-template-columns: 1fr 500px 1fr;
   text-align: center;
   padding-top:150px;
 
@@ -138,7 +136,6 @@ export default {
 
 .zio {
   margin-bottom: 75px;
-  grid-column: 2/3;
 }
 
 .register-form {
@@ -150,19 +147,8 @@ export default {
   padding: 0 30px 20px;
 
 }
-
-.dynamic-form {
-  margin-bottom: 10px;
-
-}
-.input-field input[type=number]:focus + label {
-  color: black;
+.signButton {
+  margin-bottom: 20px;
 }
 
-.shell span {
-  font-size: 16px;
-  font-family: monospace;
-  padding-right: 10px;
-  background-color: transparent;
-  text-transform: uppercase; }
 </style>

@@ -1,6 +1,5 @@
 <template>
   <div id ="app">
-      <h1>Twoja Lokalizacja:</h1>
       <p>{{ coordinates.lat }} Szerokosc, {{ coordinates.lng }} Dlugosc</p>
       <GmapMap
           :center="coordinates"

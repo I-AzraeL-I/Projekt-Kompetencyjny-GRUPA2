@@ -1,15 +1,15 @@
 <template>
   <div id="app">
-    <div class="top-title">
+    <div class="top-title row">
 
-          <input type="text" v-model="search" placeholder="szukaj przedmiotu" class="searchBar"/>
+          <input type="text" v-model="search" placeholder="szukaj przedmiotu" class="searchBar col s12 m10 l3 offset-m1 offset-l1"/>
     </div>
-    <div class="content">
-      <div class="left-section">
+    <div class="content row">
+      <div class="left-section col s12 m12 l7">
         <ul class="collection">
           <li v-for="(teacher, i) in filteredTeachers" v-bind:key="`${i}-${teacher.id}`"
-              class="collection-item avatar z-depth-2">
-            <div class="left">
+              class="collection-item avatar z-depth-2 row">
+            <div class="left col s12 m2 l2">
               <img src="../assets/books.png" alt="" class="circle">
               <span class="title">{{ teacher.name }}</span>
               <p> {{ teacher.City }}
@@ -20,10 +20,10 @@
                 <li>{{ teacher.skills[2] }}</li>
               </ul>
             </div>
-            <div class="description">
+            <div class="description col s12 m7 l7">
               <p>{{ teacher.Description }}</p>
             </div>
-            <div class="right">
+            <div class="right col s12 m3 l3">
               <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
               <div class="prices">
                 <div class="price">{{ teacher.price }} złoty</div>
@@ -36,11 +36,10 @@
           </li>
         </ul>
       </div>
-      <div class="right-section">
+      <div class="right-section col s12 m12 l5">
 <!--        <div class="promoted">-->
 <!--          Promowoanes-->
 <!--        </div>-->
-
       </div>
     </div>
   </div>
@@ -86,19 +85,11 @@ export default {
 #app {
   padding-top: 60px;
 }
-.top-title{
-  display: grid;
-  grid-template-columns: 300px 1fr 300px 1fr 1fr;
-}
-.content {
-  display: flex;
-}
+
 .searchBar{
   grid-column: 2 / 3;
 }
-.left-section{
-  width:66%;
-}
+
 
 .skills {
   margin-top: 20px;
@@ -109,20 +100,9 @@ export default {
   margin: 0 6px 10px;
   font-weight: 600;
 }
-li {
-  display: flex;
-}
 
-.left {
-  width: 15%;
-}
-
-.right {
-  width: 20%;
-}
 
 .description {
-  width: 65%;
   padding: 10px 40px 10px;
   font-weight: 400;
 }
