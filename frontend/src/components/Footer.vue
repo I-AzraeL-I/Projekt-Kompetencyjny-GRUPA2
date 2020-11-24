@@ -33,5 +33,6 @@ export default {
 <style scoped>
 .page-footer{
   background: rgb(85, 214, 170);
+
 }
 </style>

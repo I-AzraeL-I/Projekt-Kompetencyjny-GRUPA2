@@ -9,7 +9,7 @@
                     @submit="printValues"
 
       />
-      <button type="submit" :form="testForm.id" class="waves-effect waves-light btn signButton">Zarejestruj
+      <button type="submit" :form="testForm.id" class="waves-effect waves-light btn signButton">Zaloguj
       </button>
     </div>
 
@@ -22,7 +22,6 @@
 <script>
 import Map from '@/components/Map.vue'
 import {FormField, FormValidation, pattern, required, email} from '@asigloo/vue-dynamic-forms';
-import md5 from "js-md5";
 export default {
   name: "Login",
   components: {
@@ -65,7 +64,6 @@ export default {
   methods: {
     printValues(values) {
       console.log(this.picked);
-      values.password = md5(values.password);
       var json = JSON.stringify(values);
       console.log(json);
       console.log(values);

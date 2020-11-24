@@ -30,6 +30,7 @@ export default {
 </script>
 
 <style scoped>
+
 #app {
   /*background-image: url(//unsplash.it/1000/1000);*/
   background-color: ghostwhite;
@@ -48,7 +49,7 @@ export default {
 }
 
 p {
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .txt {
