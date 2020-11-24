@@ -10,11 +10,17 @@ import Profile from "@/components/Profil";
 Vue.use(Router)
 
 export default new Router({
+  mode:'history',
   routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: Index,
+    },
     {
       path: '/logowanie',
       name: 'Logowanie',
-      component: Login
+      component: Login,
     },
     {
       path: '/rejestracja',

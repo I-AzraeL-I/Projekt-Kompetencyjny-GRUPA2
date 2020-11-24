@@ -84,11 +84,6 @@
 export default {
   name: "Teacher"
 }
-document.addEventListener('DOMContentLoaded', function () {
-  var elems = document.querySelectorAll('.collapsible');
-  // eslint-disable-next-line no-unused-vars,no-undef
-  var instances = M.Collapsible.init(elems, 1);
-});
 </script>
 
 <style scoped>

@@ -1,27 +1,13 @@
 <template>
   <div class="container row">
-    <div class="register-form z-depth-3 col s12 m12 l4 offset-l4">
+    <div class="register-form z-depth-3 col s12 m12 l4 offset-l4 row">
       <div class="zio"><h1>LOGO</h1></div>
-      <dynamic-form class="dynamic-form"
+      <dynamic-form class="dynamic-form col s10 offset-s1"
                     v-bind:id="testForm.id"
                     v-bind:fields="testForm.fields"
                     @submit="printValues"
 
       />
-<!--      <div class="radio-role">-->
-<!--        <p class="role-span">-->
-<!--          <label>-->
-<!--            <input value="one" name="group1" type="radio" v-model="picked"/>-->
-<!--            <span>Uczeń</span>-->
-<!--          </label>-->
-<!--        </p>-->
-<!--        <p class="role-span">-->
-<!--          <label>-->
-<!--            <input value="two" name="group1" type="radio" v-model="picked"/>-->
-<!--            <span class="role-span">Korepetytor</span>-->
-<!--          </label>-->
-<!--        </p>-->
-<!--      </div>-->
       <button type="submit" :form="testForm.id" class="waves-effect waves-light btn signButton">Zarejestruj
       </button>
     </div>

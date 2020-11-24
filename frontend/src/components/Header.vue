@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header class="browser-default">
-      <router-link to="index"><img id="logo" src="../assets/books.png"></router-link>
+      <router-link to="/"><img id="logo" src="../assets/books.png"></router-link>
       <div class="browser-default nav-bar">
         <ul>
           <li>
@@ -35,7 +35,7 @@ export default {
 }
 
 header {
-  background: rgba(85, 214, 170, .66);
+  background: rgba(85, 214, 170, .77);
   position: fixed;
   text-align: center;
   z-index: 999;

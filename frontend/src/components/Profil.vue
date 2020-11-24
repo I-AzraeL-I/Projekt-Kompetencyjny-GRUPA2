@@ -29,7 +29,7 @@
             </li>
           </ul>
         </div>
-        <div class="sessions col s12 m9">
+        <div class="sessions col s12 m7 offset-m1">
           <component v-bind:is="componentName"></component>
         </div>
       </div>
@@ -70,14 +70,19 @@ export default {
 </script>
 
 <style scoped>
-
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: rgb(55, 138, 110);
+}
 .content {
   padding: 70px;
 
 }
 @media only screen and (min-width: 1400px) {
   .content {
-    height: 77.81vh;
+    height: 79.3vh;
   }
 }
 

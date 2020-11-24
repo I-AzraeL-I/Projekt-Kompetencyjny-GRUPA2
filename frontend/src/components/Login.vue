@@ -1,9 +1,9 @@
 <template>
   <div id="app">
   <div class="container row">
-    <div class="register-form z-depth-3 col s12 m12 l4 offset-l4">
+    <div class="register-form z-depth-3 col s12 m12 l4 offset-l4 row">
       <div class="zio"><h1>LOGO</h1></div>
-      <dynamic-form class="dynamic-form"
+      <dynamic-form class="dynamic-form col s10 offset-s1"
                     v-bind:id="testForm.id"
                     v-bind:fields="testForm.fields"
                     @submit="printValues"

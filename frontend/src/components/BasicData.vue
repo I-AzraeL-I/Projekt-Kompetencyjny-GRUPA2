@@ -1,34 +1,56 @@
 <template>
-<div id="app">
-  <div class="container">
-    <div class="register-form">
-      <div class="zio"><h1>Informacje o Tobie</h1></div>
-      <dynamic-form class="dynamic-form"
-                    v-bind:id="testForm.id"
-                    v-bind:fields="testForm.fields"
-                    @submit="printValues"
+  <div id="app">
+    <div class="container">
+      <h3>Informacje o Tobie</h3>
+      <div class="register-form">
+        <dynamic-form class="dynamic-form "
+                      v-bind:id="testForm.id"
+                      v-bind:fields="testForm.fields"
+                      @submit="printValues"
 
-      />
-      <button type="submit" :form="testForm.id" class="waves-effect waves-light btn signButton">Zapisz
-      </button>
+        />
+        <div class="radio-role">
+          <p class="role-span">
+            <label>
+              <input value="one" name="group1" type="radio" v-model="picked"/>
+              <span>Uczeń</span>
+            </label>
+          </p>
+          <p class="role-span">
+            <label>
+              <input value="two" name="group1" type="radio" v-model="picked"/>
+              <span class="role-span">Korepetytor</span>
+            </label>
+          </p>
+          <p class="role-span">
+            <label>
+              <input value="three" name="group1" type="radio" v-model="picked"/>
+              <span class="role-span">Oba</span>
+            </label>
+          </p>
+        </div>
+        <button type="submit" :form="testForm.id" class="waves-effect waves-light btn signButton">
+          Zapisz
+        </button>
+      </div>
     </div>
-
   </div>
-</div>
 </template>
 
 <script>
 import {FormField, FormValidation, required} from '@asigloo/vue-dynamic-forms';
+
 export default {
   name: "BasicData",
   data() {
     return {
+      picked: 'one',
       testForm: {
         id: 'test-form',
         fields: [
           new FormField({
             type: 'text',
-            placeholder: 'Imię',
+            label: 'Imię',
             name: 'name',
             validations: [
               new FormValidation(required, 'To pole jest wymagane'),
@@ -36,7 +58,7 @@ export default {
           }),
           new FormField({
             type: 'text',
-            placeholder: 'Nazwisko',
+            label: 'Nazwisko',
             name: 'surname',
             validations: [
               new FormValidation(required, 'To pole jest wymagane'),
@@ -46,9 +68,6 @@ export default {
             type: 'textarea',
             label: 'Opis',
             name: 'description',
-            validations: [
-              new FormValidation(required, 'To pole jest wymagane'),
-            ],
           }),
 
         ],

@@ -2,7 +2,6 @@
   <div id="app">
 
     <Header></Header>
-
     <Footer></Footer>
   </div>
 </template>
@@ -14,7 +13,7 @@ export default {
   name: 'App',
   components: {
     Header,
-    Footer
+    Footer,
   }
 }
 </script>
