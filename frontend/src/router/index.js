@@ -25,7 +25,7 @@ export default new Router({
     {
       path: '/rejestracja',
       name: 'Rejestracja',
-      component: Register
+      component: Register,
     },
     {
       path: '/pomoc',

@@ -37,9 +37,6 @@
         </ul>
       </div>
       <div class="right-section col s12 m12 l5">
-<!--        <div class="promoted">-->
-<!--          Promowoanes-->
-<!--        </div>-->
       </div>
     </div>
   </div>

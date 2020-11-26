@@ -1,14 +1,29 @@
 <template>
   <div id="app">
-    <div v-for="text in displayedText" v-bind:key="text" class="row">
+    <div v-for="(text,index) in displayedText" v-bind:key="text" class="row">
       <div class="col s12 m6 l6">
-        <div class="img1">
+        <div>
+          <a href="http://www.freepik.com">
+            <img id="photo" :src="text.link" alt="Designed by pch.vector / Freepik">
+          </a>
         </div>
       </div>
-      <div  class="col s12 m6 l6">
+      <div class="col s12 m6 l6">
         <div class="txt">
           <h4>{{ text.header }}</h4>
           <p>{{ text.text }}</p>
+        </div>
+        <div class="btn-link">
+          <router-link v-if="index===0" to="korepetycje"><a class="waves-effect waves-light btn">Przeglądaj oferty <i
+              class="material-icons left">
+            arrow_forward</i></a></router-link>
+          <router-link v-if="index===1" to="rejestracja"><a class="waves-effect waves-light btn">Zarejestruj się <i
+              class="material-icons left">
+            arrow_forward</i></a></router-link>
+          <router-link v-if="index===2" to="logowanie"><a class="waves-effect waves-light btn">Zaloguj się <i
+              class="material-icons left">
+            arrow_forward</i></a></router-link>
+          <router-view/>
         </div>
       </div>
     </div>
@@ -33,7 +48,7 @@ export default {
 
 #app {
   /*background-image: url(//unsplash.it/1000/1000);*/
-  background-color: ghostwhite;
+
   background-blend-mode: multiply;
   background-size: cover;
   place-items: center;
@@ -45,7 +60,7 @@ export default {
   color: rgb(55, 138, 110);
   text-align: center;
   box-sizing: border-box;
-  padding-top:66px;
+  padding-top: 66px;
 }
 
 p {
@@ -58,16 +73,15 @@ p {
   display: inline-block;
 }
 
-.img {
-  display: inline-block;
+.btn-link {
+  padding-top:50px;
+
 }
 
-.img1 {
-  background-color: #42b983;
-  width: 400px;
-  height: 300px;
+#photo {
+
+  height: 350px;
   display: inline-block;
-  border-radius: 45px;
 }
 
 .row {

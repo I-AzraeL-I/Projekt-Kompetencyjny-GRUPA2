@@ -19,7 +19,8 @@
 
 <script>
 export default {
-  name: "Header"
+  name: "Header",
+  rrr: "rejestracja"
 }
 </script>
 
