@@ -2,7 +2,8 @@
   <div id="app">
     <div class="top-title row">
 
-          <input type="text" v-model="search" placeholder="szukaj przedmiotu" class="searchBar col s12 m10 l3 offset-m1 offset-l1"/>
+      <input type="text" v-model="search" placeholder="szukaj przedmiotu"
+             class="searchBar col s12 m10 l3 offset-m1 offset-l1"/>
     </div>
     <div class="content row">
       <div class="left-section col s12 m12 l7">
@@ -52,29 +53,29 @@ export default {
   data() {
     return {
       teachers: data,
+      GETRequestResult: [],
       search: ''
     }
   },
   computed: {
-    filteredTeachers: function() {
-      return this.teachers.filter((teacher)=> {
+    filteredTeachers: function () {
+      return this.teachers.filter((teacher) => {
         for (const skill of teacher.skills) {
-          if(skill.toLowerCase().match(this.search.toLocaleLowerCase()))
-          return teacher;
-      }
+          if (skill.toLowerCase().match(this.search.toLocaleLowerCase())) {
+            return teacher;
+          }
+        }
       });
     }
+  },
+  created() {
+    this.GETRequestResult = [];
+    this.axios.get('/getLessons')
+    .then((response) => {
+      this.GETRequestResult = response.data;
+    })
   }
-  // created () {
-  //   alert(source);
-  //   fetch(source)
-  //     .then(response => {
-  //       return response.json();
-  //     })
-  //   .then(teachers => {
-  //     this.teachers = teachers;
-  //   })
-  // }
+
 }
 </script>
 
@@ -83,7 +84,7 @@ export default {
   padding-top: 60px;
 }
 
-.searchBar{
+.searchBar {
   grid-column: 2 / 3;
 }
 
@@ -111,7 +112,7 @@ export default {
 
 .buttons {
   text-align: center;
-  font-weight:400;
+  font-weight: 400;
   margin-top: 30px;
 }
 
@@ -129,6 +130,7 @@ export default {
   margin-top: 2px;
   margin-bottom: 2px;
 }
+
 .promoted {
   background-color: #42b983;
   width: 300px;

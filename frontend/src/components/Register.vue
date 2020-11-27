@@ -5,17 +5,28 @@
       <dynamic-form class="dynamic-form col s10 offset-s1"
                     v-bind:id="testForm.id"
                     v-bind:fields="testForm.fields"
-                    @submit="printValues"
+                    @change="checkPassword"
+                    @submit="addUser"
 
       />
-      <button type="submit" :form="testForm.id" class="waves-effect waves-light btn signButton">Zarejestruj
+      <div id="pmatch" class="col s12 error"></div>
+      <button type="submit" :form="testForm.id" class="waves-effect waves-light btn signButton">
+        Zarejestruj
       </button>
     </div>
   </div>
 </template>
 
 <script>
-import {FormField, FormValidation, pattern, required, email, minLength, maxLength} from '@asigloo/vue-dynamic-forms';
+import {
+  FormField,
+  FormValidation,
+  pattern,
+  required,
+  email,
+  minLength,
+  maxLength
+} from '@asigloo/vue-dynamic-forms';
 import '@asigloo/vue-dynamic-forms/src/styles/themes/default.scss';
 import md5 from 'js-md5'
 
@@ -23,7 +34,6 @@ export default {
   name: "Register",
   data() {
     return {
-      picked: 'one',
       testForm: {
         id: 'test-form',
         fields: [
@@ -55,15 +65,23 @@ export default {
           new FormField({
             type: 'password',
             placeholder: 'Hasło',
-            name: 'password',
+            name: 'password1',
             validations: [
               new FormValidation(required, 'To pole jest wymagane'),
-              new FormValidation(
-                  pattern(
-                      '^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[#$^+=!*()@%&]).{8,16}$',
-                  ),
-                  'Hasło musi zawierać conajmniej 1 wielką literę, 1 małą literę, 1 cyfrę, 1 znak specjalny i mieć od 8 do 16 znaków.',
-              ),
+              // new FormValidation(
+              //     pattern(
+              //         '^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[#$^+=!*()@%&]).{8,16}$',
+              //     ),
+              //     'Hasło musi zawierać conajmniej 1 wielką literę, 1 małą literę, 1 cyfrę, 1 znak specjalny i mieć od 8 do 16 znaków.',
+              // ),
+            ],
+          }),
+          new FormField({
+            type: 'password',
+            placeholder: 'Potwierdź Hasło',
+            name: 'password2',
+            validations: [
+              new FormValidation(required, 'To pole jest wymagane'),
             ],
           }),
           new FormField({
@@ -94,7 +112,6 @@ export default {
                   pattern('^\\d+$',),
                   'Niepoprawny numer telefonu',
               ),
-
             ]
           }),
         ],
@@ -102,12 +119,26 @@ export default {
     };
   },
   methods: {
-    printValues(values) {
-      console.log(this.picked);
-      values.password = md5(values.password);
-      var json = JSON.stringify(values);
-      console.log(json);
-      console.log(values);
+    addUser(values) {
+      if (values.password1 === values.password2) {
+        values.password1 = md5(values.password1);
+        values.password2 = md5(values.password2);
+        var json = JSON.stringify(values);
+        console.log(json);
+        this.axios.post('/addUser', json)
+        .then((response) => {
+          console.log(response);
+        })
+      }
+    },
+    checkPassword(values) {
+      if (values.password1 && values.password2) {
+        if (values.password1 !== values.password2) {
+          document.querySelector('#pmatch').innerHTML = 'Hasła różnią się od siebie';
+        } else {
+          document.querySelector('#pmatch').innerHTML = '';
+        }
+      }
     }
   }
 }
@@ -116,7 +147,7 @@ export default {
 <style scoped>
 .container {
   text-align: center;
-  padding-top:150px;
+  padding-top: 150px;
 
 }
 
@@ -133,8 +164,12 @@ export default {
   padding: 0 30px 20px;
 
 }
+
 .signButton {
   margin-bottom: 20px;
 }
 
+.error {
+  color: red;
+}
 </style>

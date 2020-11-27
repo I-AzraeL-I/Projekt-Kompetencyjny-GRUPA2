@@ -1,19 +1,20 @@
 <template>
   <div id="app">
-  <div class="container row">
-    <div class="register-form z-depth-3 col s12 m12 l4 offset-l4 row">
-      <div class="zio"><h1>LOGO</h1></div>
-      <dynamic-form class="dynamic-form col s10 offset-s1"
-                    v-bind:id="testForm.id"
-                    v-bind:fields="testForm.fields"
-                    @submit="printValues"
+    <div class="container row">
+      <div class="register-form z-depth-3 col s12 m12 l4 offset-l4 row">
+        <div class="zio"><h1>LOGO</h1></div>
+        <dynamic-form class="dynamic-form col s10 offset-s1"
+                      v-bind:id="testForm.id"
+                      v-bind:fields="testForm.fields"
+                      @submit="login"
 
-      />
-      <button type="submit" :form="testForm.id" class="waves-effect waves-light btn signButton">Zaloguj
-      </button>
+        />
+        <button type="submit" :form="testForm.id" class="waves-effect waves-light btn signButton">
+          Zaloguj
+        </button>
+      </div>
+
     </div>
-
-  </div>
     <Map></Map>
   </div>
 
@@ -21,7 +22,9 @@
 
 <script>
 import Map from '@/components/Map.vue'
-import {FormField, FormValidation, pattern, required, email} from '@asigloo/vue-dynamic-forms';
+import {FormField, FormValidation, required, email} from '@asigloo/vue-dynamic-forms';
+import md5 from "js-md5";
+
 export default {
   name: "Login",
   components: {
@@ -48,12 +51,6 @@ export default {
             name: 'password',
             validations: [
               new FormValidation(required, 'To pole jest wymagane'),
-              new FormValidation(
-                  pattern(
-                      '^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[#$^+=!*()@%&]).{8,16}$',
-                  ),
-                  'Hasło musi zawierać conajmniej 1 wielką literę, 1 małą literę, 1 cyfrę, 1 znak specjalny i mieć od 8 do 16 znaków.',
-              ),
             ],
           }),
 
@@ -62,11 +59,14 @@ export default {
     };
   },
   methods: {
-    printValues(values) {
-      console.log(this.picked);
+    login(values) {
+      values.password = md5(values.password);
       var json = JSON.stringify(values);
       console.log(json);
-      console.log(values);
+      this.axios.post('/login', json)
+      .then((response) => {
+        console.log(response);
+      })
     }
   }
 }
@@ -75,7 +75,7 @@ export default {
 <style scoped>
 .container {
   text-align: center;
-  padding-top:150px;
+  padding-top: 150px;
 
 }
 
@@ -92,6 +92,7 @@ export default {
   padding: 0 30px 20px;
 
 }
+
 .signButton {
   margin-bottom: 20px;
 }

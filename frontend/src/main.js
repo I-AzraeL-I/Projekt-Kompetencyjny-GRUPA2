@@ -12,8 +12,9 @@ import 'materialize-css/dist/css/materialize.min.css'
 import 'material-design-icons/iconfont/material-icons.css'
 import VueDynamicForms from '@asigloo/vue-dynamic-forms';
 import VueMaterial from 'vue-material'
-
-
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios, axios)
 Vue.use(VueMaterial)
 Vue.use(VueDynamicForms);
 Vue.use(VueGoogleMaps, {
