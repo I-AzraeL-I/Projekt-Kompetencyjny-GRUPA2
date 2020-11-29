@@ -24,7 +24,6 @@
 
 import Map from '@/components/Map.vue'
 import {FormField, FormValidation, required, email} from '@asigloo/vue-dynamic-forms';
-import md5 from "js-md5";
 
 const axios = require('axios');
 const SERVER_URL = 'http://localhost:8080';
@@ -46,7 +45,7 @@ export default {
           new FormField({
             type: 'email',
             placeholder: 'Email',
-            name: 'email',
+            name: 'emailAddress',
             validations: [
               new FormValidation(required, 'To pole jest wymagane'),
               new FormValidation(email, 'Nieprawidłowy adres email'),
@@ -55,7 +54,7 @@ export default {
           new FormField({
             type: 'password',
             placeholder: 'Hasło',
-            name: 'password',
+            name: 'plainPassword',
             validations: [
               new FormValidation(required, 'To pole jest wymagane'),
             ],
@@ -67,8 +66,7 @@ export default {
   },
   methods: {
     login(values) {
-      values.password = md5(values.password);
-      var json = JSON.stringify(values);
+      let json = JSON.stringify(values);
       console.log(json);
       instance.post('/login', json)
       .then((response) => {

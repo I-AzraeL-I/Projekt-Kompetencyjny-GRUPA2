@@ -22,8 +22,11 @@ const axios = require('axios');
 const SERVER_URL = 'http://localhost:8080';
 const instance = axios.create({
   baseURL: SERVER_URL,
-  timeout: 1000
+  timeout: 1000,
 })
+const headers = {
+  'Content-Type':'application/json'
+}
 import {
   FormField,
   FormValidation,
@@ -34,7 +37,6 @@ import {
   maxLength
 } from '@asigloo/vue-dynamic-forms';
 import '@asigloo/vue-dynamic-forms/src/styles/themes/default.scss';
-import md5 from 'js-md5'
 
 export default {
   name: "Register",
@@ -46,7 +48,7 @@ export default {
           new FormField({
             type: 'text',
             placeholder: 'Imię',
-            name: 'name',
+            name: 'firstName',
             validations: [
               new FormValidation(required, 'To pole jest wymagane')
             ]
@@ -54,41 +56,24 @@ export default {
           new FormField({
             type: 'text',
             placeholder: 'Nazwisko',
-            name: 'surname',
+            name: 'lastName',
             validations: [
               new FormValidation(required, 'To pole jest wymagane')
             ]
           }),
           new FormField({
-            type: 'email',
-            placeholder: 'Email',
-            name: 'email',
+            type: 'text',
+            placeholder: 'Data urodzenia rrrr-mm-dd',
+            name: 'birthDate',
             validations: [
               new FormValidation(required, 'To pole jest wymagane'),
-              new FormValidation(email, 'Nieprawidłowy adres email'),
-            ],
-          }),
-          new FormField({
-            type: 'password',
-            placeholder: 'Hasło',
-            name: 'password1',
-            validations: [
-              new FormValidation(required, 'To pole jest wymagane'),
-              // new FormValidation(
-              //     pattern(
-              //         '^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[#$^+=!*()@%&]).{8,16}$',
-              //     ),
-              //     'Hasło musi zawierać conajmniej 1 wielką literę, 1 małą literę, 1 cyfrę, 1 znak specjalny i mieć od 8 do 16 znaków.',
-              // ),
-            ],
-          }),
-          new FormField({
-            type: 'password',
-            placeholder: 'Potwierdź Hasło',
-            name: 'password2',
-            validations: [
-              new FormValidation(required, 'To pole jest wymagane'),
-            ],
+              new FormValidation(
+                  pattern(
+                      '^(19|20)\\d\\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$',
+                  ),
+                  'Niepoprawna data, poprawny format - rrrr-mm-dd.',
+              ),
+            ]
           }),
           new FormField({
             type: 'text',
@@ -100,11 +85,20 @@ export default {
           }),
           new FormField({
             type: 'text',
-            placeholder: 'Adres',
+            placeholder: 'Ulica',
             name: 'street',
             validations: [
               new FormValidation(required, 'To pole jest wymagane')
             ]
+          }),
+          new FormField({
+            type: 'email',
+            placeholder: 'Email',
+            name: 'emailAddress',
+            validations: [
+              new FormValidation(required, 'To pole jest wymagane'),
+              new FormValidation(email, 'Nieprawidłowy adres email'),
+            ],
           }),
           new FormField({
             type: 'text',
@@ -120,26 +114,46 @@ export default {
               ),
             ]
           }),
+          new FormField({
+            type: 'password',
+            placeholder: 'Hasło',
+            name: 'plainPassword',
+            validations: [
+              new FormValidation(required, 'To pole jest wymagane'),
+              // new FormValidation(
+              //     pattern(
+              //         '^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[#$^+=!*()@%&]).{8,16}$',
+              //     ),
+              //     'Hasło musi zawierać conajmniej 1 wielką literę, 1 małą literę, 1 cyfrę, 1 znak specjalny i mieć od 8 do 16 znaków.',
+              // ),
+            ],
+          }),
+          new FormField({
+            type: 'password',
+            placeholder: 'Potwierdź Hasło',
+            name: 'plainPassword2',
+            validations: [
+              new FormValidation(required, 'To pole jest wymagane'),
+            ],
+          }),
         ],
       },
     };
   },
   methods: {
     addUser(values) {
-      if (values.password1 === values.password2) {
-        values.password1 = md5(values.password1);
-        values.password2 = md5(values.password2);
-        var json = JSON.stringify(values);
-        console.log(instance);
-        instance.post('/addUser', json)
+      if (values.plainPassword === values.plainPassword2) {
+        let json = JSON.stringify(values, ['firstName','lastName','birthDate','city','street','emailAddress','phoneNumber','plainPassword']);
+        console.log(json);
+        instance.post('/addUser', json, {headers:headers})
         .then((response) => {
           console.log(response);
         })
       }
     },
     checkPassword(values) {
-      if (values.password1 && values.password2) {
-        if (values.password1 !== values.password2) {
+      if (values.plainPassword && values.plainPassword2) {
+        if (values.plainPassword !== values.plainPassword2) {
           document.querySelector('#pmatch').innerHTML = 'Hasła różnią się od siebie';
         } else {
           document.querySelector('#pmatch').innerHTML = '';
