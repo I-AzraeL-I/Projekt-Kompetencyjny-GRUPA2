@@ -21,10 +21,17 @@
 </template>
 
 <script>
+
 import Map from '@/components/Map.vue'
 import {FormField, FormValidation, required, email} from '@asigloo/vue-dynamic-forms';
 import md5 from "js-md5";
 
+const axios = require('axios');
+const SERVER_URL = 'http://localhost:8080';
+const instance = axios.create({
+  baseURL: SERVER_URL,
+  timeout: 1000
+})
 export default {
   name: "Login",
   components: {
@@ -63,7 +70,7 @@ export default {
       values.password = md5(values.password);
       var json = JSON.stringify(values);
       console.log(json);
-      this.axios.post('/login', json)
+      instance.post('/login', json)
       .then((response) => {
         console.log(response);
       })

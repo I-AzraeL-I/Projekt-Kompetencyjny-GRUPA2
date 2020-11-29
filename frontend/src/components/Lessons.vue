@@ -46,12 +46,13 @@
 <script>
 // const source ="";'
 import data from "@/teachers.JSON"
- const axios = require('axios');
-    const SERVER_URL = 'http://localhost:8080';
-    const instance = axios.create({
-        baseURL: SERVER_URL,
-        timeout: 1000
-    })
+
+const axios = require('axios');
+const SERVER_URL = 'http://localhost:8080';
+const instance = axios.create({
+  baseURL: SERVER_URL,
+  timeout: 1000
+})
 export default {
   name: "Lessons",
 
@@ -88,10 +89,12 @@ export default {
 #app {
   padding-top: 60px;
 }
+
 .aw {
-    height: 50px;
-    line-height: inherit;
+  height: 50px;
+  line-height: inherit;
 }
+
 .searchBar {
   grid-column: 2 / 3;
 }
