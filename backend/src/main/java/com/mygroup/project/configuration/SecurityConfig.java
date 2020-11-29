@@ -23,9 +23,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
+                .cors().disable()
                 .formLogin()
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/", true)
+                .passwordParameter("password")
+                .usernameParameter("email")
+                .and()
+                .logout()
+                .deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true)
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
                 .and()
                 .httpBasic();
     }
