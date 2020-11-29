@@ -22,7 +22,6 @@ public class RegistrationController {
         this.userService = userService;
     }
 
-    @JsonView(View.RegisterPOST.class)
     @PostMapping("/addUser")
     public ResponseEntity<?> registerUserAccount(@Valid @RequestBody UserRegisterFormDTO userRegisterFormDTO) {
         AddressDTO addressDTO = modelMapper.map(userRegisterFormDTO, AddressDTO.class);
@@ -30,8 +29,8 @@ public class RegistrationController {
         UserDTO userDTO = modelMapper.map(userRegisterFormDTO, UserDTO.class);
         userDTO.setContact(contactDTO);
         userDTO.setAddress(addressDTO);
-        userService.create(userDTO);
-        return ResponseEntity.created(URI.create("/profil/" + userDTO.getUserId())).headers(new HttpHeaders()).body(userDTO);
+        userDTO = userService.create(userDTO);
+        return ResponseEntity.created(URI.create("/profil/" + userDTO.getUserId())).headers(new HttpHeaders()).body(userDTO.getUserId());
     }
 
 }

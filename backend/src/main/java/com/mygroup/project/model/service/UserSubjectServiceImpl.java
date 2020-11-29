@@ -36,12 +36,14 @@ public class UserSubjectServiceImpl implements IService<UserSubjectDTO> {
     }
 
     @Override
-    public void create(UserSubjectDTO userSubjectDTO) {
+    public UserSubjectDTO create(UserSubjectDTO userSubjectDTO) {
         userSubjectRepository.save(modelMapper.map(userSubjectDTO, UserSubject.class));
+        return userSubjectDTO;
     }
 
     @Override
-    public void update(UserSubjectDTO userSubjectDTO) {
+    public UserSubjectDTO update(UserSubjectDTO userSubjectDTO) {
+        return userSubjectDTO;
     }
 
     @Override

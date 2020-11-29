@@ -45,21 +45,25 @@ public class UserServiceImpl implements IService<UserDTO> {
     }
 
     @Override
-    public void create(UserDTO userDTO) {
+    public UserDTO create(UserDTO userDTO) {
         getByEmail(userDTO.getContact().getEmailAddress()).ifPresent(e -> {
             throw new UserAlreadyExistsException(userDTO.getContact().getEmailAddress());
         });
         User user = modelMapper.map(userDTO, User.class);
         user.setRole(userRole);
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        userRepository.save(user);
+        user = userRepository.save(user);
+        userDTO.setUserId(user.getUserId());
+        return userDTO;
     }
 
     @Override
-    public void update(UserDTO userDTO) {
+    public UserDTO update(UserDTO userDTO) {
         User user = userRepository.findById(userDTO.getUserId()).orElseThrow(DataNotFoundException::new);
         modelMapper.map(userDTO, user);
-        userRepository.save(user);
+        user = userRepository.save(user);
+        userDTO.setUserId(user.getUserId());
+        return userDTO;
     }
 
     @Override

@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Setter
 public class UserDTO {
 
-    @JsonView(View.MinimalGET.class)
+    @JsonView({View.MinimalGET.class, View.RegisterPOST.class})
     private Long userId;
 
     @JsonView({View.MinimalGET.class, View.RegisterPOST.class})

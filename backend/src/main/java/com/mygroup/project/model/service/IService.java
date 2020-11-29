@@ -6,7 +6,7 @@ public interface IService<T> {
 
     T get(Long id);
     Collection<T> getAll();
-    void create(T t);
-    void update(T t);
+    T create(T t);
+    T update(T t);
     void delete(T t);
 }
