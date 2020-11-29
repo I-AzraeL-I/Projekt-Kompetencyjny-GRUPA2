@@ -23,7 +23,7 @@ public class RegistrationController {
     }
 
     @JsonView(View.RegisterPOST.class)
-    @PostMapping("/rejestracja")
+    @PostMapping("/addUser")
     public ResponseEntity<?> registerUserAccount(@Valid @RequestBody UserRegisterFormDTO userRegisterFormDTO) {
         AddressDTO addressDTO = modelMapper.map(userRegisterFormDTO, AddressDTO.class);
         ContactDTO contactDTO = modelMapper.map(userRegisterFormDTO, ContactDTO.class);

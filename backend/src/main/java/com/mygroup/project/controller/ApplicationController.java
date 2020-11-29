@@ -19,7 +19,7 @@ public class ApplicationController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping("/korepetycje")
+    @GetMapping("/getLessons")
     public Collection<UserSubjectOfferDTO> offers() {
         return userSubjectService.getAllOffersByRole("Teacher");
     }
