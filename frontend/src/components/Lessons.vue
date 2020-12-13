@@ -79,6 +79,7 @@ export default {
     instance.get('/getLessons')
     .then((response) => {
       this.GETRequestResult = response.data;
+      console.log(this.GETRequestResult);
     })
   }
 
