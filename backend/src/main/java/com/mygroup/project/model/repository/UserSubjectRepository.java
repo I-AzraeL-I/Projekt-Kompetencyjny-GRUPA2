@@ -1,6 +1,6 @@
 package com.mygroup.project.model.repository;
 
-import com.mygroup.project.model.dto.UserSubjectOfferDTO;
+import com.mygroup.project.model.dto.specialized.UserSubjectOfferDTO;
 import com.mygroup.project.model.entity.UserSubject;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,5 +21,7 @@ public interface UserSubjectRepository extends JpaRepository<UserSubject, Long> 
             "JOIN role on role.role_id = user_subject.role_role_id " +
             "WHERE role.role_name = :prole")
     Collection<UserSubjectOfferDTO> getAllOffers(@Param("prole") String role);
+
+    Collection<UserSubject> findAllByUser_UserIdAndRole_RoleName(Long userId, String role);
 
 }

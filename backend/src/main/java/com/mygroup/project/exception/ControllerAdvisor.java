@@ -24,4 +24,9 @@ public class ControllerAdvisor {
     public ResponseEntity<String> handleUsernameNotFoundException(UsernameNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(new HttpHeaders()).body(e.getMessage());
     }
+
+    @ExceptionHandler(DataAlreadyExistsException.class)
+    public ResponseEntity<String> handleDataAlreadyExistsException(DataAlreadyExistsException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).headers(new HttpHeaders()).body(e.getMessage());
+    }
 }

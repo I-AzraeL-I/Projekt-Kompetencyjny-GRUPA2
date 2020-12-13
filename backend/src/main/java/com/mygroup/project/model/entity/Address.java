@@ -18,4 +18,7 @@ public class Address {
 
     @Column(nullable = false, length = 50)
     private String city;
+
+    @Column(nullable = false, length = 100)
+    private String street;
 }

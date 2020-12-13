@@ -1,7 +1,9 @@
 package com.mygroup.project.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.mygroup.project.model.dto.*;
+import com.mygroup.project.model.dto.basic.AddressDTO;
+import com.mygroup.project.model.dto.basic.ContactDTO;
+import com.mygroup.project.model.dto.basic.UserDTO;
+import com.mygroup.project.model.dto.specialized.UserRegisterFormDTO;
 import com.mygroup.project.model.service.UserServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpHeaders;

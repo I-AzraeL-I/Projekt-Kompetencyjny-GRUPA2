@@ -1,9 +1,8 @@
 package com.mygroup.project.model.service;
 
 import com.mygroup.project.exception.DataNotFoundException;
-import com.mygroup.project.model.dto.UserSubjectDTO;
-import com.mygroup.project.model.dto.UserSubjectOfferDTO;
-import com.mygroup.project.model.entity.UserSubject;
+import com.mygroup.project.model.dto.basic.UserSubjectDTO;
+import com.mygroup.project.model.dto.specialized.UserSubjectOfferDTO;
 import com.mygroup.project.model.repository.UserSubjectRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -35,23 +34,28 @@ public class UserSubjectServiceImpl implements IService<UserSubjectDTO> {
         return modelMapper.map(userSubjectRepository.findAll(), new TypeToken<Set<UserSubjectDTO>>(){}.getType());
     }
 
+    public Collection<UserSubjectDTO> getAllByIdAndRole(Long id, String role) {
+        return modelMapper.map(userSubjectRepository.findAllByUser_UserIdAndRole_RoleName(id, role), new TypeToken<Set<UserSubjectDTO>>(){}.getType());
+    }
+
+    public Collection<UserSubjectOfferDTO> getAllByRole(String role) {
+        return userSubjectRepository.getAllOffers(role);
+    }
+
+    //do not use directly
     @Override
     public UserSubjectDTO create(UserSubjectDTO userSubjectDTO) {
-        userSubjectRepository.save(modelMapper.map(userSubjectDTO, UserSubject.class));
-        return userSubjectDTO;
+        return null;
     }
 
+    //do not use directly
     @Override
     public UserSubjectDTO update(UserSubjectDTO userSubjectDTO) {
-        return userSubjectDTO;
+        return null;
     }
 
+    //do not use directly
     @Override
     public void delete(UserSubjectDTO userSubjectDTO) {
-        userSubjectRepository.deleteById(userSubjectDTO.getUserSubjectId());
-    }
-
-    public Collection<UserSubjectOfferDTO> getAllOffersByRole(String role) {
-        return userSubjectRepository.getAllOffers(role);
     }
 }

@@ -1,6 +1,6 @@
 package com.mygroup.project.controller;
 
-import com.mygroup.project.model.dto.UserSubjectOfferDTO;
+import com.mygroup.project.model.dto.specialized.UserSubjectOfferDTO;
 import com.mygroup.project.model.service.UserSubjectServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +13,7 @@ public class ApplicationController {
 
     private final UserSubjectServiceImpl userSubjectService;
     private final ModelMapper modelMapper;
+    private final String teacherRole = "ROLE_TEACHER";
 
     public ApplicationController(ModelMapper modelMapper, UserSubjectServiceImpl userSubjectService) {
         this.userSubjectService = userSubjectService;
@@ -20,7 +21,7 @@ public class ApplicationController {
     }
 
     @GetMapping("/getLessons")
-    public Collection<UserSubjectOfferDTO> offers() {
-        return userSubjectService.getAllOffersByRole("Teacher");
+    public Collection<UserSubjectOfferDTO> getOffers() {
+        return userSubjectService.getAllByRole(teacherRole);
     }
 }

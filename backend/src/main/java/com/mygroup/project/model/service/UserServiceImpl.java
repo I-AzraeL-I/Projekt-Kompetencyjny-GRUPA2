@@ -1,9 +1,18 @@
 package com.mygroup.project.model.service;
 
+import com.mygroup.project.exception.DataAlreadyExistsException;
 import com.mygroup.project.exception.DataNotFoundException;
 import com.mygroup.project.exception.UserAlreadyExistsException;
+import com.mygroup.project.model.dto.basic.AddressDTO;
+import com.mygroup.project.model.dto.basic.ContactDTO;
+import com.mygroup.project.model.dto.basic.UserSubjectDTO;
+import com.mygroup.project.model.entity.Role;
+import com.mygroup.project.model.entity.Subject;
 import com.mygroup.project.model.entity.User;
-import com.mygroup.project.model.dto.UserDTO;
+import com.mygroup.project.model.dto.basic.UserDTO;
+import com.mygroup.project.model.entity.UserSubject;
+import com.mygroup.project.model.repository.RoleRepository;
+import com.mygroup.project.model.repository.SubjectRepository;
 import com.mygroup.project.model.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -20,12 +29,16 @@ import java.util.Set;
 public class UserServiceImpl implements IService<UserDTO> {
 
     private final UserRepository userRepository;
+    private final SubjectRepository subjectRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
     private final static String userRole = "ROLE_USER";
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, SubjectRepository subjectRepository, RoleRepository roleRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.subjectRepository = subjectRepository;
+        this.roleRepository = roleRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
     }
@@ -33,10 +46,6 @@ public class UserServiceImpl implements IService<UserDTO> {
     @Override
     public UserDTO get(Long id) {
         return modelMapper.map(userRepository.findById(id).orElseThrow(DataNotFoundException::new), UserDTO.class);
-    }
-
-    private Optional<User> getByEmail(String email) {
-        return userRepository.findByContact_EmailAddress(email);
     }
 
     @Override
@@ -61,14 +70,52 @@ public class UserServiceImpl implements IService<UserDTO> {
     public UserDTO update(UserDTO userDTO) {
         User user = userRepository.findById(userDTO.getUserId()).orElseThrow(DataNotFoundException::new);
         modelMapper.map(userDTO, user);
-        user = userRepository.save(user);
-        userDTO.setUserId(user.getUserId());
+        userRepository.save(user);
         return userDTO;
     }
 
     @Override
     public void delete(UserDTO userDTO) {
         userRepository.deleteById(userDTO.getUserId());
+    }
+
+    private Optional<User> getByEmail(String email) {
+        return userRepository.findByContact_EmailAddress(email);
+    }
+
+    public void addUserSubject(UserSubjectDTO userSubjectDTO) {
+        User user = userRepository.findById(userSubjectDTO.getUserId()).orElseThrow(DataNotFoundException::new);
+        if (user.getUserSubjects().stream()
+                .map(e -> e.getSubject().getSubjectId())
+                .anyMatch(e -> e.equals(userSubjectDTO.getSubjectId()))) {
+            throw new DataAlreadyExistsException(" subject id " + userSubjectDTO.getSubjectId());
+        }
+        Subject subject = subjectRepository.findById(userSubjectDTO.getSubjectId()).orElseThrow(DataNotFoundException::new);
+        Role role = roleRepository.findById(userSubjectDTO.getRoleId()).orElseThrow(DataNotFoundException::new);
+        UserSubject userSubject = new UserSubject();
+        userSubject.setRole(role);
+        userSubject.setSubject(subject);
+        userSubject.setUser(user);
+        user.getUserSubjects().add(userSubject);
+        userRepository.save(user);
+    }
+
+    public void removeUserSubject(UserSubjectDTO userSubjectDTO) {
+        User user = userRepository.findById(userSubjectDTO.getUserId()).orElseThrow(DataNotFoundException::new);
+        user.getUserSubjects().removeIf(e -> e.getUserSubjectId().equals(userSubjectDTO.getUserSubjectId()));
+        userRepository.save(user);
+    }
+
+    public void updateContact(Long userId, ContactDTO contactDTO) {
+        User user = userRepository.findById(userId).orElseThrow(DataNotFoundException::new);
+        modelMapper.map(contactDTO, user.getContact());
+        userRepository.save(user);
+    }
+
+    public void updateAddress(Long userId, AddressDTO addressDTO) {
+        User user = userRepository.findById(userId).orElseThrow(DataNotFoundException::new);
+        modelMapper.map(addressDTO, user.getAddress());
+        userRepository.save(user);
     }
 
 }
