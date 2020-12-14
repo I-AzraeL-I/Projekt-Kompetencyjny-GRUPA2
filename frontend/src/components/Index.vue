@@ -10,7 +10,7 @@
       </div>
       <div class="col s12 m6 l6">
         <div class="txt">
-          <h4>{{ text.header }}</h4>
+          <h3>{{ text.header }}</h3>
           <p>{{ text.text }}</p>
         </div>
         <div class="btn-link">
@@ -65,8 +65,11 @@ export default {
 
 p {
   font-size: 20px;
+  letter-spacing: 0.5px;
 }
-
+h3 {
+  letter-spacing: -1.25px;
+}
 .txt {
   padding: 0 150px 0 150px;
   text-align: left;

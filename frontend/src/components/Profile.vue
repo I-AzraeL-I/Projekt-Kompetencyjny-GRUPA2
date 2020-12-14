@@ -16,15 +16,15 @@
                 class="material-icons">library_books</i> Przedmioty
             </li>
             <li @click="toggleClass"
-                v-on:click="componentName='BasicData'" class="collection-item"><i
+                v-on:click="componentName='Contact'" class="collection-item"><i
                 class="material-icons">local_phone</i> Kontakt
             </li>
             <li @click="toggleClass"
-                v-on:click="componentName='BasicData'" class="collection-item"><i
+                v-on:click="componentName='Address'" class="collection-item"><i
                 class="material-icons">home</i> Adres
             </li>
             <li @click="toggleClass"
-                v-on:click="componentName='BasicData'" class="collection-item"><i
+                v-on:click="componentName='Settings'" class="collection-item"><i
                 class="material-icons">settings</i> Ustawienia
             </li>
           </ul>
@@ -42,12 +42,17 @@
 
 import BasicData from "@/components/BasicData";
 import SubjectTab from "@/components/SubjectTab";
-
+import Contact from "@/components/Contact";
+import Address from "@/components/Address";
+import Settings from "@/components/Settings";
 export default {
   name: "Profil",
   components: {
     BasicData,
     SubjectTab,
+    Settings,
+    Contact,
+    Address
   },
   data() {
     return {

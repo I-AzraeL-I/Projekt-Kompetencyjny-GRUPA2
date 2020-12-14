@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="container">
-      <h3>Informacje o Tobie</h3>
+      <h3>Adres zamieszkania</h3>
       <div class="register-form">
         <dynamic-form class="dynamic-form "
                       v-bind:id="testForm.id"
@@ -20,10 +20,10 @@
 <script>
 import instance from"../server.js"
 import headers from"../headers.js"
-import {FormField, FormValidation, required} from '@asigloo/vue-dynamic-forms';
-const url = '/profil/' + localStorage.id + '/data';
+import {FormField, FormValidation,  required} from '@asigloo/vue-dynamic-forms';
+let url = '/profil/' + localStorage.id + '/address';
 export default {
-  name: "BasicData",
+  name: "Address",
   data() {
     return {
       GETRequestResult: '',
@@ -32,28 +32,20 @@ export default {
         fields: [
           new FormField({
             type: 'text',
-            value: localStorage.firstName,
-            label: 'Imię',
-            name: 'name',
+            placeholder: 'Miasto',
+            name: 'city',
             validations: [
-              new FormValidation(required, 'To pole jest wymagane'),
-            ],
+              new FormValidation(required, 'To pole jest wymagane')
+            ]
           }),
           new FormField({
             type: 'text',
-            value: localStorage.secondName,
-            label: 'Nazwisko',
-            name: 'surname',
+            placeholder: 'Ulica',
+            name: 'street',
             validations: [
-              new FormValidation(required, 'To pole jest wymagane'),
-            ],
+              new FormValidation(required, 'To pole jest wymagane')
+            ]
           }),
-          new FormField({
-            type: 'textarea',
-            label: 'Opis',
-            name: 'description',
-          }),
-
         ],
       },
     };

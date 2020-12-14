@@ -24,13 +24,9 @@
 
 import Map from '@/components/Map.vue'
 import {FormField, FormValidation, required, email} from '@asigloo/vue-dynamic-forms';
+import instance from"../server.js"
+import headers from"../headers.js"
 
-const axios = require('axios');
-const SERVER_URL = 'http://localhost:8080';
-const instance = axios.create({
-  baseURL: SERVER_URL,
-  timeout: 1000
-})
 export default {
   name: "Login",
   components: {
@@ -66,9 +62,9 @@ export default {
   },
   methods: {
     login(values) {
-      let json = JSON.stringify(values);
+      let json = JSON.stringify(values,['emailAddress','plainPassword']);
       console.log(json);
-      instance.post('/login', json)
+      instance.post('/login', json, {headers:headers})
       .then((response) => {
         console.log(response);
       })

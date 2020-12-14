@@ -18,15 +18,8 @@
 </template>
 
 <script>
-const axios = require('axios');
-const SERVER_URL = 'http://localhost:8080';
-const instance = axios.create({
-  baseURL: SERVER_URL,
-  timeout: 1000,
-})
-const headers = {
-  'Content-Type':'application/json'
-}
+import instance from"../server.js"
+import headers from"../headers.js"
 import {
   FormField,
   FormValidation,
@@ -120,6 +113,7 @@ export default {
             name: 'plainPassword',
             validations: [
               new FormValidation(required, 'To pole jest wymagane'),
+              new FormValidation(minLength(8), 'Hasło musi się składać z conajmniej 8 znaków.'),
               // new FormValidation(
               //     pattern(
               //         '^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[#$^+=!*()@%&]).{8,16}$',
@@ -147,14 +141,15 @@ export default {
         console.log(json);
         instance.post('/addUser', json, {headers:headers})
         .then((response) => {
-          console.log(response);
-        })
+          window.localStorage.setItem('id',response.data);
+        }).then(this.$router.push({name: "profil"}));
       }
     },
     checkPassword(values) {
       if (values.plainPassword && values.plainPassword2) {
         if (values.plainPassword !== values.plainPassword2) {
           document.querySelector('#pmatch').innerHTML = 'Hasła różnią się od siebie';
+
         } else {
           document.querySelector('#pmatch').innerHTML = '';
         }

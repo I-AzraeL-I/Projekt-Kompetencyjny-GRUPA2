@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="container">
-      <h3>Informacje o Tobie</h3>
+      <h3>Zmiana hasła</h3>
       <div class="register-form">
         <dynamic-form class="dynamic-form "
                       v-bind:id="testForm.id"
@@ -20,10 +20,10 @@
 <script>
 import instance from"../server.js"
 import headers from"../headers.js"
-import {FormField, FormValidation, required} from '@asigloo/vue-dynamic-forms';
-const url = '/profil/' + localStorage.id + '/data';
+import {FormField, FormValidation,  required} from '@asigloo/vue-dynamic-forms';
+let url = '/profile/' + localStorage.id + '/subjects';
 export default {
-  name: "BasicData",
+  name: "Settings",
   data() {
     return {
       GETRequestResult: '',
@@ -31,40 +31,33 @@ export default {
         id: 'test-form',
         fields: [
           new FormField({
-            type: 'text',
-            value: localStorage.firstName,
-            label: 'Imię',
-            name: 'name',
+            type: 'password',
+            label: 'Stare hasło',
+            name: 'oldPass',
             validations: [
               new FormValidation(required, 'To pole jest wymagane'),
             ],
           }),
           new FormField({
-            type: 'text',
-            value: localStorage.secondName,
-            label: 'Nazwisko',
-            name: 'surname',
+            type: 'password',
+            label: 'Nowe hasło',
+            name: 'password',
             validations: [
               new FormValidation(required, 'To pole jest wymagane'),
             ],
           }),
           new FormField({
-            type: 'textarea',
-            label: 'Opis',
-            name: 'description',
+            type: 'password',
+            label: 'Potwierdź nowe hasło',
+            name: 'password2',
+            validations: [
+              new FormValidation(required, 'To pole jest wymagane'),
+            ],
           }),
 
         ],
       },
     };
-  },
-  created() {
-    instance.get(url)
-    .then((response) => {
-      console.log(response);
-      this.GETRequestResult = response.data;
-      console.log(this.GETRequestResult);
-    })
   },
   methods: {
     printValues(values) {

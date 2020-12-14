@@ -6,7 +6,7 @@ import Help from "@/components/Help"
 import Index from "@/components/Index";
 import Lessons from "@/components/Lessons";
 import Teacher from "@/components/Teacher";
-import Profile from "@/components/Profil";
+import Profile from "@/components/Profile";
 Vue.use(Router)
 
 export default new Router({

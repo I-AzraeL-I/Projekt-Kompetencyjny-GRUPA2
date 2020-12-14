@@ -3,12 +3,20 @@
     <header class="browser-default">
       <router-link to="/"><img id="logo" src="../assets/books.png"></router-link>
       <div class="browser-default nav-bar">
-        <ul>
+        <ul v-if="this.id ==='null'">
           <li>
             <router-link to="logowanie">Zaloguj</router-link>
           </li>
           <li>
             <router-link to="rejestracja">Zarejestruj</router-link>
+          </li>
+        </ul>
+        <ul v-else>
+          <li>
+            <router-link to="profil">Profil</router-link>
+          </li>
+          <li v-on:click="logOut">
+            <router-link to="/">Wyloguj</router-link>
           </li>
         </ul>
       </div>
@@ -20,7 +28,26 @@
 <script>
 export default {
   name: "Header",
-  rrr: "rejestracja"
+  rrr: "rejestracja",
+  data: function() {
+    return {
+      id: 'null',
+    }
+},
+  mounted() {
+    if (localStorage.id) {
+      this.id = localStorage.id;
+    }
+    else this.id= 'null';
+  },
+  methods: {
+    logOut: function() {
+      localStorage.setItem('id','null');
+      this.id='null';
+    }
+}
+
+
 }
 </script>
 

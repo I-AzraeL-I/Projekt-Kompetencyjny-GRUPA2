@@ -31,7 +31,7 @@
                 <div class="price2"> na godzinę</div>
               </div>
               <div class="buttons">
-                <a class="waves-effect waves-light btn aw">Wyślij wiadomość</a>
+                <a class="waves-effect waves-light btn messageButton">Wyślij wiadomość</a>
               </div>
             </div>
           </li>
@@ -46,13 +46,7 @@
 <script>
 // const source ="";'
 import data from "@/teachers.JSON"
-
-const axios = require('axios');
-const SERVER_URL = 'http://localhost:8080';
-const instance = axios.create({
-  baseURL: SERVER_URL,
-  timeout: 1000
-})
+import instance from"../server.js"
 export default {
   name: "Lessons",
 
@@ -75,14 +69,13 @@ export default {
     }
   },
   created() {
-    this.GETRequestResult = [];
     instance.get('/getLessons')
     .then((response) => {
+      console.log(response);
       this.GETRequestResult = response.data;
       console.log(this.GETRequestResult);
     })
   }
-
 }
 </script>
 
@@ -91,9 +84,11 @@ export default {
   padding-top: 60px;
 }
 
-.aw {
-  height: 50px;
-  line-height: inherit;
+@media only screen and (max-width: 1400px) {
+  .messageButton {
+    height: 50px;
+    line-height: inherit;
+  }
 }
 
 .searchBar {
@@ -143,10 +138,4 @@ export default {
   margin-bottom: 2px;
 }
 
-.promoted {
-  background-color: #42b983;
-  width: 300px;
-  height: 300px;
-  border-radius: 45px;
-}
 </style>
