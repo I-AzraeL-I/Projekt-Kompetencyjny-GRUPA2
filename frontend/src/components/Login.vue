@@ -41,7 +41,7 @@ export default {
           new FormField({
             type: 'email',
             placeholder: 'Email',
-            name: 'email',
+            name: 'emailAddress',
             validations: [
               new FormValidation(required, 'To pole jest wymagane'),
               new FormValidation(email, 'Nieprawidłowy adres email'),
@@ -50,7 +50,7 @@ export default {
           new FormField({
             type: 'password',
             placeholder: 'Hasło',
-            name: 'password',
+            name: 'plainPassword',
             validations: [
               new FormValidation(required, 'To pole jest wymagane'),
             ],
