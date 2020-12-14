@@ -24,8 +24,8 @@
 
 import Map from '@/components/Map.vue'
 import {FormField, FormValidation, required, email} from '@asigloo/vue-dynamic-forms';
-import instance from "../server.js"
-import headers from "../headers.js"
+import instance from"../server.js"
+import headers from"../headers.js"
 
 export default {
   name: "Login",
@@ -64,11 +64,11 @@ export default {
     login(values) {
       let json = JSON.stringify(values);
       console.log(json);
-      instance.post('/login', json, {headers: headers})
+      instance.post('/login', json, {headers:headers})
       .then((response) => {
         console.log(response);
-        window.localStorage.setItem('id', response.data);
-      })
+        window.localStorage.setItem('id',response.data);
+      }).then(this.$router.push({name: "profil"}));
     }
   }
 }
