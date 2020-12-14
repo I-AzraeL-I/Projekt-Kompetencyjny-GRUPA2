@@ -24,8 +24,8 @@
 
 import Map from '@/components/Map.vue'
 import {FormField, FormValidation, required, email} from '@asigloo/vue-dynamic-forms';
-import instance from"../server.js"
-import headers from"../headers.js"
+import instance from "../server.js"
+import headers from "../headers.js"
 
 export default {
   name: "Login",
@@ -41,7 +41,7 @@ export default {
           new FormField({
             type: 'email',
             placeholder: 'Email',
-            name: 'emailAddress',
+            name: 'email',
             validations: [
               new FormValidation(required, 'To pole jest wymagane'),
               new FormValidation(email, 'Nieprawidłowy adres email'),
@@ -50,7 +50,7 @@ export default {
           new FormField({
             type: 'password',
             placeholder: 'Hasło',
-            name: 'plainPassword',
+            name: 'password',
             validations: [
               new FormValidation(required, 'To pole jest wymagane'),
             ],
@@ -62,11 +62,12 @@ export default {
   },
   methods: {
     login(values) {
-      let json = JSON.stringify(values,['emailAddress','plainPassword']);
+      let json = JSON.stringify(values);
       console.log(json);
-      instance.post('/login', json, {headers:headers})
+      instance.post('/login', json, {headers: headers})
       .then((response) => {
         console.log(response);
+        window.localStorage.setItem('id', response.data);
       })
     }
   }

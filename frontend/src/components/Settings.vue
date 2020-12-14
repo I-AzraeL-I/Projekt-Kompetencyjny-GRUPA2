@@ -18,10 +18,11 @@
 </template>
 
 <script>
-import instance from"../server.js"
-import headers from"../headers.js"
-import {FormField, FormValidation,  required} from '@asigloo/vue-dynamic-forms';
-let url = '/profile/' + localStorage.id + '/subjects';
+import instance from "../server.js"
+import headers from "../headers.js"
+import {FormField, FormValidation, required} from '@asigloo/vue-dynamic-forms';
+
+let url = '/profil/' + localStorage.id + '/settings';
 export default {
   name: "Settings",
   data() {
@@ -63,7 +64,7 @@ export default {
     printValues(values) {
       var json = JSON.stringify(values);
       console.log(json);
-      instance.post(url, json, {headers:headers})
+      instance.post(url, json, {headers: headers})
       .then((response) => {
         console.log(response);
       })

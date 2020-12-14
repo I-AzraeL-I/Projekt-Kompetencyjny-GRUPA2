@@ -2,82 +2,75 @@
   <div id="app">
     <div class="container">
       <h3>Informacje kontaktowe</h3>
-      <div class="register-form">
-        <dynamic-form class="dynamic-form "
-                      v-bind:id="testForm.id"
-                      v-bind:fields="testForm.fields"
-                      @submit="printValues"
+      <div class="form">
+        <form
+            id="form"
+            @submit="updateValues"
+        >
 
-        />
-        <button type="submit" :form="testForm.id" class="waves-effect waves-light btn signButton">
-          Zapisz
-        </button>
+          <p>
+            <label for="emailAddress">Email</label>
+            <input
+                id="emailAddress"
+                v-model="emailAddress"
+                type="text"
+                name="emailAddress"
+            >
+          </p>
+
+          <p>
+            <label for="phoneNumber">Numer telefonu</label>
+            <input
+                id="phoneNumber"
+                v-model="phoneNumber"
+                type="text"
+                name="phoneNumber"
+            >
+          </p>
+          <p>
+            <input
+                type="submit"
+                value="Submit"
+            >
+          </p>
+
+        </form>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import instance from"../server.js"
-import headers from"../headers.js"
-import {
-  email,
-  FormField,
-  FormValidation,
-  maxLength,
-  minLength, pattern,
-  required
-} from '@asigloo/vue-dynamic-forms';
-let url = '/profile/' + localStorage.id + '/subjects';
+import instance from "../server.js"
+import headers from "../headers.js"
+
+let url = '/profil/' + localStorage.id + '/contact';
 export default {
   name: "Contact",
   data() {
     return {
-      picked: 'student',
-      GETRequestResult: '',
-      testForm: {
-        id: 'test-form',
-        fields: [
-          new FormField({
-            type: 'email',
-            label: 'Email',
-            name: 'emailAddress',
-            validations: [
-              new FormValidation(required, 'To pole jest wymagane'),
-              new FormValidation(email, 'Nieprawidłowy adres email'),
-            ],
-          }),
-          new FormField({
-            type: 'text',
-            label: 'numer telefonu',
-            name: 'phoneNumber',
-            validations: [
-              new FormValidation(required, 'To pole jest wymagane'),
-              new FormValidation(minLength(9), 'Numer telefonu musi składać się z 9 cyfr'),
-              new FormValidation(maxLength(9), 'Numer telefonu musi składać się z 9 cyfr'),
-              new FormValidation(
-                  pattern('^\\d+$',),
-                  'Niepoprawny numer telefonu',
-              ),
-            ]
-          }),
-        ],
-      },
+      emailAddress: null,
+      phoneNumber: null
     };
   },
   created() {
     instance.get(url)
     .then((response) => {
-      console.log(response);
-      this.GETRequestResult = response.data;
-      console.log(this.GETRequestResult);
+      console.log(response.data);
+      this.emailAddress = response.data.emailAddress;
+      this.phoneNumber = response.data.phoneNumber;
     })
   },
   methods: {
-    printValues(values) {
-      var json = JSON.stringify(values);
+    updateValues() {
+      event.preventDefault();
+      let values = {
+        "emailAddress": this.emailAddress,
+        "phoneNumber": this.phoneNumber
+      }
+      let json = JSON.stringify(values);
       console.log(json);
-      instance.post(url, json, {headers:headers})
+      instance.post(url, json, {headers: headers})
       .then((response) => {
         console.log(response);
       })
