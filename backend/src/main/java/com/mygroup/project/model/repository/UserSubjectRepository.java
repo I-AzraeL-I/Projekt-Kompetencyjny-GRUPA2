@@ -15,7 +15,7 @@ public interface UserSubjectRepository extends JpaRepository<UserSubject, Long> 
             "users.user_id AS userId, users.first_name AS firstName, " +
             "address.city AS city, users.description AS description " +
             "FROM user_subject " +
-            "JOIN subject ON subject.subject_id = user_subject.user_subject_id " +
+            "JOIN subject ON subject.subject_id = user_subject.subject_subject_id " +
             "JOIN users ON users.user_id = user_subject.user_user_id " +
             "JOIN address ON address.address_id = users.address_address_id " +
             "JOIN role on role.role_id = user_subject.role_role_id " +
