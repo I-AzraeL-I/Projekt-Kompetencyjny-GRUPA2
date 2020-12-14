@@ -16,28 +16,20 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import server from './server.js'
 import headers from './server'
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
+
+Vue.use(VueToast);
 Vue.use(server,headers)
 Vue.use(VueAxios, axios)
 Vue.use(VueMaterial)
 Vue.use(VueDynamicForms);
-// import Vuex from 'vuex';
-// Vue.use(Vuex);
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyAyj0E3gw7lJaCETJE218cTEbpuX-nStn4',
     libraries: 'places',
   },
 })
-// const store = new Vuex.Store({
-//   state : {
-//     id: ''
-//   },
-//   mutations: {
-//     getId (state) {
-//       state.id=localStorage.id;
-//     }
-//   }
-// })
 new Vue({
   router,
   render: h => h(App),

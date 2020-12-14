@@ -66,9 +66,10 @@ export default {
       console.log(json);
       instance.post('/login', json, {headers:headers})
       .then((response) => {
-        console.log(response);
+        this.$router.push({name: "profil"});
+        this.$router.go({name:"profil"});
         window.localStorage.setItem('id',response.data);
-      }).then(this.$router.push({name: "profil"}));
+      }).catch(error => alert(error+"\nNiepoprawny Email lub hasło!"));
     }
   }
 }

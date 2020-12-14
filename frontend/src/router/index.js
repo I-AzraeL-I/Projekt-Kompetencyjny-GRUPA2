@@ -9,7 +9,7 @@ import Teacher from "@/components/Teacher";
 import Profile from "@/components/Profile";
 Vue.use(Router)
 
-export default new Router({
+const router =  new Router({
   mode:'history',
   routes: [
     {
@@ -50,7 +50,13 @@ export default new Router({
     {
       path: '/profil',
       name: 'profil',
-      component: Profile
+      component: Profile,
     }
   ]
 })
+router.beforeEach((to, from, next) => {
+  if (to.name === 'profil' && !localStorage.id && (from.name !== 'Logowanie' && from.name !== 'Rejestracja'))
+    next({ name: 'Logowanie' })
+  else next()
+})
+export default router;

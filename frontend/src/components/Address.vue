@@ -2,70 +2,75 @@
   <div id="app">
     <div class="container">
       <h3>Adres zamieszkania</h3>
-      <div class="register-form">
-        <dynamic-form class="dynamic-form "
-                      v-bind:id="testForm.id"
-                      v-bind:fields="testForm.fields"
-                      @submit="printValues"
+      <div class="form">
+        <form
+            id="form"
+            @submit="updateValues"
+        >
+          <p>
+            <label for="city">Miasto</label>
+            <input
+                id="city"
+                v-model="city"
+                type="text"
+                name="city"
+            >
+          </p>
 
-        />
-        <button type="submit" :form="testForm.id" class="waves-effect waves-light btn signButton">
-          Zapisz
-        </button>
-      </div>
+          <p>
+            <label for="street">Ulica</label>
+            <input
+                id="street"
+                v-model="street"
+                type="text"
+                name="street"
+            >
+          </p>
+          <button type="submit" class="waves-effect waves-light btn signButton">
+            Zapisz
+          </button>
+
+        </form>
     </div>
+  </div>
   </div>
 </template>
 
 <script>
 import instance from"../server.js"
 import headers from"../headers.js"
-import {FormField, FormValidation,  required} from '@asigloo/vue-dynamic-forms';
 let url = '/profil/' + localStorage.id + '/address';
 export default {
   name: "Address",
   data() {
     return {
-      GETRequestResult: '',
-      testForm: {
-        id: 'test-form',
-        fields: [
-          new FormField({
-            type: 'text',
-            placeholder: 'Miasto',
-            name: 'city',
-            validations: [
-              new FormValidation(required, 'To pole jest wymagane')
-            ]
-          }),
-          new FormField({
-            type: 'text',
-            placeholder: 'Ulica',
-            name: 'street',
-            validations: [
-              new FormValidation(required, 'To pole jest wymagane')
-            ]
-          }),
-        ],
-      },
+      city: null,
+      street: null
     };
   },
   created() {
     instance.get(url)
     .then((response) => {
-      console.log(response);
-      this.GETRequestResult = response.data;
-      console.log(this.GETRequestResult);
+      console.log(response.data);
+      this.city = response.data.city;
+      this.street = response.data.street;
     })
   },
   methods: {
-    printValues(values) {
-      var json = JSON.stringify(values);
+    updateValues() {
+      event.preventDefault();
+      let values = {
+        "city": this.city,
+        "street": this.street
+      }
+      let json = JSON.stringify(values);
       console.log(json);
-      instance.post(url, json, {headers:headers})
+      instance.post(url, json, {headers: headers})
       .then((response) => {
         console.log(response);
-      })
+      }).then(this.$toast.success('Zapisano zmiany.', {
+        position: 'top'
+      }));
     }
   }
 }

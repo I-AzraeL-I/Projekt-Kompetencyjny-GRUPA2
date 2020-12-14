@@ -141,8 +141,10 @@ export default {
         console.log(json);
         instance.post('/addUser', json, {headers:headers})
         .then((response) => {
+          this.$router.push({name: "profil"});
+          this.$router.go({name:"profil"});
           window.localStorage.setItem('id',response.data);
-        }).then(this.$router.push({name: "profil"}));
+        }).catch(error => alert(error+"\nIstnieje już użytkownik z takim samym numerem telefonu!"));
       }
     },
     checkPassword(values) {

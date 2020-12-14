@@ -7,7 +7,6 @@
             id="form"
             @submit="updateValues"
         >
-
           <p>
             <label for="emailAddress">Email</label>
             <input
@@ -27,12 +26,9 @@
                 name="phoneNumber"
             >
           </p>
-          <p>
-            <input
-                type="submit"
-                value="Submit"
-            >
-          </p>
+          <button type="submit" class="waves-effect waves-light btn signButton">
+            Zapisz
+          </button>
 
         </form>
       </div>
@@ -43,7 +39,6 @@
 <script>
 import instance from "../server.js"
 import headers from "../headers.js"
-
 let url = '/profil/' + localStorage.id + '/contact';
 export default {
   name: "Contact",
@@ -73,7 +68,9 @@ export default {
       instance.post(url, json, {headers: headers})
       .then((response) => {
         console.log(response);
-      })
+      }).then(this.$toast.success('Zapisano zmiany.', {
+        position: 'top'
+      }));
     }
   }
 }

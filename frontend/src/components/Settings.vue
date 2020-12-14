@@ -2,17 +2,32 @@
   <div id="app">
     <div class="container">
       <h3>Zmiana hasła</h3>
-      <div class="register-form">
-        <dynamic-form class="dynamic-form "
-                      v-bind:id="testForm.id"
-                      v-bind:fields="testForm.fields"
-                      @submit="printValues"
-
-        />
-        <button type="submit" :form="testForm.id" class="waves-effect waves-light btn signButton">
+      <form
+          id="form"
+          @submit="updateValues"
+      >
+        <p>
+          <label for="plainPassword">Nowe hasło</label>
+          <input
+              id="plainPassword"
+              v-model="plainPassword"
+              type="password"
+              name="plainPassword"
+          >
+        </p>
+        <p>
+          <label for="password2">Potwierdź mowe hasło</label>
+          <input
+              id="password2"
+              v-model="password2"
+              type="password"
+              name="birthDate"
+          >
+        </p>
+        <button type="submit" class="waves-effect waves-light btn signButton">
           Zapisz
         </button>
-      </div>
+      </form>
     </div>
   </div>
 </template>
@@ -20,54 +35,29 @@
 <script>
 import instance from "../server.js"
 import headers from "../headers.js"
-import {FormField, FormValidation, required} from '@asigloo/vue-dynamic-forms';
 
 let url = '/profil/' + localStorage.id + '/settings';
 export default {
   name: "Settings",
   data() {
     return {
-      GETRequestResult: '',
-      testForm: {
-        id: 'test-form',
-        fields: [
-          new FormField({
-            type: 'password',
-            label: 'Stare hasło',
-            name: 'oldPass',
-            validations: [
-              new FormValidation(required, 'To pole jest wymagane'),
-            ],
-          }),
-          new FormField({
-            type: 'password',
-            label: 'Nowe hasło',
-            name: 'password',
-            validations: [
-              new FormValidation(required, 'To pole jest wymagane'),
-            ],
-          }),
-          new FormField({
-            type: 'password',
-            label: 'Potwierdź nowe hasło',
-            name: 'password2',
-            validations: [
-              new FormValidation(required, 'To pole jest wymagane'),
-            ],
-          }),
-
-        ],
-      },
+      paswordOld: null,
+      plainPassword: null,
+      password2: null
     };
   },
   methods: {
-    printValues(values) {
-      var json = JSON.stringify(values);
-      console.log(json);
-      instance.post(url, json, {headers: headers})
-      .then((response) => {
-        console.log(response);
-      })
+    updateValues() {
+      event.preventDefault();
+      if (this.plainPassword === this.password2) {
+        let value = {"plainPassword" : this.plainPassword}
+        let json = JSON.stringify(value);
+        console.log(json);
+        instance.post(url, json, {headers: headers})
+        .then((response) => {
+          console.log(response);
+        }).catch(error => alert(error.message));
+      }
     }
   }
 }

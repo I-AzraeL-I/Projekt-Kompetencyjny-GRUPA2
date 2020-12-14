@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     logOut: function() {
-      localStorage.setItem('id','null');
+      localStorage.clear();
       this.id='null';
     }
 }

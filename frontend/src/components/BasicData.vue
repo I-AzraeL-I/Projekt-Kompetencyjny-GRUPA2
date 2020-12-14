@@ -42,13 +42,10 @@
                       class="materialize-textarea"
             ></textarea>
           </p>
-          <p>
-            <input
-                type="submit"
-                value="Submit"
-            >
-          </p>
 
+            <button type="submit" class="waves-effect waves-light btn signButton">
+              Zapisz
+            </button>
         </form>
       </div>
     </div>
@@ -96,12 +93,16 @@ export default {
       instance.post(url, json, {headers: headers})
       .then((response) => {
         console.log(response);
-      })
+      }).then(this.$toast.success('Zapisano zmiany.', {
+        position: 'top'
+      }));
     },
   }
 }
 </script>
 
 <style scoped>
-
+#description {
+  height: 120px;
+}
 </style>
