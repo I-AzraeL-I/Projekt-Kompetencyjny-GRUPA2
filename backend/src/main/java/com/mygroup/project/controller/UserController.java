@@ -3,6 +3,7 @@ package com.mygroup.project.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.mygroup.project.model.dto.*;
 import com.mygroup.project.model.dto.basic.*;
+import com.mygroup.project.model.dto.specialized.PasswordDTO;
 import com.mygroup.project.model.dto.specialized.UserSubjectContainsDTO;
 import com.mygroup.project.model.service.RoleServiceImpl;
 import com.mygroup.project.model.service.SubjectServiceImpl;
@@ -49,7 +50,7 @@ public class UserController {
     @PostMapping("/profil/{id}/data")
     @JsonView(View.Minimal.class)
     @PreAuthorize("#userID == authentication.principal.userId")
-    public ResponseEntity<UserDTO> postUserData(@PathVariable("id") Long userID, @Valid @RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> updateUserData(@PathVariable("id") Long userID, @Valid @RequestBody UserDTO userDTO) {
         userService.update(userDTO);
         return ResponseEntity.ok(userDTO);
     }
@@ -101,7 +102,7 @@ public class UserController {
 
     @PostMapping("/profil/{id}/contact")
     @PreAuthorize("#userID == authentication.principal.userId")
-    public ResponseEntity<ContactDTO> postUserContact(@PathVariable("id") Long userID, @Valid @RequestBody ContactDTO contactDTO) {
+    public ResponseEntity<ContactDTO> updateUserContact(@PathVariable("id") Long userID, @Valid @RequestBody ContactDTO contactDTO) {
         userService.updateContact(userID, contactDTO);
         return ResponseEntity.ok(contactDTO);
     }
@@ -115,9 +116,15 @@ public class UserController {
 
     @PostMapping("/profil/{id}/address")
     @PreAuthorize("#userID == authentication.principal.userId")
-    public ResponseEntity<AddressDTO> postUserAddress(@PathVariable("id") Long userID, @Valid @RequestBody AddressDTO addressDTO) {
+    public ResponseEntity<AddressDTO> updateUserAddress(@PathVariable("id") Long userID, @Valid @RequestBody AddressDTO addressDTO) {
         userService.updateAddress(userID, addressDTO);
         return ResponseEntity.ok(addressDTO);
     }
 
+    @PutMapping("/profil/{id}/settings")
+    @PreAuthorize("#userID == authentication.principal.userId")
+    public ResponseEntity<Void> updatePassword(@PathVariable("id") Long userID, @Valid @RequestBody PasswordDTO passwordDTO) {
+        userService.updatePassword(userID, passwordDTO);
+        return ResponseEntity.ok().build();
+    }
 }

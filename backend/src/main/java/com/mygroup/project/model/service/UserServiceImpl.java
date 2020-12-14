@@ -6,6 +6,7 @@ import com.mygroup.project.exception.UserAlreadyExistsException;
 import com.mygroup.project.model.dto.basic.AddressDTO;
 import com.mygroup.project.model.dto.basic.ContactDTO;
 import com.mygroup.project.model.dto.basic.UserSubjectDTO;
+import com.mygroup.project.model.dto.specialized.PasswordDTO;
 import com.mygroup.project.model.entity.Role;
 import com.mygroup.project.model.entity.Subject;
 import com.mygroup.project.model.entity.User;
@@ -115,6 +116,12 @@ public class UserServiceImpl implements IService<UserDTO> {
     public void updateAddress(Long userId, AddressDTO addressDTO) {
         User user = userRepository.findById(userId).orElseThrow(DataNotFoundException::new);
         modelMapper.map(addressDTO, user.getAddress());
+        userRepository.save(user);
+    }
+
+    public void updatePassword(Long userId, PasswordDTO passwordDTO) {
+        User user = userRepository.findById(userId).orElseThrow(DataNotFoundException::new);
+        user.setPassword(passwordEncoder.encode(passwordDTO.getPlainPassword()));
         userRepository.save(user);
     }
 
