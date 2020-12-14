@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.*;
 
-@CrossOrigin("*")
 @RestController
 public class UserController {
 
@@ -73,23 +72,16 @@ public class UserController {
 
     @PutMapping("profil/{id}/subjects")
     @PreAuthorize("#userID == authentication.principal.userId")
-    public ResponseEntity<UserSubjectContainsDTO> addUserSubject(@PathVariable("id") Long userID, @RequestBody UserSubjectContainsDTO userSubjectContainsDTO) {
+    public ResponseEntity<UserSubjectContainsDTO> addOrDeleteUserSubject(@PathVariable("id") Long userID, @RequestBody UserSubjectContainsDTO userSubjectContainsDTO) {
         UserSubjectDTO userSubjectDTO = new UserSubjectDTO();
         userSubjectDTO.setSubjectId(userSubjectContainsDTO.getSubjectId());
         userSubjectDTO.setUserId(userID);
         userSubjectDTO.setRoleId(roleService.getByRoleName(teacherRole).getRoleId());
-        userService.addUserSubject(userSubjectDTO);
-        return ResponseEntity.ok(userSubjectContainsDTO);
-    }
-
-    @DeleteMapping("profil/{id}/subjects")
-    @PreAuthorize("#userID == authentication.principal.userId")
-    public ResponseEntity<UserSubjectContainsDTO> deleteUserSubject(@PathVariable("id") Long userID, @RequestBody UserSubjectContainsDTO userSubjectContainsDTO) {
-        UserSubjectDTO userSubjectDTO = new UserSubjectDTO();
-        userSubjectDTO.setSubjectId(userSubjectContainsDTO.getSubjectId());
-        userSubjectDTO.setUserId(userID);
-        userSubjectDTO.setRoleId(roleService.getByRoleName(teacherRole).getRoleId());
-        userService.removeUserSubject(userSubjectDTO);
+        if (userSubjectContainsDTO.isChosen()) {
+            userService.addUserSubject(userSubjectDTO);
+        } else {
+            userService.removeUserSubject(userSubjectDTO);
+        }
         return ResponseEntity.ok(userSubjectContainsDTO);
     }
 
