@@ -144,7 +144,10 @@ export default {
           this.$router.push({name: "profil"});
           this.$router.go({name:"profil"});
           window.localStorage.setItem('id',response.data);
-        }).catch(error => alert(error+"\nIstnieje już użytkownik z takim samym numerem telefonu!"));
+          // eslint-disable-next-line no-unused-vars
+        }).catch(error=>(this.$toast.error('\nIstnieje już użytkownik zarejestrowany na ten adres Email.', {
+          position: 'top'
+        })));
       }
     },
     checkPassword(values) {

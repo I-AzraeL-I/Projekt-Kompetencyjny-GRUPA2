@@ -2,7 +2,7 @@
   <div id="app">
     <div class="container row">
       <div class="register-form z-depth-3 col s12 m12 l4 offset-l4 row">
-        <div class="zio"><h1>LOGO</h1></div>
+        <div class="zio"><h1><img id="logo" src="../assets/korki.png"></h1></div>
         <dynamic-form class="dynamic-form col s10 offset-s1"
                       v-bind:id="testForm.id"
                       v-bind:fields="testForm.fields"
@@ -69,7 +69,10 @@ export default {
         this.$router.push({name: "profil"});
         this.$router.go({name:"profil"});
         window.localStorage.setItem('id',response.data);
-      }).catch(error => alert(error+"\nNiepoprawny Email lub hasło!"));
+        // eslint-disable-next-line no-unused-vars
+      }).catch(error=>(this.$toast.error('\nNiepoprawny login lub hasło.', {
+        position: 'top'
+      })));
     }
   }
 }
@@ -95,7 +98,6 @@ export default {
   padding: 0 30px 20px;
 
 }
-
 .signButton {
   margin-bottom: 20px;
 }

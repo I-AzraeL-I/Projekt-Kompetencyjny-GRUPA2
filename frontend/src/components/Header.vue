@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header class="browser-default">
-      <router-link to="/"><img id="logo" src="../assets/books.png"></router-link>
+      <router-link to="/"><img id="logo" src="../assets/korki.png"></router-link>
       <div class="browser-default nav-bar">
         <ul v-if="this.id ==='null'">
           <li>
