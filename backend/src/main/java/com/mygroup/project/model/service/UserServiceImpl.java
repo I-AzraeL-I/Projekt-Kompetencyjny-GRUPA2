@@ -34,7 +34,7 @@ public class UserServiceImpl implements IService<UserDTO> {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
-    private final static String userRole = "ROLE_USER";
+    private final static String userRole = "ROLE_USER"; //not associated with student and teacher role, used only by spring auth
 
     public UserServiceImpl(UserRepository userRepository, SubjectRepository subjectRepository, RoleRepository roleRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;

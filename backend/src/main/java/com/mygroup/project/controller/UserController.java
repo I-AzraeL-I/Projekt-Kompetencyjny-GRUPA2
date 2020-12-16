@@ -26,8 +26,6 @@ public class UserController {
     private final UserSubjectServiceImpl userSubjectService;
     private final RoleServiceImpl roleService;
     private final ModelMapper modelMapper;
-    private final String teacherRole = "ROLE_TEACHER";
-    private final String studentRole = "ROLE_STUDENT";
 
     public UserController(UserServiceImpl userService, SubjectServiceImpl subjectService,
                           UserSubjectServiceImpl userSubjectService, RoleServiceImpl roleService, ModelMapper modelMapper) {
@@ -57,7 +55,7 @@ public class UserController {
     @GetMapping("/profil/{id}/subjects")
     @PreAuthorize("#userID == authentication.principal.userId")
     public ResponseEntity<Set<UserSubjectContainsDTO>> getUserSubjects(@PathVariable("id") Long userID) {
-        Collection<UserSubjectDTO> userSubjectDTOs = userSubjectService.getAllByIdAndRole(userID, teacherRole);
+        Collection<UserSubjectDTO> userSubjectDTOs = userSubjectService.getAllByIdAndRole(userID, Roles.ROLE_TEACHER.name());
         Collection<SubjectDTO> subjectsOwned = modelMapper.map(userSubjectDTOs, new TypeToken<Set<SubjectDTO>>(){}.getType());
         List<SubjectDTO> subjects = new ArrayList<>(subjectService.getAll());
         subjects.removeAll(subjectsOwned);
@@ -76,7 +74,7 @@ public class UserController {
         UserSubjectDTO userSubjectDTO = new UserSubjectDTO();
         userSubjectDTO.setSubjectId(userSubjectContainsDTO.getSubjectId());
         userSubjectDTO.setUserId(userID);
-        userSubjectDTO.setRoleId(roleService.getByRoleName(teacherRole).getRoleId());
+        userSubjectDTO.setRoleId(roleService.getByRoleName(Roles.ROLE_TEACHER.name()).getRoleId());
         if (userSubjectContainsDTO.isChosen()) {
             userService.addUserSubject(userSubjectDTO);
         } else {

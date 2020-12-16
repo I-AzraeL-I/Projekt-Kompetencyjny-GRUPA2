@@ -1,5 +1,6 @@
 package com.mygroup.project.controller;
 
+import com.mygroup.project.model.dto.Roles;
 import com.mygroup.project.model.dto.specialized.UserSubjectOfferDTO;
 import com.mygroup.project.model.service.UserSubjectServiceImpl;
 import org.modelmapper.ModelMapper;
@@ -14,7 +15,6 @@ public class ApplicationController {
 
     private final UserSubjectServiceImpl userSubjectService;
     private final ModelMapper modelMapper;
-    private final String teacherRole = "ROLE_TEACHER";
 
     public ApplicationController(ModelMapper modelMapper, UserSubjectServiceImpl userSubjectService) {
         this.userSubjectService = userSubjectService;
@@ -23,7 +23,7 @@ public class ApplicationController {
 
     @GetMapping("/getLessons")
     public Collection<UserSubjectOfferDTO> getOffers() {
-        return userSubjectService.getAllByRole(teacherRole);
+        return userSubjectService.getAllByRole(Roles.ROLE_TEACHER.name());
     }
 
     @GetMapping("/")
