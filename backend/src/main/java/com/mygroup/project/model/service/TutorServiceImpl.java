@@ -6,10 +6,14 @@ import com.mygroup.project.model.entity.Tutor;
 import com.mygroup.project.model.repository.TutorRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Set;
 
+@Service
+@Transactional
 public class TutorServiceImpl implements IService<TutorDTO> {
 
     private final TutorRepository tutorRepository;
