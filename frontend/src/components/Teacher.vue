@@ -1,79 +1,73 @@
 <template>
   <div id="app">
-    <div class="containerr">
-      <div class="content row">
-        <div class="left-section col s12 m12 l7">
-          <div class="left col s12 m2 l2">
-            <img src="../assets/books.png" alt="" class="circle">
-            <span class="title">Adrian Kozłowski</span>
-            <p> Adr
-            </p>
-            <ul class="skills">
-              <li>Adr</li>
-              <li>Adr</li>
-              <li>Adr</li>
-            </ul>
-          </div>
-          <div class="description col s12 m7 l7">
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-              Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-              unknown printer took a galley of type and scrambled it to make a type specimen book.
-              It has survived not only five centuries, but also the leap into electronic
-              typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
-              release of Letraset sheets c</p>
-          </div>
-          <div class="right col s12 m3 l3">
-            <div class="prices">
-              <div class="price">60 złoty</div>
-              <div class="price2"> na godzinę</div>
-            </div>
-          </div>
-
+    <div class="container">
+      <div>
+        <div class="col s12 m12 l12">
+          <img src="../assets/books.png" alt="" class="circle">
+          <span class="title">{{ tutor.user.firstName }} - {{ tutor.user.userSubjects[0].subjectName }}</span>
         </div>
-        <div class="right-section col s12 m12 l12">
-          <div class="extraDescription row">
-            <div class="capabilities col s12 m6">
-              <h4>Zakres</h4>
-              <ol>
-                <li>Szkoła Podstawowa</li>
-                <li>Liceum</li>
-                <li>Pomoc do matury</li>
-                <li>Studia</li>
-              </ol>
-            </div>
-            <div class="achievements col s12 m6">
-              <h4>Doświadczenie</h4>
-              <ol>
-                <li>Native Speaker</li>
-                <li>Native Speaker</li>
-                <li>Native Speaker</li>
-              </ol>
+      </div>
+      <div class="description col s12 m12 l9">
+        <p>{{ tutor.user.description }}</p>
+      </div>
+      <div class="bottom-section row">
+        <div class="comments col s12 l9">
+          <h5>OPINIE</h5>
+        </div>
+        <div class="col s12 m12 l3">
+          <h4>Lokalizacja:</h4>
+          <p>
+          <b>Miasto: </b>{{tutor.city}}
+          </p>
+          <p>
+            <b>Miejsce zajęć: </b>u korepetytora / on-line
+          </p>
+          <div class="border">
+          <GmapMap
+              :center="position"
+              :zoom="12"
+              style="width: 289px; height: 450px;"
+          >
+            <GmapMarker
+                :position="coordinates"
+                :clickable="true"
+                @click="openWindowStudent"
 
-            </div>
-          </div>
-          <div class="available">
-            <h4>Dni dostępne w tygodniu</h4>
-            <ul>
-              <li>
-                Poniedziałek
-              </li>
-              <li>
-                Wtorek
-              </li>
-              <li>
-                Sroda
-              </li>
-              <li>
-                Czwartek
-              </li>
-              <li>
-                Piątek
-              </li>
-            </ul>
-          </div>
-          <div class="comments">
-            <h4>Opinie:</h4>
-          </div>
+            />
+<!--            :icon="{ url: ('https://developers.google.com/maps/documentation/javascript/examples/full/images/parking_lot_maps.png')}"-->
+            <GmapMarker
+                :position="position"
+                :clickable="true"
+                @click="openWindowTutor"
+            />
+            <gmap-info-window
+                @closeclick="window_open_student=false"
+                :opened="window_open_student"
+                :position="coordinates"
+                :options="{
+          pixelOffset: {
+            width: 0,
+            height: -35
+          }
+        }"
+            >
+              Ty
+            </gmap-info-window>
+            <gmap-info-window
+                @closeclick="window_open_tutor=false"
+                :opened="window_open_tutor"
+                :position="position"
+                :options="{
+          pixelOffset: {
+            width: 0,
+            height: -35
+          }
+        }"
+            >
+            <b>  {{ tutor.user.firstName }} - {{ tutor.user.address.street }} </b>
+            </gmap-info-window>
+          </GmapMap>
+        </div>
         </div>
       </div>
     </div>
@@ -81,30 +75,84 @@
 </template>
 
 <script>
+import instance from "@/server";
+
 export default {
-  name: "Teacher"
+  name: "Teacher",
+  data() {
+    return {
+      tutorId: null,
+      tutor: null,
+      coordinates: {
+        lat: 0,
+        lng: 0
+      },
+      position: {
+        lat: 0,
+        lng: 0
+      },
+      window_open_tutor: false,
+      window_open_student: false,
+      tutorAddress: {
+        city: "",
+        street:"",
+      },
+    }
+  },
+  created() {
+    this.$getLocation({})
+    .then(coordinates => {
+      this.coordinates = coordinates;
+    })
+    .catch(error => alert(error));
+    this.tutorId = this.$route.params.tutor.userId;
+    // console.log(this.$route.params.tutor);
+    instance.get('/getLessons/' + this.tutorId)
+    .then((response) => {
+      this.tutor = response.data;
+      this.tutorAddress = response.data.user.address;
+      console.log(this.tutor);
+      this.$geocoder.setDefaultMode('address');      // this is default
+      let addressObj = {
+        address_line_1: this.tutorAddress.street,
+        address_line_2: '',
+        city: this.tutorAddress.city,
+        state: '',
+        zip_code: '',
+        country: 'Poland'
+      }
+      this.$geocoder.send(addressObj, response => {
+        this.position = response.results[0].geometry.location;
+      })
+    })
+
+  },
+  methods: {
+    openWindowStudent() {
+      this.window_open_student = true
+    },
+    openWindowTutor() {
+      this.window_open_tutor = true
+    }
+  }
 }
 </script>
 
 <style scoped>
 #app {
+  font-size: 110%;
 }
 
-.available, .content, .extraDescription {
-  margin: 25px 0 25px;
+.border {
+  border: 5px solid green;
 }
 
-.containerr {
-  padding: 70px;
+.container {
+  padding-top: 120px;
 }
 
-.extraDescription {
-  width: 66%;
-  display: flex;
-}
-
-.skills {
-  margin-top: 20px;
+.bottom-section {
+  padding-top: 150px;
 }
 
 .circle {
@@ -119,27 +167,6 @@ export default {
 .description {
   padding: 10px 40px 10px;
   font-weight: 400;
-}
-
-.prices {
-  text-align: center;
-  font-weight: 400;
-}
-
-
-.price {
-  margin-top: 30px;
-  font-size: 30px;
-
-}
-
-.price2 {
-
-}
-
-.buttons a {
-  margin-top: 2px;
-  margin-bottom: 2px;
 }
 
 </style>

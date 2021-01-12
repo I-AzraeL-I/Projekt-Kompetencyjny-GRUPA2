@@ -6,7 +6,8 @@ import Help from "@/components/Help"
 import Index from "@/components/Index";
 import Lessons from "@/components/Lessons";
 import Teacher from "@/components/Teacher";
-import Profile from "@/components/Profile";
+import Profile from "@/components/ProfilePage/Profile";
+import LessonHistory from "@/components/LessonHistoryPage/LessonHistory";
 Vue.use(Router)
 
 const router =  new Router({
@@ -51,7 +52,12 @@ const router =  new Router({
       path: '/profil',
       name: 'profil',
       component: Profile,
-    }
+    },
+    {
+      path: '/historia-lekcji',
+      name: 'lessonHistory',
+      component: LessonHistory,
+    },
   ]
 })
 router.beforeEach((to, from, next) => {

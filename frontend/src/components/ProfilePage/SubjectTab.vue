@@ -44,12 +44,10 @@ export default {
     .then((response) => {
       this.subjects = response.data;
       this.subjectsOriginal = JSON.parse(JSON.stringify(response.data));
-      console.log(this.subjects);
     })
   },
   methods: {
     updateSubjects() {
-      console.log(this.subjects.length);
       for (let i = 0; i < this.subjects.length; i++) {
         if (this.subjects[i].chosen !== this.subjectsOriginal[i].chosen) {
           var value = {
@@ -58,7 +56,6 @@ export default {
             "isChosen":this.subjects[i].chosen
           }
           let json = JSON.stringify(value);
-          console.log(json);
           instance.put(url, json, {headers: headers}).then((response) => {
             console.log(response);
           }).then(this.$toast.success('Zapisano zmiany.', {

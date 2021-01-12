@@ -1,7 +1,7 @@
 <template>
   <div class="container row">
     <div class="register-form z-depth-3 col s12 m12 l4 offset-l4 row">
-      <div class="zio"><h1>LOGO</h1></div>
+      <div class="login-wrapper"><h1><img id="logo" src="../assets/korki.png"></h1></div>
       <dynamic-form class="dynamic-form col s10 offset-s1"
                     v-bind:id="testForm.id"
                     v-bind:fields="testForm.fields"
@@ -171,7 +171,7 @@ export default {
 
 }
 
-.zio {
+.login-wrapper {
   margin-bottom: 75px;
 }
 

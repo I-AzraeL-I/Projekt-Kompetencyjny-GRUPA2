@@ -13,6 +13,9 @@
         </ul>
         <ul v-else>
           <li>
+            <a href="/historia-lekcji">Moje zajęcia</a>
+          </li>
+          <li>
             <router-link to="profil">Profil</router-link>
           </li>
           <li v-on:click="logOut">

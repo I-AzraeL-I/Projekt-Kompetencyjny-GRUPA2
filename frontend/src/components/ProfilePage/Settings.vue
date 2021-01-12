@@ -16,7 +16,7 @@
           >
         </p>
         <p>
-          <label for="password2">Potwierdź mowe hasło</label>
+          <label for="password2">Potwierdź nowe hasło</label>
           <input
               id="password2"
               v-model="password2"
@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import instance from "../server.js"
-import headers from "../headers.js"
+import instance from "../../server.js"
+import headers from "../../headers.js"
 
 let url = '/profil/' + localStorage.id + '/settings';
 export default {
@@ -52,7 +52,6 @@ export default {
       if (this.plainPassword === this.password2) {
         let value = {"plainPassword" : this.plainPassword}
         let json = JSON.stringify(value);
-        console.log(json);
         instance.post(url, json, {headers: headers})
         .then((response) => {
           console.log(response);

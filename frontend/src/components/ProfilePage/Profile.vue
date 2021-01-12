@@ -40,11 +40,11 @@
 
 <script>
 
-import BasicData from "@/components/BasicData";
-import SubjectTab from "@/components/SubjectTab";
-import Contact from "@/components/Contact";
-import Address from "@/components/Address";
-import Settings from "@/components/Settings";
+import BasicData from "@/components/ProfilePage/BasicData";
+import SubjectTab from "@/components/ProfilePage/SubjectTab";
+import Contact from "@/components/ProfilePage/Contact";
+import Address from "@/components/ProfilePage/Address";
+import Settings from "@/components/ProfilePage/Settings";
 export default {
   name: "Profil",
   components: {

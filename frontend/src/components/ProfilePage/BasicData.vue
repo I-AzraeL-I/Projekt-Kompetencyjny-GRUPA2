@@ -53,8 +53,8 @@
 </template>
 
 <script>
-import instance from "../server.js"
-import headers from "../headers.js"
+import instance from "../../server.js"
+import headers from "../../headers.js"
 
 let url = '/profil/' + localStorage.id + '/data';
 export default {
@@ -89,7 +89,6 @@ export default {
         "description": this.description
       }
       var json = JSON.stringify(values);
-      console.log(json);
       instance.post(url, json, {headers: headers})
       .then((response) => {
         console.log(response);

@@ -2,7 +2,7 @@
   <div id="app">
     <div class="container row">
       <div class="register-form z-depth-3 col s12 m12 l4 offset-l4 row">
-        <div class="zio"><h1><img id="logo" src="../assets/korki.png"></h1></div>
+        <div class="login-wrapper"><h1><img id="logo" src="../assets/korki.png"></h1></div>
         <dynamic-form class="dynamic-form col s10 offset-s1"
                       v-bind:id="testForm.id"
                       v-bind:fields="testForm.fields"
@@ -15,23 +15,18 @@
       </div>
 
     </div>
-    <Map></Map>
   </div>
 
 </template>
 
 <script>
 
-import Map from '@/components/Map.vue'
 import {FormField, FormValidation, required, email} from '@asigloo/vue-dynamic-forms';
-import instance from"../server.js"
-import headers from"../headers.js"
+import instance from "../server.js"
+import headers from "../headers.js"
 
 export default {
   name: "Login",
-  components: {
-    Map,
-  },
   data() {
     return {
       picked: 'one',
@@ -64,17 +59,24 @@ export default {
     login(values) {
       let json = JSON.stringify(values);
       console.log(json);
-      instance.post('/login', json, {headers:headers})
+      instance.post('/login', json, {headers: headers})
       .then((response) => {
         this.$router.push({name: "profil"});
-        this.$router.go({name:"profil"});
-        window.localStorage.setItem('id',response.data);
+        this.$router.go({name: "profil"});
+        window.localStorage.setItem('id', response.data);
         // eslint-disable-next-line no-unused-vars
-      }).catch(error=>(this.$toast.error('\nNiepoprawny login lub hasło.', {
+      }).catch(error => (this.$toast.error('\nNiepoprawny login lub hasło.', {
         position: 'top'
       })));
     }
-  }
+  },
+  computed: {
+    mapConfig() {
+      return {
+        center: {lat: 0, lng: 0}
+      }
+    },
+  },
 }
 </script>
 
@@ -85,8 +87,12 @@ export default {
 
 }
 
-.zio {
+.login-wrapper {
   margin-bottom: 75px;
+}
+
+#logo {
+  width: 100%;
 }
 
 .register-form {
@@ -98,6 +104,7 @@ export default {
   padding: 0 30px 20px;
 
 }
+
 .signButton {
   margin-bottom: 20px;
 }
