@@ -138,9 +138,12 @@ export default {
     addUser(values) {
       if (values.plainPassword === values.plainPassword2) {
         let json = JSON.stringify(values, ['firstName','lastName','birthDate','city','street','emailAddress','phoneNumber','plainPassword']);
+        let loginJson = JSON.stringify(values,['emailAddress','plainPassword']);
+        console.log(loginJson);
         console.log(json);
         instance.post('/addUser', json, {headers:headers})
         .then((response) => {
+          instance.post('/login', loginJson, {headers: headers});
           this.$router.push({name: "profil"});
           this.$router.go({name:"profil"});
           window.localStorage.setItem('id',response.data);
