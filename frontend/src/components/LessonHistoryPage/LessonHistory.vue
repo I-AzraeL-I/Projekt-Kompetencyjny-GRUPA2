@@ -152,9 +152,13 @@ export default {
       // eslint-disable-next-line no-unused-vars,no-undef
       var instances = M.Modal.init(elems, 1);
     });
+    console.log(this.todayDate);
+    console.log(this.lessonsHistory[2].Data);
+    console.log(this.$moment(this.todayDate).isAfter(this.lessonsHistory[2].Data))
+
     for (let i = 0; i < this.lessonsHistory.length; i++) {
       if (this.lessonsHistory[i].uczen_id === localStorage.id) {
-        if (this.$moment(this.todayDate).isAfter(this.lessonsHistory[i].Data)) {
+        if (!this.$moment(this.todayDate).isAfter(this.lessonsHistory[i].Data)) {
           this.pastFilteredHistory.push(this.lessonsHistory[i]);
         } else {
           this.filteredHistory.push(this.lessonsHistory[i]);

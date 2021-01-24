@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="container row">
-      <div class="register-form z-depth-3 col s12 m12 l4 offset-l4 row">
+      <div class="register-form z-depth-3 col s12 m6 offset-m3 l4 offset-l4 row">
         <div class="login-wrapper"><h1><img id="logo" src="../assets/korki.png"></h1></div>
         <dynamic-form class="dynamic-form col s10 offset-s1"
                       v-bind:id="testForm.id"

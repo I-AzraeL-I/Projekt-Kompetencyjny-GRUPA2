@@ -40,11 +40,11 @@ const router =  new Router({
     },
     {
       path: '/korepetycje',
-      name: 'Korepetycje',
+      name: 'korepetycje',
       component: Lessons
     },
     {
-      path: '/nauczyciel',
+      path: '/nauczyciel/:id',
       name: 'nauczyciel',
       component: Teacher
     },

@@ -4,70 +4,119 @@
       <div>
         <div class="col s12 m12 l12">
           <img src="../assets/books.png" alt="" class="circle">
-          <span class="title">{{ tutor.user.firstName }} - {{ tutor.user.userSubjects[0].subjectName }}</span>
+          <span class="title"><b>{{ tutor.user.firstName }}</b> -</span> <span
+            v-for="(value,index) in tutor.user.userSubjects"
+            v-bind:key="index"><b>{{ value.subjectName }} </b></span>
         </div>
       </div>
       <div class="description col s12 m12 l9">
-        <p>{{ tutor.user.description }}</p>
+        <p>{{ tutor.user.description }}Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
+          in consectetur lorem. Donec mauris lacus, tristique at dictum et, eleifend nec justo.
+          Proin eget hendrerit massa. Sed fermentum hendrerit varius.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in consectetur lorem. Donec
+          mauris lacus, tristique at dictum et, eleifend nec justo. Proin eget hendrerit massa. Sed
+          fermentum hendrerit varius.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in consectetur lorem. Donec
+          mauris lacus, tristique at dictum et, eleifend nec justo. Proin eget hendrerit massa. Sed
+          fermentum hendrerit varius.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in consectetur lorem. Donec
+          mauris lacus, tristique at dictum et, eleifend nec justo. Proin eget hendrerit massa. Sed
+          fermentum hendrerit varius.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in consectetur lorem. Donec
+          mauris lacus, tristique at dictum et, eleifend nec justo. Proin eget hendrerit massa. Sed
+          fermentum hendrerit varius.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in consectetur lorem. Donec
+          mauris lacus, tristique at dictum et, eleifend nec justo. Proin eget hendrerit massa. Sed
+          fermentum hendrerit varius.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in consectetur lorem. Donec
+          mauris lacus, tristique at dictum et, eleifend nec justo. Proin eget hendrerit massa. Sed
+          fermentum hendrerit varius.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in consectetur lorem. Donec
+          mauris lacus, tristique at dictum et, eleifend nec justo. Proin eget hendrerit massa. Sed
+          fermentum hendrerit varius.
+        </p>
       </div>
       <div class="bottom-section row">
         <div class="comments col s12 l9">
-          <h5>OPINIE</h5>
+          <h4>Opinie:</h4>
+          <div v-for="(opinion,index) in tutor.opinions" v-bind:key="index"
+               class="z-depth-2 opinion-wrapper">
+            <div class="comment">
+              {{ opinion.comment }}
+            </div>
+            <div class="divider"></div>
+            <div class="stars">
+              <ul class="list center">
+                <li :key="star" v-for="star in maxStars"
+                    :class="{ 'active-star': star <= opinion.rating }"
+                    class="star">
+                  <i class="material-icons star">star</i>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
         <div class="col s12 m12 l3">
           <h4>Lokalizacja:</h4>
           <p>
-          <b>Miasto: </b>{{tutor.city}}
+            <b>Miasto: </b>{{ tutorAddress.city }}
           </p>
           <p>
             <b>Miejsce zajęć: </b>u korepetytora / on-line
           </p>
           <div class="border">
-          <GmapMap
-              :center="position"
-              :zoom="12"
-              style="width: 289px; height: 450px;"
-          >
-            <GmapMarker
-                :position="coordinates"
-                :clickable="true"
-                @click="openWindowStudent"
+            <GmapMap
+                :center="position"
+                :zoom="12"
+                style="width: 100%; height: 450px;"
+            >
+              <GmapMarker
+                  :position="coordinates"
+                  :clickable="true"
+                  :icon="{ url: ('http://maps.google.com/mapfiles/kml/paddle/blu-blank.png'),
+                            scaledSize: {width: 35, height: 35},
+                          }"
+                  @click="openWindowStudent"
 
-            />
-<!--            :icon="{ url: ('https://developers.google.com/maps/documentation/javascript/examples/full/images/parking_lot_maps.png')}"-->
-            <GmapMarker
-                :position="position"
-                :clickable="true"
-                @click="openWindowTutor"
-            />
-            <gmap-info-window
-                @closeclick="window_open_student=false"
-                :opened="window_open_student"
-                :position="coordinates"
-                :options="{
+              />
+              <GmapMarker
+                  :position="position"
+                  :clickable="true"
+                  :icon="{ url: ('http://maps.google.com/mapfiles/kml/paddle/ylw-blank.png'),
+
+                            scaledSize: {width: 35, height: 35},
+                          }"
+
+                  @click="openWindowTutor"
+              />
+              <gmap-info-window
+                  @closeclick="window_open_student=false"
+                  :opened="window_open_student"
+                  :position="coordinates"
+                  :options="{
           pixelOffset: {
             width: 0,
             height: -35
           }
         }"
-            >
-              Ty
-            </gmap-info-window>
-            <gmap-info-window
-                @closeclick="window_open_tutor=false"
-                :opened="window_open_tutor"
-                :position="position"
-                :options="{
+              >
+                Ty
+              </gmap-info-window>
+              <gmap-info-window
+                  @closeclick="window_open_tutor=false"
+                  :opened="window_open_tutor"
+                  :position="position"
+                  :options="{
           pixelOffset: {
             width: 0,
             height: -35
           }
         }"
-            >
-            <b>  {{ tutor.user.firstName }} - {{ tutor.user.address.street }} </b>
-            </gmap-info-window>
-          </GmapMap>
-        </div>
+              >
+                <b> {{ tutor.user.firstName }} - {{ tutor.user.address.street }} </b>
+              </gmap-info-window>
+            </GmapMap>
+          </div>
         </div>
       </div>
     </div>
@@ -95,8 +144,11 @@ export default {
       window_open_student: false,
       tutorAddress: {
         city: "",
-        street:"",
+        street: "",
       },
+      maxStars: 5,
+      stars: 0,
+      iconSize: 0,
     }
   },
   created() {
@@ -105,8 +157,7 @@ export default {
       this.coordinates = coordinates;
     })
     .catch(error => alert(error));
-    this.tutorId = this.$route.params.tutor.userId;
-    // console.log(this.$route.params.tutor);
+    this.tutorId = this.$route.params.id;
     instance.get('/getLessons/' + this.tutorId)
     .then((response) => {
       this.tutor = response.data;
@@ -133,7 +184,7 @@ export default {
     },
     openWindowTutor() {
       this.window_open_tutor = true
-    }
+    },
   }
 }
 </script>
@@ -152,7 +203,12 @@ export default {
 }
 
 .bottom-section {
-  padding-top: 150px;
+  padding-top: 50px;
+}
+
+.opinion-wrapper {
+  padding: 20px;
+  margin-bottom: 30px;
 }
 
 .circle {
@@ -169,4 +225,15 @@ export default {
   font-weight: 400;
 }
 
+.star {
+  display: inline-block;
+}
+
+.divider {
+  margin: 10px 0 10px;
+}
+
+.active-star {
+  color: gold;
+}
 </style>

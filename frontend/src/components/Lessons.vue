@@ -15,10 +15,9 @@
                 <img src="../assets/books.png" alt="" class="circle">
                 <span class="title">{{ lesson.firstName }}</span>
                 <p> {{ lesson.city }}
-                </p>
-                <ul class="skills">
-                  <li>{{ lesson.subjectName }}</li>
-                </ul>
+                </p><div class="subject-name">
+                 <p> {{ lesson.subjectName }} </p>
+              </div>
               </div>
               <div class="description col s12 m7 l7">
                 <p>{{ lesson.description }}</p>
@@ -27,7 +26,7 @@
                 <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
                 <div class="buttons">
 
-                  <router-link :to="{ name: 'nauczyciel', params: { tutor: lesson }}"><a
+                  <router-link :to="'/nauczyciel/'+lesson.userId"><a
                       class="waves-effect waves-light btn messageButton">Wyślij wiadomość</a>
                   </router-link>
                 </div>
@@ -118,5 +117,7 @@ export default {
   margin-top: 2px;
   margin-bottom: 2px;
 }
-
+.subject-name {
+  margin-top:10px;
+}
 </style>
