@@ -53,9 +53,10 @@ export default {
           var value = {
             "subjectId":this.subjects[i].subjectId,
             "subjectName":this.subjects[i].subjectName,
-            "isChosen":this.subjects[i].chosen
+            "chosen":this.subjects[i].chosen
           }
           let json = JSON.stringify(value);
+          console.log(json);
           instance.put(url, json, {headers: headers}).then((response) => {
             console.log(response);
           }).then(this.$toast.success('Zapisano zmiany.', {
