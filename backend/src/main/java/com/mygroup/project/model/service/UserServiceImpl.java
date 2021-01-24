@@ -103,7 +103,7 @@ public class UserServiceImpl implements IService<UserDTO> {
 
     public void removeUserSubject(UserSubjectDTO userSubjectDTO) {
         User user = userRepository.findById(userSubjectDTO.getUserId()).orElseThrow(DataNotFoundException::new);
-        user.getUserSubjects().removeIf(e -> e.getUserSubjectId().equals(userSubjectDTO.getUserSubjectId()));
+        System.err.println(user.getUserSubjects().removeIf(e -> e.getSubject().getSubjectId().equals(userSubjectDTO.getSubjectId())));
         userRepository.save(user);
     }
 
