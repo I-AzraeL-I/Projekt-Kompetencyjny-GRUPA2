@@ -55,7 +55,7 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
     }
 
     public Collection<PrivateLessonDTO> getByStudentId(Long id) {
-        return privateLessonRepository.getAllLessons(id);
+        return privateLessonRepository.getAllByStudent_User_UserId(id);
     }
 
 }
