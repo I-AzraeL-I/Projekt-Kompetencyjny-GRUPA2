@@ -4,7 +4,8 @@
       <div class="row">
         <div class="col l6 s12">
           <h5 class="white-text">Korepetycje</h5>
-          <p class="grey-text text-lighten-4">Znajdź korepetytora.</p>
+          <router-link :to="{ name: 'korepetycje'}"> <p class="grey-text text-lighten-4">Znajdź korepetytora.</p>
+          </router-link>
         </div>
         <div class="col l4 offset-l2 s12">
           <h5 class="white-text">Links</h5>

@@ -9,8 +9,13 @@
   },
   "dependencies": {
     "@asigloo/vue-dynamic-forms": "^2.1.0",
+    "@pderas/vue2-geocoder": "^1.1.0",
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
+    "google-maps": "^4.3.3",
+    "google-maps-api-loader": "^1.1.1",
+    "jquery": "^3.5.1",
+    "jsdom": "^16.4.0",
     "material-design-icons": "^3.0.1",
     "materialize-css": "^1.0.0-rc.2",
     "vue": "^2.6.11",
@@ -33,6 +38,7 @@
     "node-sass": "^5.0.0",
     "sass-loader": "^10.1.0",
     "vue-browser-geolocation": "^1.8.0",
+    "vue-moment": "^4.1.0",
     "vue-router": "^3.4.7",
     "vue-template-compiler": "^2.6.11",
     "vue2-google-maps": "^0.10.7"

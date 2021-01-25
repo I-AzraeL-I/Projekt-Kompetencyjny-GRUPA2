@@ -84,6 +84,7 @@ h3 {
 #photo {
 
   height: 350px;
+  max-width: 100%;
   display: inline-block;
 }
 

@@ -1,29 +1,29 @@
 <template>
   <div id="app">
     <div class="container">
-      <h3>Adres zamieszkania</h3>
+      <h3>Informacje kontaktowe</h3>
       <div class="form">
         <form
             id="form"
             @submit="updateValues"
         >
           <p>
-            <label for="city">Miasto</label>
+            <label for="emailAddress">Email</label>
             <input
-                id="city"
-                v-model="city"
+                id="emailAddress"
+                v-model="emailAddress"
                 type="text"
-                name="city"
+                name="emailAddress"
             >
           </p>
 
           <p>
-            <label for="street">Ulica</label>
+            <label for="phoneNumber">Numer telefonu</label>
             <input
-                id="street"
-                v-model="street"
+                id="phoneNumber"
+                v-model="phoneNumber"
                 type="text"
-                name="street"
+                name="phoneNumber"
             >
           </p>
           <button type="submit" class="waves-effect waves-light btn signButton">
@@ -31,40 +31,38 @@
           </button>
 
         </form>
+      </div>
     </div>
-  </div>
   </div>
 </template>
 
 <script>
-import instance from"../server.js"
-import headers from"../headers.js"
-let url = '/profil/' + localStorage.id + '/address';
+import instance from "../../server.js"
+import headers from "../../headers.js"
+let url = '/profil/' + localStorage.id + '/contact';
 export default {
-  name: "Address",
+  name: "Contact",
   data() {
     return {
-      city: null,
-      street: null
+      emailAddress: null,
+      phoneNumber: null
     };
   },
   created() {
     instance.get(url)
     .then((response) => {
-      console.log(response.data);
-      this.city = response.data.city;
-      this.street = response.data.street;
+      this.emailAddress = response.data.emailAddress;
+      this.phoneNumber = response.data.phoneNumber;
     })
   },
   methods: {
     updateValues() {
       event.preventDefault();
       let values = {
-        "city": this.city,
-        "street": this.street
+        "emailAddress": this.emailAddress,
+        "phoneNumber": this.phoneNumber
       }
       let json = JSON.stringify(values);
-      console.log(json);
       instance.post(url, json, {headers: headers})
       .then((response) => {
         console.log(response);

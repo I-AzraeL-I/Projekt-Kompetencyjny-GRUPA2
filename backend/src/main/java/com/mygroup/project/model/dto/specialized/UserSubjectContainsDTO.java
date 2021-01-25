@@ -15,5 +15,5 @@ public class UserSubjectContainsDTO {
 
     private String subjectName;
 
-    private boolean isChosen;
+    private boolean chosen;
 }
