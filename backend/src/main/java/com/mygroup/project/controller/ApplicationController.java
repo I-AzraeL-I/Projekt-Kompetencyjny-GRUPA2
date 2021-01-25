@@ -2,10 +2,12 @@ package com.mygroup.project.controller;
 
 import com.mygroup.project.model.dto.Roles;
 import com.mygroup.project.model.dto.basic.OpinionDTO;
+import com.mygroup.project.model.dto.basic.PrivateLessonDTO;
 import com.mygroup.project.model.dto.basic.TutorDTO;
 import com.mygroup.project.model.dto.specialized.OpinionFormDTO;
 import com.mygroup.project.model.dto.specialized.UserSubjectOfferDTO;
 import com.mygroup.project.model.service.OpinionServiceImpl;
+import com.mygroup.project.model.service.PrivateLessonServiceImpl;
 import com.mygroup.project.model.service.TutorServiceImpl;
 import com.mygroup.project.model.service.UserSubjectServiceImpl;
 import org.modelmapper.ModelMapper;
@@ -24,12 +26,14 @@ public class ApplicationController {
     private final TutorServiceImpl tutorService;
     private final ModelMapper modelMapper;
     private final OpinionServiceImpl opinionService;
+    private final PrivateLessonServiceImpl privateLessonService;
 
-    public ApplicationController(UserSubjectServiceImpl userSubjectService, TutorServiceImpl tutorService, ModelMapper modelMapper, OpinionServiceImpl opinionService) {
+    public ApplicationController(UserSubjectServiceImpl userSubjectService, TutorServiceImpl tutorService, ModelMapper modelMapper, OpinionServiceImpl opinionService, PrivateLessonServiceImpl privateLessonService) {
         this.userSubjectService = userSubjectService;
         this.tutorService = tutorService;
         this.modelMapper = modelMapper;
         this.opinionService = opinionService;
+        this.privateLessonService = privateLessonService;
     }
 
     @GetMapping("/")
@@ -53,6 +57,11 @@ public class ApplicationController {
         OpinionDTO opinionDTO = modelMapper.map(opinionFormDTO, OpinionDTO.class);
         opinionDTO = opinionService.create(opinionDTO);
         return ResponseEntity.created(URI.create("/opinion/" + opinionDTO.getOpinionId())).headers(new HttpHeaders()).body(opinionDTO.getOpinionId());
+    }
+
+    @GetMapping("/lessonsHistory")
+    public Collection<PrivateLessonDTO> getLessons() {
+        return privateLessonService.getAll();
     }
 
 }
