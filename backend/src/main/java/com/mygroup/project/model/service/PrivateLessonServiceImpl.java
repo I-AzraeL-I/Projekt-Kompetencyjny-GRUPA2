@@ -55,7 +55,7 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
     }
 
     public Collection<PrivateLessonDTO> getByStudentId(Long id) {
-        return privateLessonRepository.getAllByStudent_User_UserId(id);
+        return modelMapper.map(privateLessonRepository.findAllByStudent_User_UserId(id), new TypeToken<Set<PrivateLessonDTO>>(){}.getType());
     }
 
 }
