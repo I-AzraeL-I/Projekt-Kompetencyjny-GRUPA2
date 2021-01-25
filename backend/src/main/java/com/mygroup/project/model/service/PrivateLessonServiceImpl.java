@@ -54,4 +54,8 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
         privateLessonRepository.deleteById(privateLessonDTO.getPrivateLessonId());
     }
 
+    public Collection<PrivateLessonDTO> getByStudentId(Long id) {
+        return privateLessonRepository.getAllLessons(id);
+    }
+
 }

@@ -59,9 +59,14 @@ public class ApplicationController {
         return ResponseEntity.created(URI.create("/opinion/" + opinionDTO.getOpinionId())).headers(new HttpHeaders()).body(opinionDTO.getOpinionId());
     }
 
-    @GetMapping("/lessonsHistory")
-    public Collection<PrivateLessonDTO> getLessons() {
-        return privateLessonService.getAll();
+    @GetMapping("/studentHistory/{id}")
+    public Collection<PrivateLessonDTO> getStudentHistory(@PathVariable("id") Long id) {
+        return privateLessonService.getByStudentId(id);
     }
+
+//    @GetMapping("/tutorHistory/{id}")
+//    public Collection<PrivateLessonDTO> getTutorHistory(@PathVariable("id") Long id) {
+//        return privateLessonService.getAll();
+//    }
 
 }
