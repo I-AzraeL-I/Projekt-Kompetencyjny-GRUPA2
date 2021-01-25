@@ -25,4 +25,7 @@ public class PrivateLessonDTO {
     private StudentDTO student;
 
     private SubjectDTO subject;
+
+    private Short acceptance;
+
 }
