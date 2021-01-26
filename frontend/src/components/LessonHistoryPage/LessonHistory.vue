@@ -45,7 +45,7 @@
                 Data: {{ element.Data }}<br>
                 Czas trwania: {{ element.Godzina_startu }} - {{ element.Godzina_konca }}
               </div>
-              <a v-on:click="tutor_id = element.nauczyciel_id"
+              <a v-on:click="tutorToRate = element"
                  class="waves-effect waves-light btn modal-trigger col s2 offset-l10"
                  href="#modal1">Zostaw opinię</a>
             </div>
@@ -120,7 +120,9 @@ import data from "@/tempKorki.JSON";
 import instance from "@/server";
 import headers from "@/headers";
 
-let url = '/history/' + localStorage.id;
+// let url = '/history/' + localStorage.id;
+let urlHistory = '/studentHistory/1';
+let urlOpinion = '/addOpinion';
 export default {
   name: "LessonHistory",
   components: {},
@@ -136,11 +138,15 @@ export default {
       todayDate: "",
       maxStars: 5,
       stars: 0,
-      tutor_id: 0,
+      tutorToRate: null,
       description: null,
     }
   },
   created() {
+    instance.get(urlHistory)
+    .then((response) => {
+      console.log(response.data);
+    });
     this.todayDate = this.$moment().format("DD-MM-YYYY").toString();
     document.addEventListener('DOMContentLoaded', function () {
       var elems = document.querySelectorAll('.collapsible');
@@ -194,14 +200,13 @@ export default {
     },
     addComment() {
       let values = {
-        "userId": localStorage.id,
-        "tutorId": this.tutor_id,
-        "description": this.description,
-        "stars": this.stars,
+        "comment": this.description,
+        "rating": this.stars,
+        "tutor": this.tutorToRate,
       }
       var json = JSON.stringify(values);
       console.log(json);
-      instance.post(url, json, {headers: headers})
+      instance.post(urlOpinion, json, {headers: headers})
       .then((response) => {
         console.log(response);
       });
