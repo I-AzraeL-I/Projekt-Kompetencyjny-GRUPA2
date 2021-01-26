@@ -82,6 +82,7 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
         privateLessonDTO.setStudentFirstName(privateLesson.getStudent().getUser().getFirstName());
         privateLessonDTO.setStudentLastName(privateLesson.getStudent().getUser().getLastName());
         privateLessonDTO.setSubject(modelMapper.map(privateLesson.getSubject(), SubjectDTO.class));
+        privateLessonDTO.setLink(privateLesson.getLink());
         return privateLessonDTO;
     }
 
