@@ -42,4 +42,6 @@ public class PrivateLesson {
     @Column(nullable = false)
     private Short acceptance;
 
+    private String link;
+
 }

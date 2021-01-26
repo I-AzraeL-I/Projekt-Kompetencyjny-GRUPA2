@@ -20,12 +20,23 @@ public class PrivateLessonDTO {
 
     private float price;
 
-    private TutorDTO tutor;
+    private Long tutorId;
 
-    private StudentDTO student;
+    private String tutorFirstName;
+
+    private String tutorLastName;
+
+    private Long StudentId;
+
+    private String studentFirstName;
+
+    private String studentLastName;
 
     private SubjectDTO subject;
 
     private Short acceptance;
+
+    private String link;
+
 
 }
