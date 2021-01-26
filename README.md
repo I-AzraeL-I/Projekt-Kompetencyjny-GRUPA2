@@ -9,11 +9,11 @@ Dominik Snopek - database
 
 ## Technologie
 ### Frontend
-- Vue
+- Vue //
 ### Backend
-- Spring Boot
-- Hibernate
+- Java 11
+- Spring Boot 2.3.5
 ### Baza
-- PostgreSQL
+- PostgreSQL 13
 
 
