@@ -67,6 +67,12 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
                 .collect(Collectors.toSet());
     }
 
+    public Collection<PrivateLessonDTO> getByTutorId(Long id) {
+        return privateLessonRepository.findAllByTutor_User_UserId(id).stream()
+                .map(this::translateToDTO)
+                .collect(Collectors.toSet());
+    }
+
     private PrivateLessonDTO translateToDTO(PrivateLesson privateLesson) {
         PrivateLessonDTO privateLessonDTO = new PrivateLessonDTO();
         privateLessonDTO.setPrivateLessonId(privateLesson.getPrivateLessonId());

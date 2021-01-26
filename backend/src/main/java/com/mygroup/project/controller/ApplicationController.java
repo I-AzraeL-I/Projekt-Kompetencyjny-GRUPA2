@@ -64,9 +64,9 @@ public class ApplicationController {
         return privateLessonService.getByStudentId(id);
     }
 
-//    @GetMapping("/tutorHistory/{id}")
-//    public Collection<PrivateLessonDTO> getTutorHistory(@PathVariable("id") Long id) {
-//        return privateLessonService.getAll();
-//    }
+    @GetMapping("/tutorHistory/{id}")
+    public Collection<PrivateLessonDTO> getTutorHistory(@PathVariable("id") Long id) {
+        return privateLessonService.getByTutorId(id);
+    }
 
 }
