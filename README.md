@@ -9,7 +9,7 @@ Dominik Snopek - database
 
 ## Technologie
 ### Frontend
-- Vue //
+- Vue 2.6.12
 ### Backend
 - Java 11
 - Spring Boot 2.3.5
