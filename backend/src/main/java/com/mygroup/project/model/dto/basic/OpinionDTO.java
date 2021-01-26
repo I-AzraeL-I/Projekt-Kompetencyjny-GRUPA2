@@ -13,4 +13,6 @@ public class OpinionDTO {
 
     private Integer rating;
 
+    private Long tutorId;
+
 }
