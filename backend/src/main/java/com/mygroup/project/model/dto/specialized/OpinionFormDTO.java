@@ -1,6 +1,5 @@
 package com.mygroup.project.model.dto.specialized;
 
-import com.mygroup.project.model.entity.Tutor;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
@@ -23,6 +22,7 @@ public class OpinionFormDTO {
     @Max(value = 5)
     private Integer rating;
 
-    private Tutor tutor;
+    @NotNull
+    private Long tutorId;
 
 }
