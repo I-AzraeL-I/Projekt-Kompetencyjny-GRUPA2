@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -24,7 +23,25 @@ public class Schedule {
     @Column(nullable = false)
     private LocalTime endTime;
 
-    @ElementCollection
-    private List<Integer> days;
+    @Column(nullable = false)
+    private Boolean monday;
+
+    @Column(nullable = false)
+    private Boolean tuesday;
+
+    @Column(nullable = false)
+    private Boolean wednesday;
+
+    @Column(nullable = false)
+    private Boolean thursday;
+
+    @Column(nullable = false)
+    private Boolean friday;
+
+    @Column(nullable = false)
+    private Boolean saturday;
+
+    @Column(nullable = false)
+    private Boolean sunday;
 
 }

@@ -16,6 +16,18 @@ public class ScheduleDTO {
 
     private LocalTime endTime;
 
-    private List<Integer> days;
+    private Boolean monday;
+
+    private Boolean tuesday;
+
+    private Boolean wednesday;
+
+    private Boolean thursday;
+
+    private Boolean friday;
+
+    private Boolean saturday;
+
+    private Boolean sunday;
 
 }
