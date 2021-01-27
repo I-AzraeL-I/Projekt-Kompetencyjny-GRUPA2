@@ -3,15 +3,9 @@ package com.mygroup.project.model.service;
 import com.mygroup.project.exception.DataAlreadyExistsException;
 import com.mygroup.project.exception.DataNotFoundException;
 import com.mygroup.project.exception.UserAlreadyExistsException;
-import com.mygroup.project.model.dto.basic.AddressDTO;
-import com.mygroup.project.model.dto.basic.ContactDTO;
-import com.mygroup.project.model.dto.basic.UserSubjectDTO;
+import com.mygroup.project.model.dto.basic.*;
 import com.mygroup.project.model.dto.specialized.PasswordDTO;
-import com.mygroup.project.model.entity.Role;
-import com.mygroup.project.model.entity.Subject;
-import com.mygroup.project.model.entity.User;
-import com.mygroup.project.model.dto.basic.UserDTO;
-import com.mygroup.project.model.entity.UserSubject;
+import com.mygroup.project.model.entity.*;
 import com.mygroup.project.model.repository.RoleRepository;
 import com.mygroup.project.model.repository.SubjectRepository;
 import com.mygroup.project.model.repository.UserRepository;
@@ -122,6 +116,12 @@ public class UserServiceImpl implements IService<UserDTO> {
     public void updatePassword(Long userId, PasswordDTO passwordDTO) {
         User user = userRepository.findById(userId).orElseThrow(DataNotFoundException::new);
         user.setPassword(passwordEncoder.encode(passwordDTO.getPlainPassword()));
+        userRepository.save(user);
+    }
+
+    public void updateSchedule(Long userId, ScheduleDTO scheduleDTO) {
+        User user = userRepository.findById(userId).orElseThrow(DataNotFoundException::new);
+        modelMapper.map(scheduleDTO, user.getSchedule());
         userRepository.save(user);
     }
 

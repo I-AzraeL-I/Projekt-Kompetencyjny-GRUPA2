@@ -3,6 +3,7 @@ package com.mygroup.project.model.dto.basic;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.mygroup.project.model.dto.View;
+import com.mygroup.project.model.entity.Schedule;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,6 +34,8 @@ public class UserDTO {
     private ContactDTO contact;
 
     private Set<UserSubjectDTO> userSubjects;
+
+    private ScheduleDTO schedule;
 
     @JsonIgnore
     private String password;

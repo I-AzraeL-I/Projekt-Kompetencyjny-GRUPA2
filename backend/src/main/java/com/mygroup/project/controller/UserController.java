@@ -1,14 +1,12 @@
 package com.mygroup.project.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.mygroup.project.model.dto.*;
+import com.mygroup.project.model.dto.Roles;
+import com.mygroup.project.model.dto.View;
 import com.mygroup.project.model.dto.basic.*;
 import com.mygroup.project.model.dto.specialized.PasswordDTO;
 import com.mygroup.project.model.dto.specialized.UserSubjectContainsDTO;
-import com.mygroup.project.model.service.RoleServiceImpl;
-import com.mygroup.project.model.service.SubjectServiceImpl;
-import com.mygroup.project.model.service.UserServiceImpl;
-import com.mygroup.project.model.service.UserSubjectServiceImpl;
+import com.mygroup.project.model.service.*;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.http.ResponseEntity;
@@ -25,14 +23,16 @@ public class UserController {
     private final SubjectServiceImpl subjectService;
     private final UserSubjectServiceImpl userSubjectService;
     private final RoleServiceImpl roleService;
+    private final ScheduleServiceImpl scheduleService;
     private final ModelMapper modelMapper;
 
     public UserController(UserServiceImpl userService, SubjectServiceImpl subjectService,
-                          UserSubjectServiceImpl userSubjectService, RoleServiceImpl roleService, ModelMapper modelMapper) {
+                          UserSubjectServiceImpl userSubjectService, RoleServiceImpl roleService, ScheduleServiceImpl scheduleService, ModelMapper modelMapper) {
         this.userService = userService;
         this.subjectService = subjectService;
         this.userSubjectService = userSubjectService;
         this.roleService = roleService;
+        this.scheduleService = scheduleService;
         this.modelMapper = modelMapper;
     }
 
@@ -117,4 +117,19 @@ public class UserController {
         userService.updatePassword(userID, passwordDTO);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/profil/{id}/schedule")
+    @PreAuthorize("#userID == authentication.principal.userId")
+    public ResponseEntity<ScheduleDTO> getSchedule(@PathVariable("id") Long userID) {
+        UserDTO userDTO = userService.get(userID);
+        return ResponseEntity.ok(userDTO.getSchedule());
+    }
+
+    @PostMapping("/profil/{id}/schedule")
+    @PreAuthorize("#userID == authentication.principal.userId")
+    public ResponseEntity<ScheduleDTO> updateSchedule(@PathVariable("id") Long userID, @Valid @RequestBody ScheduleDTO scheduleDTO) {
+        userService.updateSchedule(userID, scheduleDTO);
+        return ResponseEntity.ok(scheduleDTO);
+    }
+
 }
