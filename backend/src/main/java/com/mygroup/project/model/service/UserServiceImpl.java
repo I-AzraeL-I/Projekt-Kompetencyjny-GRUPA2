@@ -51,7 +51,6 @@ public class UserServiceImpl implements IService<UserDTO> {
     @Override
     public UserDTO create(UserDTO userDTO) {
         getByEmail(userDTO.getContact().getEmailAddress()).ifPresent(e -> {
-            System.err.println("Exists");
             throw new UserAlreadyExistsException(userDTO.getContact().getEmailAddress());
         });
         User user = modelMapper.map(userDTO, User.class);

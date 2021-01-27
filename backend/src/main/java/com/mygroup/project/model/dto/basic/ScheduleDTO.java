@@ -16,18 +16,18 @@ public class ScheduleDTO {
 
     private LocalTime endTime;
 
-    private Boolean monday;
+    private boolean monday;
 
-    private Boolean tuesday;
+    private boolean tuesday;
 
-    private Boolean wednesday;
+    private boolean wednesday;
 
-    private Boolean thursday;
+    private boolean thursday;
 
-    private Boolean friday;
+    private boolean friday;
 
-    private Boolean saturday;
+    private boolean saturday;
 
-    private Boolean sunday;
+    private boolean sunday;
 
 }
