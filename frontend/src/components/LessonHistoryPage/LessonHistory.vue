@@ -15,38 +15,50 @@
 
       <ul v-if="student" class="collapsible popout">
         <li v-for="(element, i) in filteredHistory" v-bind:key="`${i}-${element.id}`">
-          <div v-bind:class="{past: element.Data < todayDate}" class="collapsible-header">
-            {{ element.przedmiot }} - {{ element.Data }}
+          <div class="collapsible-header">
+            <b> {{ element.subject.subjectName }} - {{ element.privateLessonDate }} </b>
           </div>
           <div class="collapsible-body">
             <div class="row">
-              <span class="col s3">Prowadzący zajęcia: {{ element.nauczyciel_id }}</span>
-              <div class="col s2 offset-l7">
-                Cena: {{ element.Cena }}
+              <span class="col s4">Prowadzący zajęcia: {{ element.tutorFirstName }}
+                {{ element.tutorLastName }}</span>
+              <div class="col s1 offset-l7">
+                Cena: {{ element.price }}
               </div>
               <div class="col s12">
-                Data: {{ element.Data }}<br>
-                Czas trwania: {{ element.Godzina_startu }} - {{ element.Godzina_konca }}
+                Data: {{ element.privateLessonDate }}<br>
+                Czas trwania: {{ element.privateLessonStartHour }} -
+                {{ element.privateLessonEndHour }}
+              </div>
+              <div v-show="element.acceptance === 2">
+                <div class="col s4 offset-l6 canceled-text-info">
+                  <b>Termin został odrzucony, wybierz inny termin zajęć.</b>
+                </div>
+                <router-link :to="'/nauczyciel/'+1"><a
+                    class="waves-effect waves-light btn messageButton col s2">Wyślij wiadomość</a>
+                </router-link>
               </div>
             </div>
           </div>
         </li>
         <li v-for="(element, i) in pastFilteredHistory" v-bind:key="`${i}-${element.id}`">
           <div class="past collapsible-header">
-            {{ element.przedmiot }} - {{ element.Data }}
+            <b> {{ element.subject.subjectName }} - {{ element.privateLessonDate }} </b>
           </div>
           <div class="collapsible-body">
             <div class="row">
-              <span class="col s3">Prowadzący zajęcia: {{ element.nauczyciel_id }}</span>
-              <div class="col s2 offset-l7">
-                Cena: {{ element.Cena }}
+              <span class="col s4">Prowadzący zajęcia: {{ element.tutorFirstName }}
+                {{ element.tutorLastName }}</span>
+              <div class="col s1 offset-l7">
+                Cena: {{ element.price }}
               </div>
               <div class="col s12">
-                Data: {{ element.Data }}<br>
-                Czas trwania: {{ element.Godzina_startu }} - {{ element.Godzina_konca }}
+                Data: {{ element.privateLessonDate }}<br>
+                Czas trwania: {{ element.privateLessonStartHour }} -
+                {{ element.privateLessonEndHour }}
               </div>
-              <a v-on:click="tutorToRate = element"
-                 class="waves-effect waves-light btn modal-trigger col s2 offset-l10"
+              <a v-on:click="tutorToRate = element.tutorId"
+                 class="waves-effect btn modal-trigger col s2 offset-l10"
                  href="#modal1">Zostaw opinię</a>
             </div>
           </div>
@@ -56,16 +68,36 @@
 
       <ul v-else class="collapsible popout">
         <li v-for="(element, i) in filteredHistoryT" v-bind:key="`${i}-${element.id}`">
-          <div class="collapsible-header">{{ element.przedmiot }} - {{ element.Data }}</div>
+
+          <div class="collapsible-header row left-align">
+            <div class="col s3">
+            <b>{{ element.subject.subjectName }} -
+            {{ element.privateLessonDate }}</b>
+            </div>
+            <div class="col s1 offset-s8">
+              <i class="material-icons">new_releases</i>
+            </div>
+          </div>
+
           <div class="collapsible-body">
             <div class="row">
-              <span class="col s3">Prowadzący zajęcia: {{ element.nauczyciel_id }}</span>
-              <div class="col s2 offset-l7">
-                Cena: {{ element.Cena }}
+              <span class="col s4">Uczeń: {{ element.studentFirstName }}
+                {{ element.studentLastName }}</span>
+              <div class="col s1 offset-l7">
+                Cena: {{ element.price }}
               </div>
               <div class="col s12">
-                Data: {{ element.Data }}<br>
-                Czas trwania: {{ element.Godzina_startu }} - {{ element.Godzina_konca }}
+                Data: {{ element.privateLessonDate }}<br>
+                Czas trwania: {{ element.privateLessonStartHour }} -
+                {{ element.privateLessonEndHour }}
+              </div>
+              <div class="col s1 offset-l10">
+                <a class="btn-floating btn-large green waves-effect waves-light"><i
+                    class="material-icons">check</i></a>
+              </div>
+              <div class="col s1">
+                <a class="btn-floating btn-large red waves-effect waves-light"><i
+                    class="material-icons">clear</i></a>
               </div>
             </div>
           </div>
@@ -76,8 +108,8 @@
           </div>
           <div class="collapsible-body">
             <div class="row">
-              <span class="col s3">Prowadzący zajęcia: {{ element.nauczyciel_id }}</span>
-              <div class="col s2 offset-l7">
+              <span class="col s4">Prowadzący zajęcia: {{ element.nauczyciel_id }}</span>
+              <div class="col s1 offset-l7">
                 Cena: {{ element.Cena }}
               </div>
               <div class="col s12">
@@ -92,7 +124,8 @@
 
     <div id="modal1" class="modal">
       <div class="modal-content">
-        <h4>Pozostaw opinię dla {{ tutor_id }}</h4>
+        <!--        PUT TUTOR NAME HERE-->
+        <h4>Pozostaw opinię dla 3</h4>
 
         <label for="description">Komentarz</label>
         <textarea id="description"
@@ -108,7 +141,7 @@
         </ul>
       </div>
       <div class="modal-footer">
-        <a v-on:click="addComment" href="#!" class="modal-close waves-effect waves-green btn-flat">Potwierdź</a>
+        <a v-on:click="addComment" href="#!" class="modal-close waves-effect btn-flat">Potwierdź</a>
       </div>
     </div>
   </div>
@@ -116,38 +149,45 @@
 
 <script>
 
-import data from "@/tempKorki.JSON";
 import instance from "@/server";
 import headers from "@/headers";
 
-// let url = '/history/' + localStorage.id;
-let urlHistory = '/studentHistory/1';
+let urlStudentHistory = '/studentHistory/' + localStorage.id;
+let urlTutorHistory = '/tutorHistory/' + localStorage.id;
 let urlOpinion = '/addOpinion';
 export default {
   name: "LessonHistory",
   components: {},
   data() {
     return {
+      userId: localStorage.id,
       componentName: 'StudentHistory',
-      lessonsHistory: data,
+      historyStudent: [],
+      historyTutor: [],
       filteredHistory: [],
       filteredHistoryT: [],
-      pastFilteredHistory: [],
-      pastFilteredHistoryT: [],
       student: true,
       todayDate: "",
       maxStars: 5,
       stars: 0,
+      tutorName: "",
       tutorToRate: null,
       description: null,
+      temp: [],
+
     }
   },
   created() {
-    instance.get(urlHistory)
+    instance.get(urlStudentHistory)
     .then((response) => {
-      console.log(response.data);
+      this.historyStudent = response.data;
     });
-    this.todayDate = this.$moment().format("DD-MM-YYYY").toString();
+
+    instance.get(urlTutorHistory)
+    .then((response) => {
+      this.historyTutor = response.data;
+    });
+
     document.addEventListener('DOMContentLoaded', function () {
       var elems = document.querySelectorAll('.collapsible');
       // eslint-disable-next-line no-unused-vars,no-undef
@@ -158,24 +198,31 @@ export default {
       // eslint-disable-next-line no-unused-vars,no-undef
       var instances = M.Modal.init(elems, 1);
     });
-    console.log(this.todayDate);
-    console.log(this.lessonsHistory[2].Data);
-    console.log(this.$moment(this.todayDate).isAfter(this.lessonsHistory[2].Data))
+    // console.log(this.lessonsHistory);
+    // console.log(this.lessonsHistory.length);
+  },
+  computed: {
+    pastFilteredHistory: function () {
+      return this.historyStudent.filter((lesson) => {
+          if (!this.$moment(lesson.privateLessonDate).isAfter()) {
+            console.log(lesson.privateLessonDate);
 
-    for (let i = 0; i < this.lessonsHistory.length; i++) {
-      if (this.lessonsHistory[i].uczen_id === localStorage.id) {
-        if (!this.$moment(this.todayDate).isAfter(this.lessonsHistory[i].Data)) {
-          this.pastFilteredHistory.push(this.lessonsHistory[i]);
-        } else {
-          this.filteredHistory.push(this.lessonsHistory[i]);
-        }
-      }
+            return lesson;
+          } else {
+            this.filteredHistory.push(lesson);
+          }
+      });
+    },
+    pastFilteredHistoryT: function () {
+      return this.historyTutor.filter((lesson) => {
+          if (!this.$moment(lesson.privateLessonDate).isAfter()) {
+            return lesson;
+          } else {
+            this.filteredHistoryT.push(lesson);
+          }
+      });
     }
-    for (let i = 0; i < this.lessonsHistory.length; i++) {
-      if (this.lessonsHistory[i].nauczyciel_id === localStorage.id) {
-        this.filteredHistoryT.push(this.lessonsHistory[i]);
-      }
-    }
+
   },
   methods: {
     toggleClass(event) {
@@ -202,7 +249,7 @@ export default {
       let values = {
         "comment": this.description,
         "rating": this.stars,
-        "tutor": this.tutorToRate,
+        "tutorId": 1,
       }
       var json = JSON.stringify(values);
       console.log(json);
@@ -222,7 +269,19 @@ export default {
 }
 
 .past {
-  background-color: lightgrey;
+  background-color: #e0e0e0;
+}
+
+.green {
+  background-color: green;
+}
+
+.canceled {
+  background-color: #ff867c;
+}
+
+.canceled-text-info {
+  color: #ff867c;
 }
 
 .switch-wrap {
@@ -233,10 +292,20 @@ export default {
   text-align: center;
 }
 
+.btn {
+  background-color: rgb(85, 214, 170);
+}
+
+.btn:hover {
+  background-color: red;
+}
+
 .student, .teacher {
   height: 100%;
 }
-
+.material-icons {
+  color:orange;
+}
 .student {
   border-bottom-left-radius: 15px;
   border-top-left-radius: 15px;
