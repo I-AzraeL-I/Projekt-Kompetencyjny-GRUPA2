@@ -4,14 +4,18 @@ import com.mygroup.project.exception.DataNotFoundException;
 import com.mygroup.project.model.dto.basic.PrivateLessonDTO;
 import com.mygroup.project.model.dto.basic.SubjectDTO;
 import com.mygroup.project.model.entity.PrivateLesson;
+import com.mygroup.project.model.entity.Student;
+import com.mygroup.project.model.entity.Subject;
+import com.mygroup.project.model.entity.Tutor;
 import com.mygroup.project.model.repository.PrivateLessonRepository;
+import com.mygroup.project.model.repository.StudentRepository;
+import com.mygroup.project.model.repository.TutorRepository;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.Set;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,10 +23,14 @@ import java.util.stream.Collectors;
 public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
 
     private final PrivateLessonRepository privateLessonRepository;
+    private final TutorRepository tutorRepository;
+    private final StudentRepository studentRepository;
     private final ModelMapper modelMapper;
 
-    public PrivateLessonServiceImpl(PrivateLessonRepository privateLessonRepository, ModelMapper modelMapper) {
+    public PrivateLessonServiceImpl(PrivateLessonRepository privateLessonRepository, TutorRepository tutorRepository, StudentRepository studentRepository, ModelMapper modelMapper) {
         this.privateLessonRepository = privateLessonRepository;
+        this.tutorRepository = tutorRepository;
+        this.studentRepository = studentRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -41,17 +49,14 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
 
     @Override
     public PrivateLessonDTO create(PrivateLessonDTO privateLessonDTO) {
-        //todo
-        PrivateLesson privateLesson = modelMapper.map(privateLessonDTO, PrivateLesson.class);
+        PrivateLesson privateLesson = translateFromDTO(privateLessonDTO);
         privateLessonRepository.save(privateLesson);
         return privateLessonDTO;
     }
 
     @Override
     public PrivateLessonDTO update(PrivateLessonDTO privateLessonDTO) {
-        //todo
-        PrivateLesson privateLesson = privateLessonRepository.findById(privateLessonDTO.getPrivateLessonId()).orElseThrow(DataNotFoundException::new);
-        modelMapper.map(privateLessonDTO, privateLesson);
+        PrivateLesson privateLesson = translateFromDTO(privateLessonDTO);
         privateLessonRepository.save(privateLesson);
         return privateLessonDTO;
     }
@@ -90,6 +95,22 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
         privateLessonDTO.setSubject(modelMapper.map(privateLesson.getSubject(), SubjectDTO.class));
         privateLessonDTO.setLink(privateLesson.getLink());
         return privateLessonDTO;
+    }
+
+    private PrivateLesson translateFromDTO(PrivateLessonDTO privateLessonDTO) {
+        PrivateLesson privateLesson = new PrivateLesson();
+        privateLesson.setPrivateLessonDate(privateLessonDTO.getPrivateLessonDate());
+        privateLesson.setPrivateLessonStartHour(privateLessonDTO.getPrivateLessonStartHour());
+        privateLesson.setPrivateLessonEndHour(privateLessonDTO.getPrivateLessonEndHour());
+        privateLesson.setPrice(privateLessonDTO.getPrice());
+        Optional<Tutor> tutor = tutorRepository.findById(privateLessonDTO.getTutorId());
+        tutor.ifPresent(theTutor -> privateLesson.setTutor(tutor.get()));
+        Optional<Student> student = studentRepository.findById(privateLessonDTO.getStudentId());
+        student.ifPresent(theStudent -> privateLesson.setStudent(student.get()));
+        privateLesson.setSubject(modelMapper.map(privateLessonDTO.getSubject(), Subject.class));
+        privateLesson.setAcceptance(privateLessonDTO.getAcceptance());
+        privateLesson.setLink(privateLessonDTO.getLink());
+        return privateLesson;
     }
 
 }
