@@ -34,7 +34,8 @@ public class PrivateLessonDTO {
 
     private SubjectDTO subject;
 
-    private boolean accepted;
+    //0 pending, 1 accepted 2 rejected
+    private int acceptance;
 
     private String link;
 

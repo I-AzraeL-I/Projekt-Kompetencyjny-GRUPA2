@@ -89,7 +89,7 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
         PrivateLessonDTO privateLessonDTO = new PrivateLessonDTO();
         privateLessonDTO.setPrivateLessonId(privateLesson.getPrivateLessonId());
         privateLessonDTO.setPrice(privateLesson.getPrice());
-        privateLessonDTO.setAccepted(privateLesson.isAccepted());
+        privateLessonDTO.setAcceptance(privateLesson.getAcceptance());
         privateLessonDTO.setPrivateLessonDate(privateLesson.getPrivateLessonDate());
         privateLessonDTO.setPrivateLessonStartHour(privateLesson.getPrivateLessonStartHour());
         privateLessonDTO.setPrivateLessonEndHour(privateLesson.getPrivateLessonEndHour());
@@ -119,7 +119,7 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
         studentRepository.save(student);
         privateLesson.setStudent(student);
         privateLesson.setSubject(modelMapper.map(privateLessonDTO.getSubject(), Subject.class));
-        //privateLesson.setAccepted(privateLessonDTO.isAccepted());
+        //privateLesson.setAcceptance(0);
         //privateLesson.setLink(privateLessonDTO.getLink());
         return privateLesson;
     }

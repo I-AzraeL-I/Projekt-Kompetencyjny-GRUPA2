@@ -39,8 +39,7 @@ public class PrivateLesson {
     @ManyToOne(optional = false)
     private Subject subject;
 
-    @Column(nullable = false)
-    private boolean accepted;
+    private int acceptance;
 
     private String link;
 

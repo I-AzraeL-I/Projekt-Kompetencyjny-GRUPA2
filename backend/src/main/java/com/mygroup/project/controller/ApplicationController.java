@@ -73,6 +73,8 @@ public class ApplicationController {
     @PostMapping("/addPrivateLesson")
     public ResponseEntity<?> addLesson(@Valid @RequestBody PrivateLessonFormDTO privateLessonFormDTO) {
         PrivateLessonDTO privateLessonDTO = modelMapper.map(privateLessonFormDTO, PrivateLessonDTO.class);
+        privateLessonDTO.setAcceptance(0);
+        privateLessonDTO.setPrice(100);
         privateLessonDTO = privateLessonService.create(privateLessonDTO);
         return ResponseEntity.created(URI.create("/addLesson/")).headers(new HttpHeaders()).body(privateLessonDTO.getPrivateLessonId());
     }
