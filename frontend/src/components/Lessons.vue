@@ -23,7 +23,6 @@
                 <p>{{ lesson.description }}</p>
               </div>
               <div class="right col s12 m3 l3">
-                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
                 <div class="buttons">
 
                   <router-link :to="'/nauczyciel/'+lesson.userId"><a
@@ -90,7 +89,14 @@ export default {
   grid-column: 2 / 3;
 }
 
+.btn {
 
+  background-color: rgb(51,51,51);
+}
+
+.btn:hover {
+  background-color: rgb(85, 214, 170);
+}
 .skills {
   margin-top: 20px;
 }

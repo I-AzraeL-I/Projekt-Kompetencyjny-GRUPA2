@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="container row">
+    <div class="container row center">
       <div class="register-form z-depth-3 col s12 m6 offset-m3 l4 offset-l4 row">
         <div class="login-wrapper"><h1><img id="logo" src="../assets/korki.png"></h1></div>
         <dynamic-form class="dynamic-form col s10 offset-s1"
@@ -9,6 +9,8 @@
                       @submit="login"
 
         />
+      </div>
+      <div class="col s12 button-wrapper">
         <button type="submit" :form="testForm.id" class="waves-effect waves-light btn signButton">
           Zaloguj
         </button>
@@ -91,18 +93,31 @@ export default {
   margin-bottom: 75px;
 }
 
+.btn {
+
+  background-color: rgb(51, 51, 51);
+}
+
+.btn:hover {
+  background-color: rgb(85, 214, 170);
+}
+
 #logo {
   width: 100%;
 }
 
 .register-form {
 
-  margin-bottom: 100px;
+  margin-bottom: 40px;
   grid-column: 2 / 3;
   background-color: rgb(85, 214, 170);
   border-radius: 10px 10px 30px 30px;
   padding: 0 30px 20px;
 
+}
+
+.button-wrapper {
+  margin-bottom: 50px;
 }
 
 .signButton {

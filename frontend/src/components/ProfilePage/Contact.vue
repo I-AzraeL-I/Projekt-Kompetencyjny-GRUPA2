@@ -39,6 +39,7 @@
 <script>
 import instance from "../../server.js"
 import headers from "../../headers.js"
+
 let url = '/profil/' + localStorage.id + '/contact';
 export default {
   name: "Contact",
@@ -75,5 +76,12 @@ export default {
 </script>
 
 <style scoped>
+.btn {
 
+  background-color: rgb(51, 51, 51);
+}
+
+.btn:hover {
+  background-color: rgb(85, 214, 170);
+}
 </style>
