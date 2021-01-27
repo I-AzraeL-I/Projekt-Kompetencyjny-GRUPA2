@@ -17,31 +17,22 @@ public class Schedule {
     @Setter(AccessLevel.NONE)
     private Long scheduleId;
 
-    @Column(nullable = false)
     private LocalTime startTime;
 
-    @Column(nullable = false)
     private LocalTime endTime;
 
-    @Column(nullable = false)
-    private Boolean monday;
+    private boolean monday;
 
-    @Column(nullable = false)
-    private Boolean tuesday;
+    private boolean tuesday;
 
-    @Column(nullable = false)
-    private Boolean wednesday;
+    private boolean wednesday;
 
-    @Column(nullable = false)
-    private Boolean thursday;
+    private boolean thursday;
 
-    @Column(nullable = false)
-    private Boolean friday;
+    private boolean friday;
 
-    @Column(nullable = false)
-    private Boolean saturday;
+    private boolean saturday;
 
-    @Column(nullable = false)
-    private Boolean sunday;
+    private boolean sunday;
 
 }
