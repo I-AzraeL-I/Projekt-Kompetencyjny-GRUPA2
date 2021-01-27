@@ -70,7 +70,7 @@ public class ApplicationController {
         return privateLessonService.getByTutorId(id);
     }
 
-    @PostMapping("/addLesson")
+    @PostMapping("/addPrivateLesson")
     public ResponseEntity<?> addLesson(@Valid @RequestBody PrivateLessonFormDTO privateLessonFormDTO) {
         PrivateLessonDTO privateLessonDTO = modelMapper.map(privateLessonFormDTO, PrivateLessonDTO.class);
         privateLessonDTO = privateLessonService.create(privateLessonDTO);
