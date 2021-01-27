@@ -62,7 +62,14 @@ export default {
   box-sizing: border-box;
   padding-top: 66px;
 }
+.btn {
 
+  background-color: rgb(51,51,51);
+}
+
+.btn:hover {
+  background-color: rgb(85, 214, 170);
+}
 p {
   font-size: 20px;
   letter-spacing: 0.5px;

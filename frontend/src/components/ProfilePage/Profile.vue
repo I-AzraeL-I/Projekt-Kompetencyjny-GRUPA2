@@ -45,6 +45,7 @@ import SubjectTab from "@/components/ProfilePage/SubjectTab";
 import Contact from "@/components/ProfilePage/Contact";
 import Address from "@/components/ProfilePage/Address";
 import Settings from "@/components/ProfilePage/Settings";
+
 export default {
   name: "Profil",
   components: {
@@ -61,11 +62,12 @@ export default {
     }
   },
   methods: {
-    toggleClass (event) {
+    toggleClass(event) {
       var el = document.querySelector(".collection");
       var len = document.querySelectorAll(".collection-item").length;
-      for (var i = 0; i < len; i++)
+      for (var i = 0; i < len; i++) {
         el.getElementsByTagName("li")[i].classList.remove("current");
+      }
       event.target.classList.add("current");
     }
   }
@@ -81,10 +83,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: rgb(55, 138, 110);
 }
+
 .content {
   padding: 70px;
-
 }
+
 @media only screen and (min-width: 1400px) {
   .content {
     height: 79.3vh;

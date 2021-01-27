@@ -23,7 +23,7 @@
               <span class="col s4">Prowadzący zajęcia: {{ element.tutorFirstName }}
                 {{ element.tutorLastName }}</span>
               <div class="col s1 offset-l7">
-                Cena: {{ element.price }}
+                Cena: {{ element.price }} zł
               </div>
               <div class="col s12">
                 Data: {{ element.privateLessonDate }}<br>
@@ -50,7 +50,7 @@
               <span class="col s4">Prowadzący zajęcia: {{ element.tutorFirstName }}
                 {{ element.tutorLastName }}</span>
               <div class="col s1 offset-l7">
-                Cena: {{ element.price }}
+                Cena: {{ element.price }} zł
               </div>
               <div class="col s12">
                 Data: {{ element.privateLessonDate }}<br>
@@ -75,7 +75,7 @@
             {{ element.privateLessonDate }}</b>
             </div>
             <div class="col s1 offset-s8">
-              <i class="material-icons">new_releases</i>
+              <i class="material-icons new-notification">new_releases</i>
             </div>
           </div>
 
@@ -84,7 +84,7 @@
               <span class="col s4">Uczeń: {{ element.studentFirstName }}
                 {{ element.studentLastName }}</span>
               <div class="col s1 offset-l7">
-                Cena: {{ element.price }}
+                Cena: {{ element.price }} zł
               </div>
               <div class="col s12">
                 Data: {{ element.privateLessonDate }}<br>
@@ -92,7 +92,7 @@
                 {{ element.privateLessonEndHour }}
               </div>
               <div class="col s1 offset-l10">
-                <a class="btn-floating btn-large green waves-effect waves-light"><i
+                <a v-on:click="confirm()" class="btn-floating btn-large green waves-effect waves-light"><i
                     class="material-icons">check</i></a>
               </div>
               <div class="col s1">
@@ -124,8 +124,7 @@
 
     <div id="modal1" class="modal">
       <div class="modal-content">
-        <!--        PUT TUTOR NAME HERE-->
-        <h4>Pozostaw opinię dla 3</h4>
+        <h4>Twoja opinia</h4>
 
         <label for="description">Komentarz</label>
         <textarea id="description"
@@ -171,6 +170,7 @@ export default {
       maxStars: 5,
       stars: 0,
       tutorName: "",
+      tutorToRateName:"",
       tutorToRate: null,
       description: null,
       temp: [],
@@ -198,8 +198,6 @@ export default {
       // eslint-disable-next-line no-unused-vars,no-undef
       var instances = M.Modal.init(elems, 1);
     });
-    // console.log(this.lessonsHistory);
-    // console.log(this.lessonsHistory.length);
   },
   computed: {
     pastFilteredHistory: function () {
@@ -246,6 +244,7 @@ export default {
       }
     },
     addComment() {
+      console.log(this.tutorToRate);
       let values = {
         "comment": this.description,
         "rating": this.stars,
@@ -258,6 +257,9 @@ export default {
         console.log(response);
       });
     },
+    confirm() {
+      console.log("e");
+    }
   }
 }
 </script>
@@ -293,17 +295,17 @@ export default {
 }
 
 .btn {
-  background-color: rgb(85, 214, 170);
+  background-color: rgb(51,51,51);
 }
 
 .btn:hover {
-  background-color: red;
+  background-color: rgb(85, 214, 170);
 }
 
 .student, .teacher {
   height: 100%;
 }
-.material-icons {
+.new-notification {
   color:orange;
 }
 .student {

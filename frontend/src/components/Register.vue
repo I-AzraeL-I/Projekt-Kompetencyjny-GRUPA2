@@ -9,7 +9,10 @@
                     @submit="addUser"
 
       />
+
       <div id="pmatch" class="col s12 error"></div>
+    </div>
+    <div class="button-wrapper col s12">
       <button type="submit" :form="testForm.id" class="waves-effect waves-light btn signButton">
         Zarejestruj
       </button>
@@ -18,8 +21,8 @@
 </template>
 
 <script>
-import instance from"../server.js"
-import headers from"../headers.js"
+import instance from "../server.js"
+import headers from "../headers.js"
 import {
   FormField,
   FormValidation,
@@ -137,20 +140,23 @@ export default {
   methods: {
     addUser(values) {
       if (values.plainPassword === values.plainPassword2) {
-        let json = JSON.stringify(values, ['firstName','lastName','birthDate','city','street','emailAddress','phoneNumber','plainPassword']);
-        let loginJson = JSON.stringify(values,['emailAddress','plainPassword']);
+        let json = JSON.stringify(values,
+            ['firstName', 'lastName', 'birthDate', 'city', 'street', 'emailAddress', 'phoneNumber',
+              'plainPassword']);
+        let loginJson = JSON.stringify(values, ['emailAddress', 'plainPassword']);
         console.log(loginJson);
         console.log(json);
-        instance.post('/addUser', json, {headers:headers})
+        instance.post('/addUser', json, {headers: headers})
         .then((response) => {
           instance.post('/login', loginJson, {headers: headers});
           this.$router.push({name: "profil"});
-          this.$router.go({name:"profil"});
-          window.localStorage.setItem('id',response.data);
+          this.$router.go({name: "profil"});
+          window.localStorage.setItem('id', response.data);
           // eslint-disable-next-line no-unused-vars
-        }).catch(error=>(this.$toast.error('\nIstnieje już użytkownik zarejestrowany na ten adres Email.', {
-          position: 'top'
-        })));
+        }).catch(error => (this.$toast.error(
+            '\nIstnieje już użytkownik zarejestrowany na ten adres Email.', {
+              position: 'top'
+            })));
       }
     },
     checkPassword(values) {
@@ -177,17 +183,32 @@ export default {
 .login-wrapper {
   margin-bottom: 75px;
 }
+
 #logo {
   width: 100%;
 }
+
+.btn {
+
+  background-color: rgb(51, 51, 51);
+}
+
+.btn:hover {
+  background-color: rgb(51, 51, 51);
+}
+
 .register-form {
 
-  margin-bottom: 100px;
+  margin-bottom: 40px;
   grid-column: 2 / 3;
   background-color: rgb(85, 214, 170);
   border-radius: 10px 10px 30px 30px;
   padding: 0 30px 20px;
 
+}
+
+.button-wrapper {
+  margin-bottom: 50px;
 }
 
 .signButton {
@@ -196,5 +217,6 @@ export default {
 
 .error {
   color: red;
+  margin-bottom: 20px;
 }
 </style>

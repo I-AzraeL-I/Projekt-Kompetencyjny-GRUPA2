@@ -43,9 +43,9 @@
             ></textarea>
           </p>
 
-            <button type="submit" class="waves-effect waves-light btn signButton">
-              Zapisz
-            </button>
+          <button type="submit" class="waves-effect waves-light btn signButton">
+            Zapisz
+          </button>
         </form>
       </div>
     </div>
@@ -103,5 +103,14 @@ export default {
 <style scoped>
 #description {
   height: 120px;
+}
+
+.btn {
+
+  background-color: rgb(51, 51, 51);
+}
+
+.btn:hover {
+  background-color: rgb(85, 214, 170);
 }
 </style>

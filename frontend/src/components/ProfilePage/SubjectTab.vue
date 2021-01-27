@@ -68,9 +68,9 @@ export default {
       for (let i = 0; i < this.subjects.length; i++) {
         if (this.subjects[i].chosen !== this.subjectsOriginal[i].chosen) {
           var value = {
-            "subjectId":this.subjects[i].subjectId,
-            "subjectName":this.subjects[i].subjectName,
-            "chosen":this.subjects[i].chosen
+            "subjectId": this.subjects[i].subjectId,
+            "subjectName": this.subjects[i].subjectName,
+            "chosen": this.subjects[i].chosen
           }
           let json = JSON.stringify(value);
           console.log(json);
@@ -86,9 +86,9 @@ export default {
       for (let i = 0; i < this.weekDays.length; i++) {
         if (this.subjects[i].chosen !== this.subjectsOriginal[i].chosen) {
           var value = {
-            "subjectId":this.subjects[i].subjectId,
-            "subjectName":this.subjects[i].subjectName,
-            "chosen":this.subjects[i].chosen
+            "subjectId": this.subjects[i].subjectId,
+            "subjectName": this.subjects[i].subjectName,
+            "chosen": this.subjects[i].chosen
           }
           let json = JSON.stringify(value);
           console.log(json);
@@ -113,6 +113,14 @@ export default {
 
 .description {
   margin-top: 20px;
+}
+
+.btn {
+  background-color: rgb(51, 51, 51);
+}
+
+.btn:hover {
+  background-color: rgb(85, 214, 170);
 }
 </style>
 

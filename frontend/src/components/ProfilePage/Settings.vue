@@ -50,7 +50,7 @@ export default {
     updateValues() {
       event.preventDefault();
       if (this.plainPassword === this.password2) {
-        let value = {"plainPassword" : this.plainPassword}
+        let value = {"plainPassword": this.plainPassword}
         let json = JSON.stringify(value);
         instance.post(url, json, {headers: headers})
         .then((response) => {
@@ -63,5 +63,12 @@ export default {
 </script>
 
 <style scoped>
+.btn {
 
+  background-color: rgb(51, 51, 51);
+}
+
+.btn:hover {
+  background-color: rgb(85, 214, 170);
+}
 </style>
