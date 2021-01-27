@@ -5,10 +5,14 @@ import com.mygroup.project.model.dto.basic.ScheduleDTO;
 import com.mygroup.project.model.entity.Schedule;
 import com.mygroup.project.model.repository.ScheduleRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+@Service
+@Transactional
 public class ScheduleServiceImpl implements IService<ScheduleDTO> {
 
     private final ScheduleRepository scheduleRepository;
