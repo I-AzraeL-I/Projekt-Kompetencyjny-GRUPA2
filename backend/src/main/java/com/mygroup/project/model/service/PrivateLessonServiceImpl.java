@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -44,7 +45,9 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
     public Collection<PrivateLessonDTO> getAll() {
         return privateLessonRepository.findAll().stream()
                 .map(this::translateToDTO)
-                .collect(Collectors.toSet());
+                .sorted(Comparator.comparing(PrivateLessonDTO::getPrivateLessonDate)
+                        .thenComparing(PrivateLessonDTO::getPrivateLessonStartHour))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -69,13 +72,17 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
     public Collection<PrivateLessonDTO> getByStudentId(Long id) {
         return privateLessonRepository.findAllByStudent_User_UserId(id).stream()
                 .map(this::translateToDTO)
-                .collect(Collectors.toSet());
+                .sorted(Comparator.comparing(PrivateLessonDTO::getPrivateLessonDate)
+                        .thenComparing(PrivateLessonDTO::getPrivateLessonStartHour))
+                .collect(Collectors.toList());
     }
 
     public Collection<PrivateLessonDTO> getByTutorId(Long id) {
         return privateLessonRepository.findAllByTutor_User_UserId(id).stream()
                 .map(this::translateToDTO)
-                .collect(Collectors.toSet());
+                .sorted(Comparator.comparing(PrivateLessonDTO::getPrivateLessonDate)
+                        .thenComparing(PrivateLessonDTO::getPrivateLessonStartHour))
+                .collect(Collectors.toList());
     }
 
     private PrivateLessonDTO translateToDTO(PrivateLesson privateLesson) {

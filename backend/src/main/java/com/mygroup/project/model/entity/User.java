@@ -37,6 +37,8 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    @Lob
+    @Column(length = 2000)
     private String description;
 
     @Column(nullable = false)
