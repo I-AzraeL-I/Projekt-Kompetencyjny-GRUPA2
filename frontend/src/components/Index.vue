@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div v-for="(text,index) in displayedText" v-bind:key="text" class="row">
+    <div v-for="(text,index) in displayedText" v-bind:key="index" class="row">
       <div class="col s12 m6 l6">
         <div>
           <a href="http://www.freepik.com">
