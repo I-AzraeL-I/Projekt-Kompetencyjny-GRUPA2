@@ -40,7 +40,7 @@ public class PrivateLesson {
     private Subject subject;
 
     @Column(nullable = false)
-    private Short acceptance;
+    private boolean accepted;
 
     private String link;
 

@@ -3,13 +3,11 @@ package com.mygroup.project.model.service;
 import com.mygroup.project.exception.DataNotFoundException;
 import com.mygroup.project.model.dto.basic.PrivateLessonDTO;
 import com.mygroup.project.model.dto.basic.SubjectDTO;
-import com.mygroup.project.model.entity.PrivateLesson;
-import com.mygroup.project.model.entity.Student;
-import com.mygroup.project.model.entity.Subject;
-import com.mygroup.project.model.entity.Tutor;
+import com.mygroup.project.model.entity.*;
 import com.mygroup.project.model.repository.PrivateLessonRepository;
 import com.mygroup.project.model.repository.StudentRepository;
 import com.mygroup.project.model.repository.TutorRepository;
+import com.mygroup.project.model.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,14 +23,16 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
 
     private final PrivateLessonRepository privateLessonRepository;
     private final TutorRepository tutorRepository;
+    private final UserRepository userRepository;
     private final StudentRepository studentRepository;
     private final ModelMapper modelMapper;
 
-    public PrivateLessonServiceImpl(PrivateLessonRepository privateLessonRepository, TutorRepository tutorRepository, StudentRepository studentRepository, ModelMapper modelMapper) {
+    public PrivateLessonServiceImpl(PrivateLessonRepository privateLessonRepository, TutorRepository tutorRepository, UserRepository userRepository, ModelMapper modelMapper, StudentRepository studentRepository) {
         this.privateLessonRepository = privateLessonRepository;
         this.tutorRepository = tutorRepository;
-        this.studentRepository = studentRepository;
+        this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.studentRepository = studentRepository;
     }
 
     @Override
@@ -89,7 +89,7 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
         PrivateLessonDTO privateLessonDTO = new PrivateLessonDTO();
         privateLessonDTO.setPrivateLessonId(privateLesson.getPrivateLessonId());
         privateLessonDTO.setPrice(privateLesson.getPrice());
-        privateLessonDTO.setAcceptance(privateLesson.getAcceptance());
+        privateLessonDTO.setAccepted(privateLesson.isAccepted());
         privateLessonDTO.setPrivateLessonDate(privateLesson.getPrivateLessonDate());
         privateLessonDTO.setPrivateLessonStartHour(privateLesson.getPrivateLessonStartHour());
         privateLessonDTO.setPrivateLessonEndHour(privateLesson.getPrivateLessonEndHour());
@@ -112,11 +112,15 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
         privateLesson.setPrice(privateLessonDTO.getPrice());
         Optional<Tutor> tutor = tutorRepository.findById(privateLessonDTO.getTutorId());
         tutor.ifPresent(theTutor -> privateLesson.setTutor(tutor.get()));
-        Optional<Student> student = studentRepository.findById(privateLessonDTO.getStudentId());
-        student.ifPresent(theStudent -> privateLesson.setStudent(student.get()));
+
+        User user = userRepository.findById(privateLessonDTO.getStudentId()).orElseThrow(DataNotFoundException::new);
+        Student student = new Student();
+        student.setUser(user);
+        studentRepository.save(student);
+        privateLesson.setStudent(student);
         privateLesson.setSubject(modelMapper.map(privateLessonDTO.getSubject(), Subject.class));
-        privateLesson.setAcceptance(privateLessonDTO.getAcceptance());
-        privateLesson.setLink(privateLessonDTO.getLink());
+        //privateLesson.setAccepted(privateLessonDTO.isAccepted());
+        //privateLesson.setLink(privateLessonDTO.getLink());
         return privateLesson;
     }
 

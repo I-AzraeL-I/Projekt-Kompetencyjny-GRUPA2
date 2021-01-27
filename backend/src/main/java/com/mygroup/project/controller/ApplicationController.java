@@ -5,6 +5,7 @@ import com.mygroup.project.model.dto.basic.OpinionDTO;
 import com.mygroup.project.model.dto.basic.PrivateLessonDTO;
 import com.mygroup.project.model.dto.basic.TutorDTO;
 import com.mygroup.project.model.dto.specialized.OpinionFormDTO;
+import com.mygroup.project.model.dto.specialized.PrivateLessonFormDTO;
 import com.mygroup.project.model.dto.specialized.UserSubjectOfferDTO;
 import com.mygroup.project.model.service.OpinionServiceImpl;
 import com.mygroup.project.model.service.PrivateLessonServiceImpl;
@@ -67,6 +68,13 @@ public class ApplicationController {
     @GetMapping("/tutorHistory/{id}")
     public Collection<PrivateLessonDTO> getTutorHistory(@PathVariable("id") Long id) {
         return privateLessonService.getByTutorId(id);
+    }
+
+    @PostMapping("/addLesson")
+    public ResponseEntity<?> addLesson(@Valid @RequestBody PrivateLessonFormDTO privateLessonFormDTO) {
+        PrivateLessonDTO privateLessonDTO = modelMapper.map(privateLessonFormDTO, PrivateLessonDTO.class);
+        privateLessonDTO = privateLessonService.create(privateLessonDTO);
+        return ResponseEntity.created(URI.create("/addLesson/")).headers(new HttpHeaders()).body(privateLessonDTO.getPrivateLessonId());
     }
 
 }

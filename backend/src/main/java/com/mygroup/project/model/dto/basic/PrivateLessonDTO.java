@@ -26,7 +26,7 @@ public class PrivateLessonDTO {
 
     private String tutorLastName;
 
-    private Long StudentId;
+    private Long studentId;
 
     private String studentFirstName;
 
@@ -34,7 +34,7 @@ public class PrivateLessonDTO {
 
     private SubjectDTO subject;
 
-    private Short acceptance;
+    private boolean accepted;
 
     private String link;
 
