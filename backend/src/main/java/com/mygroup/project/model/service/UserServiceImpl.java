@@ -8,6 +8,7 @@ import com.mygroup.project.model.dto.specialized.PasswordDTO;
 import com.mygroup.project.model.entity.*;
 import com.mygroup.project.model.repository.RoleRepository;
 import com.mygroup.project.model.repository.SubjectRepository;
+import com.mygroup.project.model.repository.TutorRepository;
 import com.mygroup.project.model.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -26,14 +27,16 @@ public class UserServiceImpl implements IService<UserDTO> {
     private final UserRepository userRepository;
     private final SubjectRepository subjectRepository;
     private final RoleRepository roleRepository;
+    private final TutorRepository tutorRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
     private final static String userRole = "ROLE_USER"; //not associated with student and teacher role, used only by spring auth
 
-    public UserServiceImpl(UserRepository userRepository, SubjectRepository subjectRepository, RoleRepository roleRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, SubjectRepository subjectRepository, RoleRepository roleRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, TutorRepository tutorRepository) {
         this.userRepository = userRepository;
         this.subjectRepository = subjectRepository;
         this.roleRepository = roleRepository;
+        this.tutorRepository = tutorRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
     }
@@ -93,6 +96,9 @@ public class UserServiceImpl implements IService<UserDTO> {
         userSubject.setSubject(subject);
         userSubject.setUser(user);
         user.getUserSubjects().add(userSubject);
+        Tutor tutor = new Tutor();
+        tutor.setUser(user);
+        tutorRepository.save(tutor);
         userRepository.save(user);
     }
 
