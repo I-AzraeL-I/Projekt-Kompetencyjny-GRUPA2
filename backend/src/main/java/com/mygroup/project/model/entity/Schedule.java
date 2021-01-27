@@ -19,10 +19,10 @@ public class Schedule {
     private Long scheduleId;
 
     @Column(nullable = false)
-    private LocalTime start;
+    private LocalTime startTime;
 
     @Column(nullable = false)
-    private LocalTime end;
+    private LocalTime endTime;
 
     @ElementCollection
     private List<Integer> days;

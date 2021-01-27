@@ -5,10 +5,12 @@ import com.mygroup.project.model.dto.basic.ScheduleDTO;
 import com.mygroup.project.model.entity.Schedule;
 import com.mygroup.project.model.repository.ScheduleRepository;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,15 +27,12 @@ public class ScheduleServiceImpl implements IService<ScheduleDTO> {
 
     @Override
     public ScheduleDTO get(Long id) {
-        Schedule schedule = scheduleRepository.findById(id).orElseThrow(DataNotFoundException::new);
-        return translateToDTO(schedule);
+        return modelMapper.map(scheduleRepository.findById(id).orElseThrow(DataNotFoundException::new), ScheduleDTO.class);
     }
 
     @Override
     public Collection<ScheduleDTO> getAll() {
-        return scheduleRepository.findAll().stream()
-                .map(this::translateToDTO)
-                .collect(Collectors.toSet());
+        return modelMapper.map(scheduleRepository.findAll(), new TypeToken<Set<ScheduleDTO>>(){}.getType());
     }
 
     @Override
@@ -54,15 +53,6 @@ public class ScheduleServiceImpl implements IService<ScheduleDTO> {
     @Override
     public void delete(ScheduleDTO scheduleDTO) {
         scheduleRepository.deleteById(scheduleDTO.getScheduleId());
-    }
-
-    private ScheduleDTO translateToDTO(Schedule schedule) {
-        ScheduleDTO scheduleDTO = new ScheduleDTO();
-        scheduleDTO.setScheduleId(schedule.getScheduleId());
-        scheduleDTO.setDays(schedule.getDays());
-        scheduleDTO.setStart(schedule.getStart());
-        scheduleDTO.setEnd(schedule.getEnd());
-        return scheduleDTO;
     }
 
 }

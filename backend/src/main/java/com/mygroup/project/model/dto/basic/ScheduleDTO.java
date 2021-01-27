@@ -12,9 +12,9 @@ public class ScheduleDTO {
 
     private Long scheduleId;
 
-    private LocalTime start;
+    private LocalTime startTime;
 
-    private LocalTime end;
+    private LocalTime endTime;
 
     private List<Integer> days;
 
