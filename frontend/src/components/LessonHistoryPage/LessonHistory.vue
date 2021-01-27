@@ -154,6 +154,7 @@ import headers from "@/headers";
 let urlStudentHistory = '/studentHistory/' + localStorage.id;
 let urlTutorHistory = '/tutorHistory/' + localStorage.id;
 let urlOpinion = '/addOpinion';
+let urlConfirmLesson = '/confirmLesson';
 export default {
   name: "LessonHistory",
   components: {},
@@ -173,6 +174,8 @@ export default {
       tutorToRateName:"",
       tutorToRate: null,
       description: null,
+      link: null,
+      lesson: null,
       temp: [],
 
     }
@@ -244,21 +247,27 @@ export default {
       }
     },
     addComment() {
-      console.log(this.tutorToRate);
       let values = {
         "comment": this.description,
         "rating": this.stars,
-        "tutorId": 1,
+        "tutorId": this.tutorToRate,
       }
       var json = JSON.stringify(values);
-      console.log(json);
       instance.post(urlOpinion, json, {headers: headers})
       .then((response) => {
         console.log(response);
       });
     },
     confirm() {
-      console.log("e");
+      let values = {
+        "link": this.link,
+        "lesson": this.lesson,
+      }
+      var json = JSON.stringify(values);
+      instance.post(urlConfirmLesson, json, {headers: headers})
+      .then((response) => {
+        console.log(response);
+      });
     }
   }
 }
