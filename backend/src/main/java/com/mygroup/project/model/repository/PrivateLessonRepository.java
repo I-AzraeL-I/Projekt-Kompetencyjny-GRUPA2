@@ -11,4 +11,6 @@ public interface PrivateLessonRepository extends JpaRepository<PrivateLesson, Lo
 
     Collection<PrivateLesson> findAllByTutor_User_UserId(Long id);
 
+    Collection<PrivateLesson> findAllByTutor_TutorId(Long id);
+
 }

@@ -1,17 +1,22 @@
 package com.mygroup.project.model.service;
 
+import com.mygroup.project.exception.DataAlreadyExistsException;
 import com.mygroup.project.exception.DataNotFoundException;
 import com.mygroup.project.model.dto.basic.PrivateLessonDTO;
 import com.mygroup.project.model.dto.basic.SubjectDTO;
+import com.mygroup.project.model.dto.specialized.PrivateLessonFormDTO;
 import com.mygroup.project.model.entity.*;
 import com.mygroup.project.model.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -51,6 +56,9 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
 
     @Override
     public PrivateLessonDTO create(PrivateLessonDTO privateLessonDTO) {
+        if (!isAvailable(privateLessonDTO.getPrivateLessonDate(), privateLessonDTO.getPrivateLessonStartHour(), privateLessonDTO.getPrivateLessonEndHour(), privateLessonDTO.getTutorId())) {
+            throw new DataAlreadyExistsException("This date is already occupied");
+        }
         PrivateLesson privateLesson = translateFromDTO(privateLessonDTO);
         privateLessonRepository.save(privateLesson);
         return privateLessonDTO;
@@ -122,6 +130,19 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
         studentRepository.save(student);
         privateLesson.setStudent(student);
         return privateLesson;
+    }
+
+    private boolean isAvailable(LocalDate date, LocalTime startHour, LocalTime endHour, Long tutorId) {
+        Collection<PrivateLesson> privateLessons = privateLessonRepository.findAllByTutor_TutorId(tutorId);
+        Set<PrivateLesson> privateLessonSet = privateLessons.stream()
+                .filter(element -> element.getPrivateLessonDate().equals(date)
+                        && (startHour.compareTo(element.getPrivateLessonStartHour()) >= 0)
+                        && (endHour.compareTo(element.getPrivateLessonEndHour()) <= 0)
+                        && ((((startHour.compareTo(element.getPrivateLessonStartHour()) > 0)) && (startHour.compareTo(element.getPrivateLessonEndHour()) < 0))
+                            || (((endHour.compareTo(element.getPrivateLessonStartHour()) > 0)) && (endHour.compareTo(element.getPrivateLessonEndHour()) < 0))))
+                .collect(Collectors.toSet());
+        return privateLessonSet.isEmpty();
+
     }
 
 }
