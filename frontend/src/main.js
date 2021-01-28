@@ -21,6 +21,9 @@ import server from './server.js'
 import headers from './server'
 import VueToast from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
+import 'vue-material-slider/dist/vue-material-slider.css';
+import VueMaterialSlider from 'vue-material-slider';
+Vue.use(VueMaterialSlider);
 Vue.use(require('vue-moment'));
 Vue.use(VueToast);
 Vue.use(server,headers)

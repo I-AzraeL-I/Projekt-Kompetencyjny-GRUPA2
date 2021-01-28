@@ -25,9 +25,9 @@
               <div class="right col s12 m3 l3">
                 <div class="buttons">
 
-                  <router-link :to="'/nauczyciel/'+lesson.userId"><a
+                  <a :href="'/nauczyciel/' + lesson.userId +'#'+lesson.subjectName"
                       class="waves-effect waves-light btn messageButton">Wyślij wiadomość</a>
-                  </router-link>
+
                 </div>
               </div>
             </li>
