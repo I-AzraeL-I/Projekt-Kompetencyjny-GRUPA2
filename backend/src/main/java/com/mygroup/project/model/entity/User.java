@@ -3,6 +3,7 @@ package com.mygroup.project.model.entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,6 +40,7 @@ public class User implements UserDetails {
 
     @Lob
     @Column(length = 2000)
+    @Type(type = "text")
     private String description;
 
     @Column(nullable = false)
