@@ -10,6 +10,8 @@ import java.time.LocalTime;
 @Setter
 public class PrivateLessonFormDTO {
 
+    private Long privateLessonId;
+
     private LocalDate privateLessonDate;
 
     private LocalTime privateLessonStartHour;
