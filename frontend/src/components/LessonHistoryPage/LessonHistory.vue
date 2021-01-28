@@ -201,6 +201,8 @@ export default {
       // eslint-disable-next-line no-unused-vars,no-undef
       var instances = M.Modal.init(elems, 1);
     });
+
+
   },
   computed: {
     pastFilteredHistory: function () {

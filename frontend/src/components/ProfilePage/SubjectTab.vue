@@ -13,12 +13,18 @@
             </label>
           </li>
         </ul>
+        <div class="center-align">
+          <button type="submit" v-on:click="updateSubjects"
+                  class="waves-effect waves-light btn signButton">
+            Zapisz
+          </button>
+        </div>
       </div>
       <div class="description col s12 m5 offset-m1">
         <h3>Wybierz godziny i dni swoich zajęć:</h3>
         <ul class="day-picker">
           <li v-for="(day, i) in week" v-bind:key="`${i}`"
-              >
+          >
             <div class="col s10">{{ day }}</div>
             <label class="align">
               <input v-model="weekPicked[i]" type="checkbox" value="name"/>
@@ -26,28 +32,25 @@
             </label>
           </li>
         </ul>
-        <div class="input-field col s12">
-          <select>
-            <optgroup label="team 1">
-              <option value="1">Option 1</option>
-              <option value="2">Option 2</option>
-            </optgroup>
-            <optgroup label="team 2">
-              <option value="3">Option 3</option>
-              <option value="4">Option 4</option>
-            </optgroup>
-          </select>
-          <label>Optgroups</label>
+        <vue-material-range-slider
+            :min="9"
+            :max="18"
+            :thumbLabel="true"
+
+            v-model="value"
+        />
+        <div class="center-align">
+          <button type="submit" v-on:click="updateHours"
+                  class="waves-effect waves-light btn signButton">
+            Zapisz
+          </button>
         </div>
       </div>
     </div>
-    <button type="submit" v-on:click="updateSubjects"
-            class="waves-effect waves-light btn signButton">
-      Zapisz
-    </button>
+
+
   </div>
 </template>
-
 <script>
 import instance from "@/server";
 import headers from "@/headers";
@@ -62,22 +65,9 @@ export default {
       subjectsOriginal: null,
       schedule: null,
       scheduleOriginal: null,
-      week : ["poniedziałek","wtorek","środa","czwartek","piątek","sobota","niedziela"],
-      weekPicked : [false,false,false,false,false,false,false],
-      hours : [
-          "8:00",
-          "9:00",
-          "10:00",
-          "11:00",
-          "12:00",
-          "13:00",
-          "14:00",
-          "15:00",
-          "16:00",
-          "17:00",
-          "18:00",
-          "19:00",
-      ]
+      week: ["poniedziałek", "wtorek", "środa", "czwartek", "piątek", "sobota", "niedziela"],
+      weekPicked: [false, false, false, false, false, false, false],
+      value: [9, 10],
     }
   },
   created() {
@@ -90,18 +80,25 @@ export default {
     .then((response) => {
       console.log(response.data);
       this.schedule = response.data;
-      this.scheduleOriginal = JSON.parse(JSON.stringify(this.schedule));
+      if(this.schedule.monday === true)
+        this.weekPicked[0] = true
+      if(this.schedule.tuesday === true)
+        this.weekPicked[1] = true
+      if(this.schedule.wednesday === true)
+        this.weekPicked[2] = true
+      if(this.schedule.thursday === true)
+        this.weekPicked[3] = true
+      if(this.schedule.friday === true)
+        this.weekPicked[4] = true
+      if(this.schedule.saturday === true)
+        this.weekPicked[5] = true
+      if(this.schedule.sunday === true)
+        this.weekPicked[6] = true
     })
-    document.addEventListener('DOMContentLoaded', function() {
-      var elems = document.querySelectorAll('select');
-      // eslint-disable-next-line no-unused-vars,no-undef
-      var instances = M.FormSelect.init(elems, 1);
-    });
 
   },
   methods: {
     updateSubjects() {
-      console.log(this.weekPicked);
       for (let i = 0; i < this.subjects.length; i++) {
         if (this.subjects[i].chosen !== this.subjectsOriginal[i].chosen) {
           var value = {
@@ -120,25 +117,23 @@ export default {
       }
     },
     updateHours() {
-          var value = {
-            "startTime": "17:00",
-            "endTime": "18:00",
-            "monday": true,
-            "tuesday": true,
-            "wednesday": true,
-            "thursday": true,
-            "friday": true,
-            "saturday": true,
-            "sunday": true,
-          }
-          let json = JSON.stringify(value);
-          console.log(json);
-          instance.post(urlHours, json, {headers: headers}).then((response) => {
-            console.log(response);
-          }).then(this.$toast.success('Zapisano zmiany.', {
-            position: 'top'
-          }));
-
+      var value = {
+        "startTime": this.value[0] + ":00",
+        "endTime": this.value[1] + ":00",
+        "monday": this.weekPicked[0],
+        "tuesday": this.weekPicked[1],
+        "wednesday": this.weekPicked[2],
+        "thursday": this.weekPicked[3],
+        "friday": this.weekPicked[4],
+        "saturday": this.weekPicked[5],
+        "sunday": this.weekPicked[6],
+      }
+      let json = JSON.stringify(value);
+      instance.post(urlHours, json, {headers: headers}).then((response) => {
+        console.log(response);
+      }).then(this.$toast.success('Zapisano zmiany.', {
+        position: 'top'
+      }));
 
     }
   }
@@ -151,7 +146,6 @@ export default {
   height: 369px;
   overflow-y: scroll;
 }
-
 
 
 .btn {
