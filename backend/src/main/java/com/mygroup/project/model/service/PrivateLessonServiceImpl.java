@@ -4,10 +4,7 @@ import com.mygroup.project.exception.DataNotFoundException;
 import com.mygroup.project.model.dto.basic.PrivateLessonDTO;
 import com.mygroup.project.model.dto.basic.SubjectDTO;
 import com.mygroup.project.model.entity.*;
-import com.mygroup.project.model.repository.PrivateLessonRepository;
-import com.mygroup.project.model.repository.StudentRepository;
-import com.mygroup.project.model.repository.TutorRepository;
-import com.mygroup.project.model.repository.UserRepository;
+import com.mygroup.project.model.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,13 +22,15 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
     private final TutorRepository tutorRepository;
     private final UserRepository userRepository;
     private final StudentRepository studentRepository;
+    private final SubjectRepository subjectRepository;
     private final ModelMapper modelMapper;
 
-    public PrivateLessonServiceImpl(PrivateLessonRepository privateLessonRepository, TutorRepository tutorRepository, UserRepository userRepository, ModelMapper modelMapper, StudentRepository studentRepository) {
+    public PrivateLessonServiceImpl(PrivateLessonRepository privateLessonRepository, TutorRepository tutorRepository, UserRepository userRepository, ModelMapper modelMapper, StudentRepository studentRepository, SubjectRepository subjectRepository) {
         this.privateLessonRepository = privateLessonRepository;
         this.tutorRepository = tutorRepository;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.subjectRepository = subjectRepository;
         this.studentRepository = studentRepository;
     }
 
@@ -112,13 +111,14 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
         privateLesson.setPrice(privateLessonDTO.getPrice());
         Optional<Tutor> tutor = tutorRepository.findById(privateLessonDTO.getTutorId());
         tutor.ifPresent(theTutor -> privateLesson.setTutor(tutor.get()));
+        Optional<Subject> subject = subjectRepository.findById(privateLessonDTO.getSubject().getSubjectId());
+        subject.ifPresent(theSubject -> privateLesson.setSubject(subject.get()));
 
         User user = userRepository.findById(privateLessonDTO.getStudentId()).orElseThrow(DataNotFoundException::new);
         Student student = new Student();
         student.setUser(user);
         studentRepository.save(student);
         privateLesson.setStudent(student);
-        privateLesson.setSubject(modelMapper.map(privateLessonDTO.getSubject(), Subject.class));
         //privateLesson.setAcceptance(0);
         //privateLesson.setLink(privateLessonDTO.getLink());
         return privateLesson;

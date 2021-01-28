@@ -1,10 +1,14 @@
 package com.mygroup.project.model.dto.specialized;
 
 import com.mygroup.project.model.dto.basic.SubjectDTO;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@Getter
+@Setter
 public class PrivateLessonFormDTO {
 
     private LocalDate privateLessonDate;
@@ -17,6 +21,6 @@ public class PrivateLessonFormDTO {
 
     private Long studentId;
 
-    private SubjectDTO subject;
+    private Long subjectId;
 
 }

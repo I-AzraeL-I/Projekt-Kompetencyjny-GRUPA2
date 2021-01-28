@@ -3,6 +3,7 @@ package com.mygroup.project.controller;
 import com.mygroup.project.model.dto.Roles;
 import com.mygroup.project.model.dto.basic.OpinionDTO;
 import com.mygroup.project.model.dto.basic.PrivateLessonDTO;
+import com.mygroup.project.model.dto.basic.SubjectDTO;
 import com.mygroup.project.model.dto.basic.TutorDTO;
 import com.mygroup.project.model.dto.specialized.OpinionFormDTO;
 import com.mygroup.project.model.dto.specialized.PrivateLessonFormDTO;
@@ -75,6 +76,9 @@ public class ApplicationController {
         PrivateLessonDTO privateLessonDTO = modelMapper.map(privateLessonFormDTO, PrivateLessonDTO.class);
         privateLessonDTO.setAcceptance(0);
         privateLessonDTO.setPrice(100);
+        SubjectDTO subjectDTO = new SubjectDTO();
+        subjectDTO.setSubjectId(privateLessonFormDTO.getSubjectId());
+        privateLessonDTO.setSubject(subjectDTO);
         privateLessonDTO = privateLessonService.create(privateLessonDTO);
         return ResponseEntity.created(URI.create("/addLesson/")).headers(new HttpHeaders()).body(privateLessonDTO.getPrivateLessonId());
     }
