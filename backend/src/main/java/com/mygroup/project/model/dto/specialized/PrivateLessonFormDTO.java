@@ -1,6 +1,5 @@
 package com.mygroup.project.model.dto.specialized;
 
-import com.mygroup.project.model.dto.basic.SubjectDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,5 +21,9 @@ public class PrivateLessonFormDTO {
     private Long studentId;
 
     private Long subjectId;
+
+    private int acceptance;
+
+    private String link;
 
 }

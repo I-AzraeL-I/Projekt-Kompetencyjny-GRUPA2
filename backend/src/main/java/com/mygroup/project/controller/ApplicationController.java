@@ -80,7 +80,14 @@ public class ApplicationController {
         subjectDTO.setSubjectId(privateLessonFormDTO.getSubjectId());
         privateLessonDTO.setSubject(subjectDTO);
         privateLessonDTO = privateLessonService.create(privateLessonDTO);
-        return ResponseEntity.created(URI.create("/addLesson/")).headers(new HttpHeaders()).body(privateLessonDTO.getPrivateLessonId());
+        return ResponseEntity.created(URI.create("/addPrivateLesson/")).headers(new HttpHeaders()).body(privateLessonDTO.getPrivateLessonId());
+    }
+
+    @PostMapping("/updatePrivateLesson")
+    public ResponseEntity<?> updateLesson(@Valid @RequestBody PrivateLessonFormDTO privateLessonFormDTO) {
+        PrivateLessonDTO privateLessonDTO = modelMapper.map(privateLessonFormDTO, PrivateLessonDTO.class);
+        privateLessonDTO = privateLessonService.update(privateLessonDTO);
+        return ResponseEntity.created(URI.create("/updatePrivateLesson/")).headers(new HttpHeaders()).body(privateLessonDTO.getPrivateLessonId());
     }
 
 }

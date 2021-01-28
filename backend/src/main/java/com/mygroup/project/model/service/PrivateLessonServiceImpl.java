@@ -58,7 +58,9 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
 
     @Override
     public PrivateLessonDTO update(PrivateLessonDTO privateLessonDTO) {
-        PrivateLesson privateLesson = translateFromDTO(privateLessonDTO);
+        PrivateLesson privateLesson = privateLessonRepository.findById(privateLessonDTO.getPrivateLessonId()).orElseThrow(DataNotFoundException::new);
+        privateLesson.setAcceptance(privateLessonDTO.getAcceptance());
+        privateLesson.setLink(privateLessonDTO.getLink());
         privateLessonRepository.save(privateLesson);
         return privateLessonDTO;
     }
@@ -119,8 +121,6 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
         student.setUser(user);
         studentRepository.save(student);
         privateLesson.setStudent(student);
-        //privateLesson.setAcceptance(0);
-        //privateLesson.setLink(privateLessonDTO.getLink());
         return privateLesson;
     }
 
