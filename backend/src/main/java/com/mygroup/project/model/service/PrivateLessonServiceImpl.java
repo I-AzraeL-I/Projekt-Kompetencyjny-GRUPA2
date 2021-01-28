@@ -4,7 +4,6 @@ import com.mygroup.project.exception.DataAlreadyExistsException;
 import com.mygroup.project.exception.DataNotFoundException;
 import com.mygroup.project.model.dto.basic.PrivateLessonDTO;
 import com.mygroup.project.model.dto.basic.SubjectDTO;
-import com.mygroup.project.model.dto.specialized.PrivateLessonFormDTO;
 import com.mygroup.project.model.entity.*;
 import com.mygroup.project.model.repository.*;
 import org.modelmapper.ModelMapper;
@@ -50,7 +49,8 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
         return privateLessonRepository.findAll().stream()
                 .map(this::translateToDTO)
                 .sorted(Comparator.comparing(PrivateLessonDTO::getPrivateLessonDate)
-                        .thenComparing(PrivateLessonDTO::getPrivateLessonStartHour))
+                        .thenComparing(PrivateLessonDTO::getPrivateLessonStartHour)
+                        .reversed())
                 .collect(Collectors.toList());
     }
 
@@ -82,7 +82,8 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
         return privateLessonRepository.findAllByStudent_User_UserId(id).stream()
                 .map(this::translateToDTO)
                 .sorted(Comparator.comparing(PrivateLessonDTO::getPrivateLessonDate)
-                        .thenComparing(PrivateLessonDTO::getPrivateLessonStartHour))
+                        .thenComparing(PrivateLessonDTO::getPrivateLessonStartHour)
+                        .reversed())
                 .collect(Collectors.toList());
     }
 
@@ -90,7 +91,8 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
         return privateLessonRepository.findAllByTutor_User_UserId(id).stream()
                 .map(this::translateToDTO)
                 .sorted(Comparator.comparing(PrivateLessonDTO::getPrivateLessonDate)
-                        .thenComparing(PrivateLessonDTO::getPrivateLessonStartHour))
+                        .thenComparing(PrivateLessonDTO::getPrivateLessonStartHour)
+                        .reversed())
                 .collect(Collectors.toList());
     }
 

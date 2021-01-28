@@ -55,8 +55,8 @@ public class TutorServiceImpl implements IService<TutorDTO> {
         tutorRepository.deleteById(tutorDTO.getTutorId());
     }
 
-    public TutorDTO getByUserId(Long id) {
-        return modelMapper.map(tutorRepository.findByUser_UserId(id).orElseThrow(DataNotFoundException::new), TutorDTO.class);
+    public Collection<TutorDTO> getAllByUserId(Long id) {
+        return modelMapper.map(tutorRepository.findAllByUser_UserId(id), new TypeToken<Set<TutorDTO>>(){}.getType());
     }
 
 }

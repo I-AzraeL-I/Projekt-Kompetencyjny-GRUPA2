@@ -20,7 +20,7 @@ public class Tutor {
     @Setter(AccessLevel.NONE)
     private Long tutorId;
 
-    @OneToOne
+    @ManyToOne
     private User user;
 
     @OneToMany(mappedBy = "tutor")

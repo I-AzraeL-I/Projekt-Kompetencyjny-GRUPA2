@@ -49,9 +49,8 @@ public class ApplicationController {
     }
 
     @GetMapping("/getLessons/{id}")
-    public ResponseEntity<TutorDTO> getOffer(@PathVariable("id") Long userId) {
-        TutorDTO tutorDTO = tutorService.getByUserId(userId);
-        return ResponseEntity.ok(tutorDTO);
+    public Collection<TutorDTO> getOffer(@PathVariable("id") Long userId) {
+        return tutorService.getAllByUserId(userId);
     }
 
     @PostMapping("/addOpinion")
