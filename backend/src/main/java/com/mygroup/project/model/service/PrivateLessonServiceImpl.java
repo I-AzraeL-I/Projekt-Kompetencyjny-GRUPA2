@@ -136,10 +136,10 @@ public class PrivateLessonServiceImpl implements IService<PrivateLessonDTO> {
         Collection<PrivateLesson> privateLessons = privateLessonRepository.findAllByTutor_TutorId(tutorId);
         Set<PrivateLesson> privateLessonSet = privateLessons.stream()
                 .filter(element -> element.getPrivateLessonDate().equals(date)
-                        && (startHour.compareTo(element.getPrivateLessonStartHour()) >= 0)
-                        && (endHour.compareTo(element.getPrivateLessonEndHour()) <= 0)
-                        && ((((startHour.compareTo(element.getPrivateLessonStartHour()) > 0)) && (startHour.compareTo(element.getPrivateLessonEndHour()) < 0))
-                            || (((endHour.compareTo(element.getPrivateLessonStartHour()) > 0)) && (endHour.compareTo(element.getPrivateLessonEndHour()) < 0))))
+                        && (((startHour.compareTo(element.getPrivateLessonStartHour()) >= 0)
+                            && (endHour.compareTo(element.getPrivateLessonEndHour()) <= 0))
+                        || ((((startHour.compareTo(element.getPrivateLessonStartHour()) > 0)) && (startHour.compareTo(element.getPrivateLessonEndHour()) < 0))
+                            || (((endHour.compareTo(element.getPrivateLessonStartHour()) > 0)) && (endHour.compareTo(element.getPrivateLessonEndHour()) < 0)))))
                 .collect(Collectors.toSet());
         return privateLessonSet.isEmpty();
 
