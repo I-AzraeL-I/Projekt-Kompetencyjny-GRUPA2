@@ -2,6 +2,7 @@ package com.mygroup.project.model.service;
 
 import com.mygroup.project.exception.DataNotFoundException;
 import com.mygroup.project.model.dto.basic.TutorDTO;
+import com.mygroup.project.model.dto.basic.UserDTO;
 import com.mygroup.project.model.entity.Tutor;
 import com.mygroup.project.model.repository.TutorRepository;
 import org.modelmapper.ModelMapper;
@@ -52,6 +53,10 @@ public class TutorServiceImpl implements IService<TutorDTO> {
     @Override
     public void delete(TutorDTO tutorDTO) {
         tutorRepository.deleteById(tutorDTO.getTutorId());
+    }
+
+    public TutorDTO getByUserId(Long id) {
+        return modelMapper.map(tutorRepository.findByUser_UserId(id).orElseThrow(DataNotFoundException::new), TutorDTO.class);
     }
 
 }

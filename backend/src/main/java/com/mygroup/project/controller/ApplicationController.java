@@ -49,8 +49,8 @@ public class ApplicationController {
     }
 
     @GetMapping("/getLessons/{id}")
-    public ResponseEntity<TutorDTO> getOffer(@PathVariable("id") Long tutorId) {
-        TutorDTO tutorDTO = tutorService.get(tutorId);
+    public ResponseEntity<TutorDTO> getOffer(@PathVariable("id") Long userId) {
+        TutorDTO tutorDTO = tutorService.getByUserId(userId);
         return ResponseEntity.ok(tutorDTO);
     }
 
